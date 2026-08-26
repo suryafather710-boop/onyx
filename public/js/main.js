@@ -1,0 +1,239 @@
+/* ONYX — main.js
+   Core interactivity: nav, mobile menu, clock, cookies, FAQ, testimonials,
+   work lightbox, smooth scrolling (Lenis), and anchor navigation. */
+(function () {
+  'use strict';
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.documentElement.classList.remove('no-js');
+
+  /* ---------------------------------------------------- Lenis smooth scroll */
+  let lenis = null;
+  function initLenis() {
+    if (reduceMotion || typeof window.Lenis === 'undefined') return;
+    lenis = new window.Lenis({ duration: 1.1, smoothWheel: true });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    // Keep GSAP ScrollTrigger in sync if present.
+    if (window.ScrollTrigger) {
+      lenis.on('scroll', window.ScrollTrigger.update);
+    }
+    window.onyxLenis = lenis;
+  }
+
+  function scrollToTarget(target) {
+    if (!target) return;
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -10 });
+    } else {
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+  }
+
+  /* ---------------------------------------------------- anchor navigation */
+  document.querySelectorAll('[data-scroll]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      closeMenu();
+      scrollToTarget(target);
+    });
+  });
+
+  /* ---------------------------------------------------- nav scroll state */
+  const nav = document.getElementById('nav');
+  function onScroll() {
+    if (!nav) return;
+    nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------------------------------------------------- mobile menu */
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('navOverlay');
+  const menuClose = document.getElementById('menuClose');
+  const menuLinks = overlay ? overlay.querySelectorAll('.menu__link') : [];
+
+  menuLinks.forEach((link, i) => link.style.setProperty('--i', i));
+
+  function openMenu() {
+    if (!overlay) return;
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    nav.classList.add('is-menu-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('is-locked');
+    if (lenis) lenis.stop();
+  }
+
+  function closeMenu() {
+    if (!overlay || !overlay.classList.contains('is-open')) return;
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    nav.classList.remove('is-menu-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('is-locked');
+    if (lenis) lenis.start();
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      overlay.classList.contains('is-open') ? closeMenu() : openMenu();
+    });
+  }
+  if (menuClose) menuClose.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMenu();
+      closeLightbox();
+    }
+  });
+
+  /* ---------------------------------------------------- clock (India / IST) */
+  const clockEl = document.getElementById('navClock');
+  function updateClock() {
+    if (!clockEl) return;
+    const now = new Date();
+    // Force IST regardless of visitor timezone.
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).format(now);
+    clockEl.textContent = parts;
+  }
+  updateClock();
+  setInterval(updateClock, 15000);
+
+  /* ---------------------------------------------------- cookie banner */
+  const cookie = document.getElementById('cookie');
+  const cookieAccept = document.getElementById('cookieAccept');
+  const cookieDecline = document.getElementById('cookieDecline');
+
+  function showCookie() {
+    if (!cookie) return;
+    if (localStorage.getItem('onyx_cookie_choice')) return;
+    cookie.hidden = false;
+  }
+  function setCookieChoice(choice) {
+    try {
+      localStorage.setItem('onyx_cookie_choice', choice);
+    } catch (e) {
+      /* storage may be blocked; ignore */
+    }
+    if (cookie) cookie.hidden = true;
+  }
+  if (cookieAccept) cookieAccept.addEventListener('click', () => setCookieChoice('accepted'));
+  if (cookieDecline) cookieDecline.addEventListener('click', () => setCookieChoice('declined'));
+  // Delay slightly so it doesn't fight the preloader.
+  setTimeout(showCookie, 1400);
+
+  /* ---------------------------------------------------- FAQ accordion */
+  const faqItems = document.querySelectorAll('.faq__item');
+  faqItems.forEach((item) => {
+    const btn = item.querySelector('.faq__q');
+    const panel = item.querySelector('.faq__a');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+      // Close all others.
+      faqItems.forEach((other) => {
+        if (other === item) return;
+        other.classList.remove('is-open');
+        const oBtn = other.querySelector('.faq__q');
+        const oPanel = other.querySelector('.faq__a');
+        if (oBtn) oBtn.setAttribute('aria-expanded', 'false');
+        if (oPanel) oPanel.style.maxHeight = null;
+      });
+      if (isOpen) {
+        item.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        panel.style.maxHeight = null;
+      } else {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ---------------------------------------------------- testimonials */
+  const testimonials = document.querySelectorAll('.testimonial');
+  const testPrev = document.getElementById('testPrev');
+  const testNext = document.getElementById('testNext');
+  let testIndex = 0;
+
+  function showTestimonial(i) {
+    if (!testimonials.length) return;
+    testIndex = (i + testimonials.length) % testimonials.length;
+    testimonials.forEach((t, idx) => t.classList.toggle('is-active', idx === testIndex));
+  }
+  if (testPrev) testPrev.addEventListener('click', () => showTestimonial(testIndex - 1));
+  if (testNext) testNext.addEventListener('click', () => showTestimonial(testIndex + 1));
+
+  /* ---------------------------------------------------- work lightbox */
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbTitle = document.getElementById('lightboxTitle');
+  const lbTag = document.getElementById('lightboxTag');
+  const lbDesc = document.getElementById('lightboxDesc');
+  const lbClose = document.getElementById('lightboxClose');
+
+  function openLightbox(card) {
+    if (!lightbox) return;
+    if (lbImg) {
+      lbImg.src = card.dataset.img || '';
+      lbImg.alt = (card.dataset.title || '') + ' preview';
+    }
+    if (lbTitle) lbTitle.textContent = card.dataset.title || '';
+    if (lbTag) lbTag.textContent = card.dataset.tag || '';
+    if (lbDesc) lbDesc.textContent = card.dataset.desc || '';
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('is-locked');
+    if (lenis) lenis.stop();
+    if (lbClose) lbClose.focus();
+  }
+
+  function closeLightbox() {
+    if (!lightbox || !lightbox.classList.contains('is-open')) return;
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('is-locked');
+    if (lenis) lenis.start();
+  }
+
+  document.querySelectorAll('.work-card').forEach((card) => {
+    card.addEventListener('click', () => openLightbox(card));
+  });
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+  lightbox &&
+    lightbox.querySelectorAll('[data-lightbox-close]').forEach((el) =>
+      el.addEventListener('click', closeLightbox)
+    );
+
+  // expose for keydown handler above
+  window.closeLightbox = closeLightbox;
+
+  /* ---------------------------------------------------- boot */
+  // Init Lenis after preloader completes (or immediately if none).
+  if (document.getElementById('preloader')) {
+    document.addEventListener('onyx:preloaded', initLenis, { once: true });
+    // Fallback in case the event never fires.
+    setTimeout(() => {
+      if (!lenis) initLenis();
+    }, 4000);
+  } else {
+    initLenis();
+  }
+})();
