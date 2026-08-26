@@ -1,0 +1,49 @@
+<!-- Footer -->
+<footer class="footer" id="footer">
+  <div class="footer__brand" aria-hidden="true">ONYX</div>
+
+  <div class="footer__top">
+    <p class="footer__tagline"><%= site.tagline %></p>
+    <a class="footer__cta" href="mailto:<%= site.email %>">Email Us <span aria-hidden="true">→</span></a>
+  </div>
+
+  <div class="footer__grid">
+    <div class="footer__col">
+      <h3 class="footer__col-title">Pages</h3>
+      <ul>
+        <li><a href="#home" data-scroll>Home</a></li>
+        <li><a href="#about" data-scroll>About</a></li>
+        <li><a href="#services" data-scroll>Services</a></li>
+        <li><a href="#work" data-scroll>Work</a></li>
+        <li><a href="#contact" data-scroll>Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__col-title">Services</h3>
+      <ul>
+        <li><a href="#services" data-scroll>Web Development</a></li>
+        <li><a href="#services" data-scroll>Branding</a></li>
+        <li><a href="#services" data-scroll>UI/UX</a></li>
+        <li><a href="#services" data-scroll>Growth</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__col-title">Connect</h3>
+      <ul>
+        <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://x.com" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
+        <li><a href="mailto:<%= site.email %>"><%= site.email %></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bar">
+    <span>© <%= site.year %> ONYX. All Rights Reserved.</span>
+    <div class="footer__bar-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+      <a href="#home" class="footer__top-link" data-scroll>Back to Top <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>
