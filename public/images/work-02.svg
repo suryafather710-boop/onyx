@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Helix Studio">
+  <defs>
+    <linearGradient id="w2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141a1e"/>
+      <stop offset="1" stop-color="#08080b"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="520" fill="url(#w2)"/>
+  <g stroke="#c9a84c" stroke-opacity="0.45" stroke-width="2" fill="none">
+    <path d="M240,120 C420,220 300,300 480,400"/>
+    <path d="M480,120 C300,220 420,300 240,400"/>
+  </g>
+  <text x="50" y="470" font-family="'Space Grotesk',sans-serif" font-size="34" font-weight="700" fill="#f0efe9" fill-opacity="0.9">Helix Studio</text>
+</svg>
