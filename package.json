@@ -1,0 +1,29 @@
+{
+  "name": "onyx-website",
+  "version": "1.0.0",
+  "description": "ONYX — Precision-Built Digital Experiences. Production single-page site for the ONYX digital agency.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "onyx",
+    "digital-agency",
+    "express",
+    "ejs",
+    "gsap"
+  ],
+  "author": "Suryanshu — ONYX",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
