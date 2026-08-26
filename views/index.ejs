@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ONYX — Precision-Built Digital Experiences</title>
+  <meta name="description" content="ONYX is a next-gen digital studio crafting immersive websites, brand systems, UI/UX, and growth engines for ambitious brands. Founder-led, globally available." />
+  <meta name="theme-color" content="#060608" />
+  <meta name="author" content="Suryanshu — ONYX" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ONYX" />
+  <meta property="og:title" content="ONYX — Precision-Built Digital Experiences" />
+  <meta property="og:description" content="A next-gen digital studio crafting immersive web, brand systems, UI/UX, and growth. Founder-led by Suryanshu." />
+  <meta property="og:url" content="<%= site.url %>" />
+  <meta property="og:image" content="<%= site.url %>/images/og-cover.svg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ONYX — Precision-Built Digital Experiences" />
+  <meta name="twitter:description" content="A next-gen digital studio crafting immersive web, brand systems, UI/UX, and growth." />
+  <meta name="twitter:image" content="<%= site.url %>/images/og-cover.svg" />
+
+  <link rel="canonical" href="<%= site.url %>" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/sections.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ONYX",
+      "url": "<%= site.url %>",
+      "email": "<%= site.email %>",
+      "founder": { "@type": "Person", "name": "Suryanshu" },
+      "foundingDate": "2024",
+      "slogan": "We build brands that lead.",
+      "description": "A next-gen digital studio crafting immersive web, brand systems, UI/UX, and growth."
+    }
+  </script>
+</head>
+
+<body>
+  <%- include('partials/preloader') %>
+
+  <!-- 1. Cookie banner -->
+  <div class="cookie" id="cookie" role="dialog" aria-live="polite" aria-label="Cookie notice" hidden>
+    <p class="cookie__text">We use cookies to enhance your experience. No fuss, no tracking you didn't ask for.</p>
+    <div class="cookie__actions">
+      <button class="cookie__btn cookie__btn--accept" id="cookieAccept">Accept</button>
+      <button class="cookie__btn cookie__btn--decline" id="cookieDecline">Decline</button>
+    </div>
+  </div>
+
+  <%- include('partials/nav') %>
+
+  <main>
+    <!-- 4. Hero -->
+    <section class="hero" id="home">
+      <div class="hero__mesh" aria-hidden="true"></div>
+      <div class="hero__grain" aria-hidden="true"></div>
+      <div class="hero__inner container">
+        <span class="hero__label reveal">A Next-Gen Digital Studio</span>
+        <h1 class="hero__title">
+          <span class="reveal">BEYOND</span>
+          <span class="hero__sep reveal" aria-hidden="true">—</span>
+          <span class="reveal">ORDINARY</span>
+        </h1>
+        <p class="hero__para reveal">
+          ONYX designs immersive websites, sharp brand systems, and growth engines that turn
+          first impressions into lasting momentum.
+        </p>
+        <div class="hero__scroll reveal">
+          <a href="#philosophy" data-scroll>SCROLL TO EXPLORE</a>
+          <span class="hero__scroll-line" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Philosophy quote -->
+    <section class="philosophy" id="philosophy">
+      <div class="container philosophy__inner">
+        <blockquote class="philosophy__quote reveal">
+          "We don't just build websites — we engineer the moment a visitor becomes a believer."
+        </blockquote>
+        <p class="philosophy__support reveal">
+          Craft over noise. Precision over trend. Every pixel and every millisecond is a decision
+          made in service of the people who use what we make.
+        </p>
+        <span class="philosophy__mark reveal" aria-hidden="true">ONYX</span>
+      </div>
+    </section>
+
+    <!-- 6. Marquee -->
+    <section class="marquee-section" aria-label="What we do and who we work with">
+      <p class="marquee-section__heading container">Trusted By Ambitious Brands</p>
+      <div class="marquee" data-marquee>
+        <div class="marquee__track marquee__track--left">
+          <% for (let i = 0; i < 2; i++) { %>
+          <span class="marquee__group" <%= i === 1 ? 'aria-hidden="true"' : '' %>>
+            Digital Studio · Immersive Web · Brand Systems · UI/UX Design · Growth Strategy · Est. 2024 ·
+          </span>
+          <% } %>
+        </div>
+      </div>
+      <div class="marquee marquee--slow" data-marquee>
+        <div class="marquee__track marquee__track--right">
+          <% for (let i = 0; i < 2; i++) { %>
+          <span class="marquee__group marquee__group--muted" <%= i === 1 ? 'aria-hidden="true"' : '' %>>
+            Your Brand Here · Partner 01 · Partner 02 · Partner 03 · Partner 04 · Partner 05 ·
+          </span>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Showreel -->
+    <section class="reel" id="reel">
+      <div class="container">
+        <span class="section-label reveal">Our Reel</span>
+        <h2 class="reel__title">
+          <span class="reveal">CRAFTING DIGITAL</span>
+          <span class="reveal">REALITIES</span>
+        </h2>
+        <div class="reel__frame reveal" role="img" aria-label="Showreel coming soon">
+          <button class="reel__play" aria-label="Play showreel (coming soon)">
+            <span class="reel__play-icon" aria-hidden="true">▶</span>
+          </button>
+          <span class="reel__frame-text">Showreel Coming Soon</span>
+        </div>
+        <p class="reel__tags reveal">Immersive Web · Brand Identity · UI/UX · Growth</p>
+      </div>
+    </section>
+
+    <!-- 8. Stats -->
+    <section class="stats" aria-label="ONYX by the numbers">
+      <div class="container stats__grid">
+        <div class="stat reveal">
+          <span class="stat__num" data-count="10" data-suffix="+">0</span>
+          <span class="stat__label">Projects Delivered</span>
+        </div>
+        <div class="stat reveal">
+          <span class="stat__num" data-count="3" data-suffix="+">0</span>
+          <span class="stat__label">Countries Served</span>
+        </div>
+        <div class="stat reveal">
+          <span class="stat__num" data-count="100" data-suffix="%">0</span>
+          <span class="stat__label">Client Retention</span>
+        </div>
+        <div class="stat reveal">
+          <span class="stat__num" data-count="2024" data-raw="true">0</span>
+          <span class="stat__label">Established</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Core / About -->
+    <section class="core" id="about">
+      <div class="container core__inner">
+        <span class="section-label reveal">Our Core</span>
+        <h2 class="core__title reveal">Strategic Precision</h2>
+        <div class="core__body">
+          <p class="reveal">
+            ONYX is a founder-led studio built on a simple conviction: great digital work is
+            engineering and art in equal measure. We obsess over performance, clarity, and the small
+            details that most teams skip — because those details are exactly what people feel.
+          </p>
+          <p class="reveal">
+            The studio is led by Suryanshu, who started ONYX at 17 with an unreasonable standard for
+            craft and a refusal to ship anything ordinary. That standard now shapes every brand,
+            interface, and launch we touch.
+          </p>
+        </div>
+        <ul class="core__highlights reveal">
+          <li>★ Founder-Led Studio</li>
+          <li>★ Global Clients</li>
+          <li>★ 10+ Projects Delivered</li>
+          <li>★ Est. 2024</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 10. Services -->
+    <section class="services" id="services">
+      <div class="container">
+        <span class="section-label reveal">Capabilities</span>
+        <h2 class="section-heading reveal">Our Services</h2>
+        <div class="services__grid">
+          <% const services = [
+            { n: '01', t: 'Web Design & Development', d: 'Immersive, fast, hand-built sites that feel inevitable — from concept to a production codebase you own.', img: 'service-web' },
+            { n: '02', t: 'Branding & Identity', d: 'Names, marks, and systems with a spine. Identities that stay sharp across every surface and scale.', img: 'service-brand' },
+            { n: '03', t: 'UI & UX Design', d: 'Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.', img: 'service-uiux' },
+            { n: '04', t: 'Growth & Automation', d: 'Funnels, analytics, and automations that turn a great launch into compounding, measurable momentum.', img: 'service-growth' }
+          ]; %>
+          <% services.forEach(function (s) { %>
+          <article class="service-card reveal">
+            <div class="service-card__media">
+              <img src="/images/<%= s.img %>.svg" alt="" loading="lazy" width="600" height="420" />
+            </div>
+            <span class="service-card__num"><%= s.n %> //</span>
+            <h3 class="service-card__title"><%= s.t %></h3>
+            <p class="service-card__desc"><%= s.d %></p>
+          </article>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Process -->
+    <section class="process" id="process">
+      <div class="container">
+        <span class="section-label reveal">How We Work</span>
+        <h2 class="section-heading reveal">Our Process</h2>
+        <ol class="process__list">
+          <% const steps = [
+            { n: '01', t: 'Discovery', d: 'We dig into your goals, audience, and market so every decision that follows has a reason behind it.' },
+            { n: '02', t: 'Strategy', d: 'We shape the positioning, structure, and success metrics — the blueprint the whole project is built on.' },
+            { n: '03', t: 'Design', d: 'We craft the visual system and interface, iterating until it feels effortless and unmistakably yours.' },
+            { n: '04', t: 'Build', d: 'We engineer it for real — clean code, fast load times, and performance you can measure.' },
+            { n: '05', t: 'Launch', d: 'We ship, monitor, and refine — then set you up to grow with confidence after go-live.' }
+          ]; %>
+          <% steps.forEach(function (step) { %>
+          <li class="process__step reveal">
+            <span class="process__num"><%= step.n %> //</span>
+            <div class="process__text">
+              <h3 class="process__step-title"><%= step.t %></h3>
+              <p><%= step.d %></p>
+            </div>
+          </li>
+          <% }); %>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 12. CTA banner -->
+    <section class="cta-banner" aria-label="Start a project">
+      <div class="container cta-banner__inner">
+        <h2 class="cta-banner__title reveal">Ready to Build Something Bold?</h2>
+        <p class="cta-banner__sub reveal">Every standout brand started with a single decision to stop blending in.</p>
+        <a href="#contact" class="btn btn--sweep reveal" data-scroll>Start Your Project <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- 13. Selected work -->
+    <section class="work" id="work">
+      <div class="container work__head">
+        <h2 class="section-heading reveal">Selected Archives</h2>
+        <p class="work__instruction reveal">
+          <span class="work__instruction--desktop">SCROLL TO EXPLORE. CLICK TO EXPAND.</span>
+          <span class="work__instruction--mobile">SWIPE TO EXPLORE. TAP TO EXPAND.</span>
+        </p>
+      </div>
+      <div class="work__scroller" id="workScroller">
+        <% const projects = [
+          { n: '01', t: 'Aurora Commerce', tag: 'Web · Brand', img: 'work-01', d: 'A headless storefront rebuild that cut load times in half and lifted conversion for a growing DTC label. (Placeholder project — replace with real work.)' },
+          { n: '02', t: 'Helix Studio', tag: 'Identity · UI', img: 'work-02', d: 'A full identity system and portfolio site for a creative studio, built to scale across future ventures. (Placeholder project — replace with real work.)' },
+          { n: '03', t: 'Nimbus SaaS', tag: 'Product · UX', img: 'work-03', d: 'Onboarding and dashboard UX for an early-stage SaaS, designed to make a complex tool feel obvious. (Placeholder project — replace with real work.)' },
+          { n: '04', t: 'Vertex Growth', tag: 'Growth · Automation', img: 'work-04', d: 'A conversion-focused landing system with analytics and automations wired in from day one. (Placeholder project — replace with real work.)' }
+        ]; %>
+        <% projects.forEach(function (p, i) { %>
+        <button class="work-card reveal"
+          data-project-index="<%= i %>"
+          data-title="<%= p.t %>"
+          data-tag="<%= p.tag %>"
+          data-img="/images/<%= p.img %>.svg"
+          data-desc="<%= p.d %>">
+          <span class="work-card__count"><%= p.n %>/<%= String(projects.length).padStart(2, '0') %></span>
+          <div class="work-card__media">
+            <img src="/images/<%= p.img %>.svg" alt="<%= p.t %> preview" loading="lazy" width="720" height="520" />
+            <span class="work-card__overlay" aria-hidden="true"></span>
+          </div>
+          <div class="work-card__meta">
+            <h3 class="work-card__title"><%= p.t %></h3>
+            <span class="work-card__tag"><%= p.tag %></span>
+          </div>
+        </button>
+        <% }); %>
+      </div>
+    </section>
+
+    <!-- Work lightbox -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project details">
+      <div class="lightbox__backdrop" data-lightbox-close></div>
+      <div class="lightbox__panel">
+        <button class="lightbox__close" id="lightboxClose" aria-label="Close project">✕</button>
+        <div class="lightbox__media"><img id="lightboxImg" src="" alt="" /></div>
+        <div class="lightbox__body">
+          <span class="lightbox__tag" id="lightboxTag"></span>
+          <h3 class="lightbox__title" id="lightboxTitle"></h3>
+          <p class="lightbox__desc" id="lightboxDesc"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14. Testimonials -->
+    <section class="testimonials" id="testimonials" aria-label="Client testimonials">
+      <div class="container">
+        <span class="section-label reveal">Client Voices</span>
+        <h2 class="section-heading reveal">What They Say</h2>
+        <div class="testimonials__viewport reveal">
+          <% const quotes = [
+            { q: 'ONYX treated our launch like it was their own company. The site is fast, the brand finally feels like us, and the numbers moved. (Placeholder testimonial.)', name: 'Priya Raman', role: 'Founder, DTC Skincare', loc: 'Bengaluru, IN' },
+            { q: 'Rare to find this level of taste and technical rigor in one team. They shipped early and the details were flawless. (Placeholder testimonial.)', name: 'Daniel Osei', role: 'Product Lead, SaaS', loc: 'Accra, GH' },
+            { q: 'Working with a founder who genuinely cares changes everything. ONYX made the whole process feel effortless. (Placeholder testimonial.)', name: 'Sofia Marchetti', role: 'Creative Director', loc: 'Milan, IT' }
+          ]; %>
+          <% quotes.forEach(function (c, i) { %>
+          <figure class="testimonial <%= i === 0 ? 'is-active' : '' %>" data-testimonial="<%= i %>">
+            <blockquote class="testimonial__quote"><%= c.q %></blockquote>
+            <figcaption class="testimonial__meta">
+              <span class="testimonial__name"><%= c.name %></span>
+              <span class="testimonial__role"><%= c.role %> · <%= c.loc %></span>
+            </figcaption>
+          </figure>
+          <% }); %>
+        </div>
+        <div class="testimonials__nav">
+          <button class="testimonials__arrow" id="testPrev" aria-label="Previous testimonial">←</button>
+          <button class="testimonials__arrow" id="testNext" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. FAQ -->
+    <section class="faq" id="faq">
+      <div class="container">
+        <span class="section-label reveal">Questions</span>
+        <h2 class="section-heading reveal">FAQ</h2>
+        <div class="faq__list">
+          <% const faqs = [
+            { q: 'What does your process look like?', a: 'Five clear stages — Discovery, Strategy, Design, Build, and Launch. You always know what phase we\'re in, what\'s next, and what we need from you. No black boxes, no surprises.' },
+            { q: 'How long does a project typically take?', a: 'Most projects land between 3 and 8 weeks depending on scope. A focused landing page is fast; a full brand and site build takes longer. We\'ll give you a realistic timeline before we start.' },
+            { q: 'Do you work with international clients?', a: 'Absolutely. We\'re remote-first and already work across multiple countries and time zones. Async-friendly communication keeps everything smooth no matter where you are.' },
+            { q: 'What do you need from me to get started?', a: 'A clear sense of your goals, any existing brand assets, and a point of contact who can give feedback. We handle the rest and guide you through anything we still need.' },
+            { q: 'Do you offer post-launch support?', a: 'Yes. Launch is a milestone, not the finish line. We monitor, refine, and offer ongoing support and growth retainers so your project keeps performing after go-live.' }
+          ]; %>
+          <% faqs.forEach(function (f, i) { %>
+          <div class="faq__item reveal">
+            <button class="faq__q" aria-expanded="false" aria-controls="faq-a-<%= i %>" id="faq-q-<%= i %>">
+              <span><%= f.q %></span>
+              <span class="faq__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq__a" id="faq-a-<%= i %>" role="region" aria-labelledby="faq-q-<%= i %>">
+              <p><%= f.a %></p>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. Contact -->
+    <section class="contact" id="contact">
+      <div class="container contact__inner">
+        <div class="contact__intro">
+          <span class="section-label reveal">Initiate</span>
+          <h2 class="section-heading reveal">Let's Connect.</h2>
+          <p class="contact__sub reveal">
+            Our books are open. Share your details and we'll set up a discovery call.
+          </p>
+        </div>
+
+        <form class="contact__form reveal" id="contactForm" novalidate>
+          <div class="field">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" name="fullName" required autocomplete="name" />
+            <span class="field__error" data-error-for="fullName"></span>
+          </div>
+          <div class="field">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+            <span class="field__error" data-error-for="email"></span>
+          </div>
+          <div class="field">
+            <label for="company">Company / Brand</label>
+            <input type="text" id="company" name="company" autocomplete="organization" />
+          </div>
+          <div class="field">
+            <label for="website">Company Website</label>
+            <input type="text" id="website" name="website" autocomplete="url" placeholder="https://" />
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label for="service">Service Interested In</label>
+            <select id="service" name="service">
+              <option value="">Select a service</option>
+              <option>Web Development</option>
+              <option>UI/UX Design</option>
+              <option>Branding</option>
+              <option>Growth &amp; Automation</option>
+              <option>Full Digital Setup</option>
+              <option>Other</option>
+            </select>
+            <span class="field__error" data-error-for="service"></span>
+          </div>
+          <div class="field">
+            <label for="budget">Estimated Budget</label>
+            <select id="budget" name="budget">
+              <option value="">Select a budget</option>
+              <option>Under $1K</option>
+              <option>$1K–$3K</option>
+              <option>$3K–$5K</option>
+              <option>$5K–$10K</option>
+              <option>$10K+</option>
+              <option>Not sure yet</option>
+            </select>
+            <span class="field__error" data-error-for="budget"></span>
+          </div>
+          <div class="field field--full">
+            <label for="description">Project Description</label>
+            <textarea id="description" name="description" rows="5"></textarea>
+          </div>
+
+          <p class="contact__note">Projects start from $500.</p>
+          <button type="submit" class="btn btn--sweep contact__submit" id="contactSubmit">
+            Send Dispatch <span aria-hidden="true">→</span>
+          </button>
+          <p class="contact__status" id="contactStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <!-- GSAP + ScrollTrigger + Lenis via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+
+  <script src="/js/preloader.js" defer></script>
+  <script src="/js/main.js" defer></script>
+  <script src="/js/gsap-init.js" defer></script>
+  <script src="/js/form.js" defer></script>
+</body>
+</html>
