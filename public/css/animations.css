@@ -1,0 +1,57 @@
+/* =========================================================================
+   ONYX — animations.css
+   Reveal states + reduced-motion overrides.
+   ========================================================================= */
+
+/* Base reveal state — GSAP toggles .is-visible; CSS is the no-JS fallback. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* If JS/GSAP never runs, show everything after a short delay. */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered children helper (services/work cards) */
+.reveal[data-stagger] {
+  transition-delay: calc(var(--i, 0) * 0.08s);
+}
+
+/* -------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html { scroll-behavior: auto; }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero__mesh,
+  .hero__sep,
+  .hero__scroll-line::after,
+  .marquee__track--left,
+  .marquee__track--right {
+    animation: none !important;
+  }
+
+  .preloader { display: none !important; }
+}
