@@ -40,12 +40,53 @@
     });
   }
 
+  // Split target text into word spans and reveal them on scroll (scrubbed),
+  // reproducing the magicui "TextRevealByWord" effect with ScrollTrigger.
+  function initTextReveal(usingGsap) {
+    const scroller = document.querySelector('[data-text-reveal]');
+    if (!scroller) return;
+
+    const wordEls = [];
+    scroller.querySelectorAll('[data-reveal-text]').forEach((el) => {
+      const words = el.textContent.trim().split(/\s+/);
+      el.textContent = '';
+      words.forEach((w) => {
+        const span = document.createElement('span');
+        span.className = 'reveal-word';
+        span.textContent = w;
+        el.appendChild(span);
+        el.appendChild(document.createTextNode(' ')); // preserve word spacing
+        wordEls.push(span);
+      });
+    });
+
+    if (!usingGsap || !wordEls.length) {
+      wordEls.forEach((s) => (s.style.opacity = '1'));
+      return;
+    }
+
+    window.gsap.set(wordEls, { opacity: 0.18 });
+    const tl = window.gsap.timeline({
+      scrollTrigger: {
+        trigger: scroller,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.4
+      }
+    });
+    // Sequential, slightly overlapping fades mapped across the scroll range.
+    wordEls.forEach((el, i) => {
+      tl.to(el, { opacity: 1, ease: 'none', duration: 1 }, i * 0.8);
+    });
+  }
+
   function boot() {
     const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
 
     if (!hasGsap || reduceMotion) {
       revealAll();
       initCounters(false);
+      initTextReveal(false);
       return;
     }
 
@@ -68,6 +109,7 @@
     });
 
     initCounters(true);
+    initTextReveal(true);
 
     // Recalculate after images/fonts settle.
     window.addEventListener('load', () => window.ScrollTrigger.refresh());

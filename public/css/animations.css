@@ -22,6 +22,14 @@
   transform: none;
 }
 
+/* Without JS the words are never split; keep the section a normal block. */
+.no-js .philosophy__scroller { height: auto; }
+.no-js .philosophy__sticky {
+  position: static;
+  min-height: 0;
+  padding-block: var(--section-y);
+}
+
 /* Staggered children helper (services/work cards) */
 .reveal[data-stagger] {
   transition-delay: calc(var(--i, 0) * 0.08s);
@@ -49,6 +57,15 @@
   .marquee__track--right {
     animation: none !important;
   }
+
+  /* Collapse the scroll-reveal section into a normal centered block. */
+  .philosophy__scroller { height: auto; }
+  .philosophy__sticky {
+    position: static;
+    min-height: 0;
+    padding-block: var(--section-y);
+  }
+  .reveal-word { opacity: 1 !important; }
 
   .preloader { display: none !important; }
 }
