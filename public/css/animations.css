@@ -30,6 +30,25 @@
   padding-block: var(--section-y);
 }
 
+/* Text block reveal (per-line block sweep) — built by textblock.js */
+.tb-wrap {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.tb-line { display: block; }
+
+.tb-block {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+  pointer-events: none;
+}
+
 /* Staggered children helper (services/work cards) */
 .reveal[data-stagger] {
   transition-delay: calc(var(--i, 0) * 0.08s);
