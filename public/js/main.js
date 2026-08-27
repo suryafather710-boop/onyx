@@ -12,7 +12,14 @@
   let lenis = null;
   function initLenis() {
     if (reduceMotion || typeof window.Lenis === 'undefined') return;
-    lenis = new window.Lenis({ duration: 1.1, smoothWheel: true });
+    // lerp-based smoothing feels far more responsive on a mouse wheel than a
+    // long fixed duration (1.1s made each notch glide slowly, like it lagged).
+    lenis = new window.Lenis({
+      lerp: 0.12,
+      smoothWheel: true,
+      wheelMultiplier: 1.1,
+      touchMultiplier: 1.6
+    });
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
