@@ -122,23 +122,14 @@
     <!-- 6. Marquee -->
     <section class="marquee-section" aria-label="What we do and who we work with">
       <p class="marquee-section__heading container">Trusted By Ambitious Brands</p>
-
-      <!-- 3D rotating prism of service tags (replaces the top marquee row) -->
-      <% const tagCubeTags = ['Digital Studio', 'Immersive Web', 'Brand Systems', 'UI / UX Design', 'Growth Strategy', 'Est. 2024']; %>
-      <div class="tagcube">
-        <% for (let r = 0; r < 2; r++) { %>
-        <div class="tagcube__stage<%= r === 1 ? ' tagcube__stage--reflect' : '' %>" aria-hidden="true">
-          <div class="tagcube__prism">
-            <% tagCubeTags.forEach(function (t, i) { %>
-            <div class="tagcube__face" style="--i: <%= i %>"><span><%= t %></span></div>
-            <% }); %>
-          </div>
+      <div class="marquee" data-marquee>
+        <div class="marquee__track marquee__track--left">
+          <% for (let i = 0; i < 2; i++) { %>
+          <span class="marquee__group" <%= i === 1 ? 'aria-hidden="true"' : '' %>>
+            Digital Studio · Immersive Web · Brand Systems · UI/UX Design · Growth Strategy · Est. 2024 ·
+          </span>
+          <% } %>
         </div>
-        <% } %>
-        <!-- Screen-reader + reduced-motion fallback -->
-        <ul class="tagcube__list">
-          <% tagCubeTags.forEach(function (t) { %><li><%= t %></li><% }); %>
-        </ul>
       </div>
       <div class="marquee marquee--slow" data-marquee>
         <div class="marquee__track marquee__track--right">
