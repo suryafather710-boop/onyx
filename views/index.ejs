@@ -67,22 +67,42 @@
   <main>
     <!-- 4. Hero -->
     <section class="hero" id="home">
-      <div class="hero__mesh" aria-hidden="true"></div>
-      <div class="hero__grain" aria-hidden="true"></div>
-      <div class="hero__inner container">
-        <span class="hero__label reveal">A Next-Gen Digital Studio</span>
-        <h1 class="hero__title">
-          <span class="reveal">BEYOND</span>
-          <span class="hero__sep reveal" aria-hidden="true">—</span>
-          <span class="reveal">ORDINARY</span>
-        </h1>
-        <p class="hero__para reveal">
-          ONYX designs immersive websites, sharp brand systems, and growth engines that turn
-          first impressions into lasting momentum.
-        </p>
-        <div class="hero__scroll reveal">
-          <a href="#philosophy" data-scroll>SCROLL TO EXPLORE</a>
-          <span class="hero__scroll-line" aria-hidden="true"></span>
+      <!-- Background video (decorative). Replace src with ONYX footage when ready. -->
+      <video
+        class="hero__video"
+        id="heroVideo"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+        tabindex="-1"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
+      ></video>
+
+      <div class="hero__noise" aria-hidden="true"></div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <div class="hero__grid">
+          <div class="hero__wordmark-col">
+            <h1 class="hero__wordmark reveal">
+              <span class="hero__word">ONYX</span><span class="hero__asterisk" aria-hidden="true">*</span>
+            </h1>
+          </div>
+
+          <div class="hero__aside">
+            <span class="hero__label reveal" style="transition-delay: 0.1s">A Next-Gen Digital Studio</span>
+            <p class="hero__para reveal" style="transition-delay: 0.2s">
+              ONYX designs immersive websites, sharp brand systems, and growth engines that turn
+              first impressions into lasting momentum.
+            </p>
+            <a href="#contact" class="hero__cta reveal" style="transition-delay: 0.3s" data-scroll>
+              Start Your Project
+              <span class="hero__cta-icon" aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

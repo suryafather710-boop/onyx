@@ -25,6 +25,12 @@
     window.onyxLenis = lenis;
   }
 
+  // Hero is above the fold, so its reveals must not depend on scroll position
+  // (the CTA sits below GSAP's trigger line and would never fire otherwise).
+  function revealHero() {
+    document.querySelectorAll('#home .reveal').forEach((el) => el.classList.add('is-visible'));
+  }
+
   function scrollToTarget(target) {
     if (!target) return;
     if (lenis) {
@@ -97,6 +103,24 @@
       closeLightbox();
     }
   });
+
+  /* ---------------------------------------------------- hero video */
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    if (reduceMotion) {
+      // Respect reduced-motion: don't autoplay background motion.
+      heroVideo.removeAttribute('autoplay');
+      heroVideo.pause();
+    } else {
+      // Some browsers need an explicit play() call after load.
+      const tryPlay = () => {
+        const p = heroVideo.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      };
+      tryPlay();
+      heroVideo.addEventListener('canplay', tryPlay, { once: true });
+    }
+  }
 
   /* ---------------------------------------------------- clock (India / IST) */
   const clockEl = document.getElementById('navClock');
@@ -228,12 +252,21 @@
   /* ---------------------------------------------------- boot */
   // Init Lenis after preloader completes (or immediately if none).
   if (document.getElementById('preloader')) {
-    document.addEventListener('onyx:preloaded', initLenis, { once: true });
+    document.addEventListener(
+      'onyx:preloaded',
+      () => {
+        initLenis();
+        revealHero();
+      },
+      { once: true }
+    );
     // Fallback in case the event never fires.
     setTimeout(() => {
       if (!lenis) initLenis();
+      revealHero();
     }, 4000);
   } else {
     initLenis();
+    revealHero();
   }
 })();

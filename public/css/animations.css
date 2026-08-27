@@ -45,9 +45,6 @@
     transform: none !important;
   }
 
-  .hero__mesh,
-  .hero__sep,
-  .hero__scroll-line::after,
   .marquee__track--left,
   .marquee__track--right {
     animation: none !important;
