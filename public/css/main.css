@@ -1,6 +1,7 @@
 /* =========================================================================
    ONYX — main.css
-   Design tokens, reset, layout primitives, nav, footer, cookie, preloader.
+   Design tokens, reset, layout primitives, nav, cookie, preloader, legal.
+   (The footer lives in footer.css.)
    ========================================================================= */
 
 :root {
@@ -515,123 +516,6 @@ ol {
 
 .menu__social a:hover {
   color: var(--accent);
-}
-
-/* --------------------------------------------------------------- footer */
-.footer {
-  position: relative;
-  padding-top: clamp(4rem, 8vw, 7rem);
-  border-top: 1px solid var(--line);
-  overflow: hidden;
-}
-
-.footer__brand {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(5rem, 26vw, 22rem);
-  line-height: 0.8;
-  text-align: center;
-  letter-spacing: 0.02em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(240, 239, 233, 0.12);
-  padding-inline: var(--gutter);
-  pointer-events: none;
-  margin-bottom: -0.1em;
-}
-
-.footer__top {
-  max-width: var(--container);
-  margin-inline: auto;
-  padding: 2.5rem var(--gutter);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.4rem;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.footer__tagline {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
-  letter-spacing: -0.01em;
-}
-
-.footer__cta {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 4px;
-  transition: opacity 0.3s var(--ease);
-}
-
-.footer__cta:hover { opacity: 0.7; }
-
-.footer__grid {
-  max-width: var(--container);
-  margin-inline: auto;
-  padding: 3rem var(--gutter);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-}
-
-.footer__col-title {
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 1.2rem;
-}
-
-.footer__col ul { display: flex; flex-direction: column; gap: 0.7rem; }
-
-.footer__col a {
-  font-size: 0.95rem;
-  color: var(--text-dim);
-  transition: color 0.3s var(--ease);
-}
-
-.footer__col a:hover { color: var(--text); }
-
-.footer__bar {
-  max-width: var(--container);
-  margin-inline: auto;
-  padding: 1.8rem var(--gutter);
-  border-top: 1px solid var(--line);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.8rem;
-  color: var(--text-faint);
-}
-
-.footer__bar-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.4rem;
-}
-
-.footer__bar-links a {
-  color: var(--text-dim);
-  transition: color 0.3s var(--ease);
-}
-
-.footer__bar-links a:hover { color: var(--accent); }
-
-@media (max-width: 720px) {
-  .footer__grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 460px) {
-  .footer__grid { grid-template-columns: 1fr; }
 }
 
 /* --------------------------------------------------------------- legal page */

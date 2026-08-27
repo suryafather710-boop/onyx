@@ -1,0 +1,331 @@
+/* =========================================================================
+   ONYX — footer.css
+   Cinematic footer: fixed footer revealed through a clip-path wrapper as the
+   page scrolls (adapted from the React "CinematicFooter"). ONYX palette.
+   ========================================================================= */
+
+/* The wrapper sits in normal flow at the end of the page. Its clip-path
+   restricts the fixed footer's paint to this box, so the footer is only
+   visible as the wrapper scrolls into view (the "curtain reveal"). */
+.footer-reveal {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.cine-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+/* ---------------------------------------------------- ambient layers */
+.cine-footer__aurora {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: 80vw;
+  height: 60vh;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(201, 168, 76, 0.18) 0%,
+    rgba(201, 168, 76, 0.06) 40%,
+    transparent 70%);
+  animation: footer-breathe 8s ease-in-out infinite alternate;
+}
+
+.cine-footer__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: 60px 60px;
+  background-image:
+    linear-gradient(to right, rgba(240, 239, 233, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(240, 239, 233, 0.03) 1px, transparent 1px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+}
+
+/* ---------------------------------------------------- giant wordmark */
+.cine-footer__giant {
+  position: absolute;
+  bottom: -5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26vw;
+  line-height: 0.75;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240, 239, 233, 0.06);
+  background: linear-gradient(180deg, rgba(240, 239, 233, 0.1) 0%, transparent 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ---------------------------------------------------- marquee */
+.cine-footer__marquee {
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  padding-block: 1rem;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: rgba(6, 6, 8, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform: rotate(-2deg) scale(1.1);
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.6);
+}
+
+.cine-footer__marquee-track {
+  display: flex;
+  width: max-content;
+  animation: footer-scroll-marquee 40s linear infinite;
+}
+
+.cine-footer__marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-inline: 1.5rem;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.cine-footer__spark { color: rgba(201, 168, 76, 0.6); }
+.cine-footer__spark--2 { color: rgba(240, 239, 233, 0.4); }
+
+/* ---------------------------------------------------- glass pills */
+.glass-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 100px;
+  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
+  background: linear-gradient(145deg, rgba(240, 239, 233, 0.03), rgba(240, 239, 233, 0.01));
+  border: 1px solid rgba(240, 239, 233, 0.08);
+  box-shadow:
+    0 10px 30px -10px rgba(6, 6, 8, 0.5),
+    inset 0 1px 1px rgba(240, 239, 233, 0.1),
+    inset 0 -1px 2px rgba(6, 6, 8, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform-style: preserve-3d;
+  transition: color 0.4s var(--ease), border-color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease), background 0.4s var(--ease);
+}
+
+.glass-pill svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--text-dim);
+  transition: color 0.4s var(--ease);
+}
+
+.glass-pill:hover {
+  color: var(--text);
+  border-color: rgba(240, 239, 233, 0.2);
+  background: linear-gradient(145deg, rgba(240, 239, 233, 0.08), rgba(240, 239, 233, 0.02));
+  box-shadow:
+    0 20px 40px -10px rgba(6, 6, 8, 0.7),
+    inset 0 1px 1px rgba(240, 239, 233, 0.2);
+}
+
+.glass-pill:hover svg { color: var(--text); }
+
+.glass-pill--lg {
+  padding: 1.1rem 2.2rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.glass-pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------- center content */
+.cine-footer__main {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: 5rem 1.5rem 0;
+}
+
+.cine-footer__heading {
+  margin-bottom: 2.6rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 7rem);
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, var(--text) 0%, rgba(240, 239, 233, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(240, 239, 233, 0.15));
+}
+
+.cine-footer__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  width: 100%;
+}
+
+.cine-footer__pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cine-footer__pills--secondary { gap: 0.7rem; margin-top: 0.4rem; }
+
+/* ---------------------------------------------------- bottom bar */
+.cine-footer__bar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  width: 100%;
+  padding: 0 clamp(1.5rem, 4vw, 3rem) 2rem;
+}
+
+.cine-footer__copy {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.cine-footer__legal { display: flex; gap: 1rem; }
+
+.cine-footer__legal a {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  transition: color 0.3s var(--ease);
+}
+
+.cine-footer__legal a:hover { color: var(--accent); }
+
+.cine-footer__made {
+  cursor: default;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.cine-footer__made-name {
+  margin-left: 0.2rem;
+  font-family: var(--font-display);
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.cine-footer__heart {
+  color: #e2554e;
+  animation: footer-heartbeat 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+.cine-footer__top {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  justify-content: center;
+}
+
+.cine-footer__top svg { transition: transform 0.3s var(--ease); }
+.cine-footer__top:hover svg { transform: translateY(-4px); }
+
+/* ---------------------------------------------------- keyframes */
+@keyframes footer-breathe {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+
+@keyframes footer-scroll-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes footer-heartbeat {
+  0%, 100% { transform: scale(1); }
+  15%, 45% { transform: scale(1.2); }
+  30% { transform: scale(1); }
+}
+
+/* ---------------------------------------------------- responsive */
+@media (max-width: 640px) {
+  .cine-footer__bar { justify-content: center; text-align: center; }
+  .cine-footer__marquee { top: 2rem; }
+}
+
+/* ---------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .cine-footer__aurora,
+  .cine-footer__marquee-track,
+  .cine-footer__heart { animation: none !important; }
+
+  .cine-footer__giant,
+  .cine-footer__heading,
+  .cine-footer__links {
+    opacity: 1 !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .cine-footer__heading,
+  .cine-footer__links { transform: none !important; }
+}
