@@ -198,19 +198,7 @@
     });
   });
 
-  /* ---------------------------------------------------- testimonials */
-  const testimonials = document.querySelectorAll('.testimonial');
-  const testPrev = document.getElementById('testPrev');
-  const testNext = document.getElementById('testNext');
-  let testIndex = 0;
-
-  function showTestimonial(i) {
-    if (!testimonials.length) return;
-    testIndex = (i + testimonials.length) % testimonials.length;
-    testimonials.forEach((t, idx) => t.classList.toggle('is-active', idx === testIndex));
-  }
-  if (testPrev) testPrev.addEventListener('click', () => showTestimonial(testIndex - 1));
-  if (testNext) testNext.addEventListener('click', () => showTestimonial(testIndex + 1));
+  /* Testimonials are handled by the stagger deck in stagger.js. */
 
   /* ---------------------------------------------------- work lightbox */
   const lightbox = document.getElementById('lightbox');

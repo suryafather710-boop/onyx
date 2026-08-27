@@ -687,63 +687,128 @@
 
 .lightbox__desc { color: var(--text-dim); max-width: 60ch; }
 
-/* --------------------------------------------------------------- testimonials */
+/* --------------------------------------------------------------- testimonials (stagger deck) */
 .testimonials { padding-block: var(--section-y); }
 
-.testimonials__viewport {
+.stagger {
   position: relative;
-  min-height: 220px;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  margin-top: 1rem;
 }
 
-.testimonial {
+/* Each card is centered, then JS offsets it via transform for the fan effect. */
+.testi-card {
   position: absolute;
-  inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s var(--ease);
-  max-width: 900px;
-}
-
-.testimonial.is-active { opacity: 1; visibility: visible; position: relative; }
-
-.testimonial__quote {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.3rem, 3.2vw, 2.1rem);
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-  margin-bottom: 1.8rem;
-}
-
-.testimonial__name {
-  display: block;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-
-.testimonial__role { font-size: 0.9rem; color: var(--text-dim); }
-
-.testimonials__nav {
-  display: flex;
-  gap: 0.8rem;
-  margin-top: 2.4rem;
-}
-
-.testimonials__arrow {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 1px solid var(--line-strong);
+  left: 50%;
+  top: 50%;
+  cursor: pointer;
+  padding: 2rem;
+  border: 2px solid var(--line-strong);
+  background: var(--bg-card);
   color: var(--text);
-  font-size: 1.1rem;
-  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+  /* notched top-right corner where the diagonal slash sits */
+  clip-path: polygon(50px 0%, calc(100% - 50px) 0%, 100% 50px, 100% 100%, calc(100% - 50px) 100%, 50px 100%, 0 100%, 0 0);
+  transition: transform 0.5s ease-in-out, background 0.5s var(--ease),
+    color 0.5s var(--ease), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  outline: none;
 }
 
-.testimonials__arrow:hover {
+.testi-card:hover { border-color: rgba(201, 168, 76, 0.5); }
+.testi-card:focus-visible { border-color: var(--accent); }
+
+.testi-card.is-center {
   background: var(--accent);
   color: #060608;
   border-color: var(--accent);
+}
+
+.testi-card__slash {
+  position: absolute;
+  right: -2px;
+  top: 48px;
+  width: 70.71px; /* sqrt(5000) */
+  height: 2px;
+  transform-origin: top right;
+  transform: rotate(45deg);
+  background: var(--line-strong);
+}
+
+.testi-card.is-center .testi-card__slash { background: rgba(6, 6, 8, 0.35); }
+
+.testi-card__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 56px;
+  margin-bottom: 1rem;
+  background: var(--bg-soft);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  box-shadow: 3px 3px 0 var(--bg);
+}
+
+.testi-card.is-center .testi-card__avatar { color: #060608; background: rgba(6, 6, 8, 0.12); }
+
+.testi-card__quote {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.testi-card__by {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  bottom: 2rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+.testi-card.is-center .testi-card__by { color: rgba(6, 6, 8, 0.75); }
+
+@media (min-width: 640px) {
+  .testi-card__quote { font-size: 1.25rem; }
+}
+
+.stagger__nav {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 20;
+}
+
+.stagger__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--bg);
+  border: 2px solid var(--line-strong);
+  color: var(--text);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.stagger__arrow:hover {
+  background: var(--accent);
+  color: #060608;
+  border-color: var(--accent);
+}
+
+.stagger__arrow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------- faq */
