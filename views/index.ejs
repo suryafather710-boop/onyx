@@ -261,6 +261,8 @@
 
     <!-- 12. CTA banner -->
     <section class="cta-banner" aria-label="Start a project">
+      <!-- Auralis: WebGL ambient background (noise + glow + grain). CSS gradient is the fallback. -->
+      <canvas class="cta-banner__canvas" id="ctaCanvas" aria-hidden="true"></canvas>
       <div class="container cta-banner__inner">
         <h2 class="cta-banner__title reveal">Ready to Build Something Bold?</h2>
         <p class="cta-banner__sub reveal">Every standout brand started with a single decision to stop blending in.</p>
@@ -470,5 +472,6 @@
   <script src="/js/gsap-init.js" defer></script>
   <script src="/js/form.js" defer></script>
   <script src="/js/stagger.js" defer></script>
+  <script src="/js/auralis.js" defer></script>
 </body>
 </html>
