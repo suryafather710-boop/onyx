@@ -385,65 +385,123 @@
 
 .core__highlights li { white-space: nowrap; }
 
-/* --------------------------------------------------------------- services */
-.services { padding-block: var(--section-y); }
+/* --------------------------------------------------------------- services (horizontal scroll) */
+.hservices { position: relative; }
 
-.services__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1.2rem, 2.5vw, 2rem);
+.hservices__head {
+  padding: var(--section-y) var(--gutter) 0;
+  max-width: var(--container);
+  margin-inline: auto;
 }
 
-.service-card {
+.hservices__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 6vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-top: 0.4rem;
+}
+
+/* Fallback (no JS / reduced motion / mobile): a normal vertical stack. */
+.hservices__track {
+  display: flex;
+  flex-direction: column;
+}
+
+.hpanel {
   position: relative;
-  padding: 1.6rem;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  max-width: var(--container);
+  margin-inline: auto;
+  width: 100%;
+  padding: clamp(3rem, 7vw, 5.5rem) var(--gutter);
+}
+
+.hpanel__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.hpanel__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.2rem;
+}
+
+.hpanel__desc {
+  color: var(--text-dim);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  max-width: 44ch;
+}
+
+.hpanel__media {
+  aspect-ratio: 16 / 11;
   border-radius: 16px;
   overflow: hidden;
-  transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
-}
-
-.service-card:hover {
-  border-color: var(--line-strong);
-  transform: translateY(-4px);
-}
-
-.service-card__media {
-  aspect-ratio: 16 / 10;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 1.6rem;
+  border: 1px solid var(--line-strong);
   background: var(--bg-soft);
 }
 
-.service-card__media img {
+.hpanel__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s var(--ease);
 }
 
-.service-card:hover .service-card__media img { transform: scale(1.05); }
-
-.service-card__num {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  color: var(--accent);
+/* Horizontal-scroll mode: JS pins the section and slides the track sideways. */
+.hservices.is-hscroll .hservices__head {
+  position: absolute;
+  top: calc(var(--nav-h) + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: 100%;
+  max-width: var(--container);
+  padding: 0 var(--gutter);
+  pointer-events: none;
 }
 
-.service-card__title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
-  margin: 0.6rem 0 0.8rem;
+.hservices.is-hscroll .hservices__title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin-top: 0.1rem;
 }
 
-.service-card__desc { color: var(--text-dim); font-size: 0.95rem; }
+.hservices.is-hscroll .hservices__track {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100vh;
+  will-change: transform;
+}
 
-@media (max-width: 720px) {
-  .services__grid { grid-template-columns: 1fr; }
+.hservices.is-hscroll .hpanel {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  padding: var(--nav-h) clamp(2rem, 7vw, 8rem);
+  gap: clamp(2rem, 5vw, 6rem);
+}
+
+.hservices.is-hscroll .hpanel__media {
+  aspect-ratio: auto;
+  height: min(62vh, 560px);
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  .hpanel { grid-template-columns: 1fr; }
+  .hpanel__media { order: -1; }
 }
 
 /* --------------------------------------------------------------- process */

@@ -208,29 +208,38 @@
       </div>
     </section>
 
-    <!-- 10. Services -->
-    <section class="services" id="services">
-      <div class="container">
-        <span class="section-label reveal">Capabilities</span>
-        <h2 class="section-heading reveal">Our Services</h2>
-        <div class="services__grid">
-          <% const services = [
-            { n: '01', t: 'Web Design & Development', d: 'Immersive, fast, hand-built sites that feel inevitable — from concept to a production codebase you own.', img: 'service-web' },
-            { n: '02', t: 'Branding & Identity', d: 'Names, marks, and systems with a spine. Identities that stay sharp across every surface and scale.', img: 'service-brand' },
-            { n: '03', t: 'UI & UX Design', d: 'Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.', img: 'service-uiux' },
-            { n: '04', t: 'Growth & Automation', d: 'Funnels, analytics, and automations that turn a great launch into compounding, measurable momentum.', img: 'service-growth' }
-          ]; %>
-          <% services.forEach(function (s) { %>
-          <article class="service-card reveal">
-            <div class="service-card__media">
-              <img src="/images/<%= s.img %>.svg" alt="" loading="lazy" width="600" height="420" />
-            </div>
-            <span class="service-card__num"><%= s.n %> //</span>
-            <h3 class="service-card__title"><%= s.t %></h3>
-            <p class="service-card__desc"><%= s.d %></p>
-          </article>
-          <% }); %>
-        </div>
+    <!-- 10. Services — horizontal scroll deck -->
+    <section class="hservices" id="services">
+      <div class="hservices__head">
+        <span class="section-label">Capabilities</span>
+        <h2 class="hservices__title">Our Services</h2>
+      </div>
+
+      <div class="hservices__track">
+        <% const services = [
+          { n: '01', t: 'Web Design & Development', d: 'Immersive, fast, hand-built sites that feel inevitable — from concept to a production codebase you own.', img: 'service-web', photo: true },
+          { n: '02', t: 'Branding & Identity', d: 'Names, marks, and systems with a spine. Identities that stay sharp across every surface and scale.', img: 'service-brand', photo: false },
+          { n: '03', t: 'UI & UX Design', d: 'Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.', img: 'service-uiux', photo: true },
+          { n: '04', t: 'Growth & Automation', d: 'Funnels, analytics, and automations that turn a great launch into compounding, measurable momentum.', img: 'service-growth', photo: false }
+        ]; %>
+        <% services.forEach(function (s) { %>
+        <article class="hpanel">
+          <div class="hpanel__text">
+            <span class="hpanel__num"><%= s.n %> //</span>
+            <h3 class="hpanel__title"><%= s.t %></h3>
+            <p class="hpanel__desc"><%= s.d %></p>
+          </div>
+          <div class="hpanel__media">
+            <% if (s.photo) { %>
+            <img src="/images/<%= s.img %>.jpg"
+                 onerror="this.onerror=null;this.src='/images/<%= s.img %>.svg'"
+                 alt="<%= s.t %>" loading="lazy" />
+            <% } else { %>
+            <img src="/images/<%= s.img %>.svg" alt="<%= s.t %>" loading="lazy" />
+            <% } %>
+          </div>
+        </article>
+        <% }); %>
       </div>
     </section>
 
@@ -476,5 +485,6 @@
   <script src="/js/auralis.js" defer></script>
   <script src="/js/footer.js" defer></script>
   <script src="/js/textblock.js" defer></script>
+  <script src="/js/hservices.js" defer></script>
 </body>
 </html>
