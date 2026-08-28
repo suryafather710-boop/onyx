@@ -1,16 +1,16 @@
-/* ONYX — silk.js
-   "Silk" flow shader (made with the 21st.dev Shader Builder), mounted as the
-   philosophy-section background. Plain WebGL1, fullscreen triangle, no libs.
-   DPR capped at 2; RAF pauses when the tab is hidden or the section is off
-   screen; a single static frame is drawn under prefers-reduced-motion. */
+/* ONYX — shader-bg.js
+   "Mesh drift" blobs shader (made with the 21st.dev Shader Builder), mounted as
+   the philosophy-section background. Plain WebGL1, fullscreen triangle, no libs.
+   Full-bleed canvas; DPR capped at 2; RAF pauses when the tab is hidden or the
+   section is off screen; a single static frame under prefers-reduced-motion. */
 (function () {
   'use strict';
 
-  const canvas = document.getElementById('silkCanvas');
+  const canvas = document.getElementById('shaderCanvas');
   if (!canvas) return;
 
   const gl = canvas.getContext('webgl', { antialias: true, alpha: false });
-  if (!gl) return; // no WebGL -> the CSS scrim + dark body remain
+  if (!gl) return; // no WebGL -> CSS scrim + dark body remain
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -173,13 +173,19 @@ vec3 hueRotate(vec3 col, float a) {
 }
 
 vec3 shade(vec2 uv, vec2 p, float t) {
-  vec2 q = p * 1.6;
-  float amp = 0.25 + u_intensity * 0.85;
-  for (float i = 1.0; i < 5.0; i += 1.0) {
-    q.x += amp / i * cos(i * 2.4 * q.y + t * 0.8 + u_seed);
-    q.y += amp / i * cos(i * 1.7 * q.x + t * 0.6);
+  vec3 acc = u_colors[0] * 0.15;
+  float total = 0.15;
+  for (int i = 0; i < 8; i++) {
+    if (float(i) >= u_colorCount) break;
+    float fi = float(i);
+    vec2 c = vec2(
+      sin(t * (0.21 + fi * 0.071) + fi * 2.4 + u_seed),
+      cos(t * (0.17 + fi * 0.093) + fi * 1.7)) * (0.45 + u_intensity * 0.35);
+    float w = exp(-dot(p - c, p - c) * 6.0);
+    acc += u_colors[i] * w;
+    total += w;
   }
-  return palette(0.5 + 0.5 * sin(q.x + q.y));
+  return acc / total;
 }
 
 void main() {
@@ -268,7 +274,7 @@ void main() {
     gl.shaderSource(sh, src);
     gl.compileShader(sh);
     if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
-      console.error('[silk] shader compile error:', gl.getShaderInfoLog(sh));
+      console.error('[shader-bg] compile error:', gl.getShaderInfoLog(sh));
       return null;
     }
     return sh;
@@ -283,12 +289,11 @@ void main() {
   gl.attachShader(program, fs);
   gl.linkProgram(program);
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    console.error('[silk] program link error:', gl.getProgramInfoLog(program));
+    console.error('[shader-bg] link error:', gl.getProgramInfoLog(program));
     return;
   }
   gl.useProgram(program);
 
-  // Fullscreen triangle.
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
@@ -306,19 +311,19 @@ void main() {
   const uSpace = loc('u_space');
   const uCursor = loc('u_cursor');
 
-  // Static uniforms (from the requested "Silk" preset).
-  // u_colors[8], first 4 used: #02010A #04052E #3D2C8D #916BBF.
+  // "Mesh drift" preset. u_colors[8], first 4 used:
+  // #03120E #0E7C5A #7CE577 #F4FFC7.
   gl.uniform3fv(uColors, new Float32Array([
-    0.008, 0.004, 0.039,
-    0.016, 0.020, 0.180,
-    0.239, 0.173, 0.553,
-    0.569, 0.420, 0.749,
+    0.012, 0.071, 0.055,
+    0.055, 0.486, 0.353,
+    0.486, 0.898, 0.467,
+    0.957, 1.000, 0.780,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ]));
-  gl.uniform4f(uShape, 1.26, 0.28, 0.50, 0.00);     // scale, intensity, paramA, warp
-  gl.uniform4f(uSurface, 2.40, 1.11, 0.00, 1.00);   // detail, contrast, brightness, saturation
-  gl.uniform4f(uFinish, 0.00, 0.00, 0.000, 0.05);   // hue, vignette, blur, grain
-  gl.uniform4f(uTransform, 1581.0, 0.00, 0.00, 0.0); // seed, rotation, drift, OKLab
+  gl.uniform4f(uShape, 1.16, 0.34, 0.50, 0.00);      // scale, intensity, paramA, warp
+  gl.uniform4f(uSurface, 2.40, 1.16, 0.00, 1.00);    // detail, contrast, brightness, saturation
+  gl.uniform4f(uFinish, 0.00, 0.00, 0.000, 0.09);    // hue, vignette, blur, grain
+  gl.uniform4f(uTransform, 1453.0, 0.00, 0.00, 0.0); // seed, rotation, drift, OKLab
   gl.uniform4f(uSpace, 0.00, 0.00, 0.00, 0.00);      // offset.xy, pointer.xy (cursor off)
   gl.uniform4f(uCursor, 0.00, 2.0, 0.65, 0.46);      // presence off, effect, strength, radius
 
@@ -337,19 +342,18 @@ void main() {
   function draw() {
     resize();
     const seconds = (performance.now() - start) / 1000;
-    gl.uniform4f(uScene, canvas.width, canvas.height, seconds * 0.76, 4.0);
+    gl.uniform4f(uScene, canvas.width, canvas.height, seconds * 0.73, 4.0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
   const ro = new ResizeObserver(() => {
     resize();
-    if (reduce) draw(); // keep the static frame correct on resize
+    if (reduce) draw();
   });
   ro.observe(canvas);
 
   if (reduce) {
-    // Draw a single static frame; no animation loop.
-    requestAnimationFrame(draw);
+    requestAnimationFrame(draw); // one static frame, no loop
     return;
   }
 
@@ -370,7 +374,6 @@ void main() {
     raf = null;
   }
 
-  // Only run while the section is on screen.
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(
       (entries) => (entries[0].isIntersecting ? play() : stop()),
@@ -380,7 +383,6 @@ void main() {
     play();
   }
 
-  // Pause when the tab is hidden (required).
   document.addEventListener('visibilitychange', () => {
     document.hidden ? stop() : play();
   });
