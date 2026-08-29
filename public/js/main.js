@@ -20,15 +20,25 @@
       wheelMultiplier: 1.1,
       touchMultiplier: 1.6
     });
-    function raf(time) {
-      lenis.raf(time);
+
+    // Keep ScrollTrigger in sync, and — critically — drive Lenis from GSAP's
+    // single ticker instead of a separate requestAnimationFrame loop. Two loops
+    // desync scroll position from ScrollTrigger updates, which shows up as
+    // jitter/lag on scrubbed and pinned sections. One loop fixes that.
+    if (window.gsap && window.ScrollTrigger) {
+      lenis.on('scroll', window.ScrollTrigger.update);
+      window.gsap.ticker.add((time) => {
+        lenis.raf(time * 1000); // ticker time is seconds; Lenis wants ms
+      });
+      window.gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = (time) => {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      };
       requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
-    // Keep GSAP ScrollTrigger in sync if present.
-    if (window.ScrollTrigger) {
-      lenis.on('scroll', window.ScrollTrigger.update);
-    }
+
     window.onyxLenis = lenis;
   }
 
