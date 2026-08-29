@@ -504,44 +504,234 @@
   .hpanel__media { order: -1; }
 }
 
-/* --------------------------------------------------------------- process */
-.process { padding-block: var(--section-y); }
+/* --------------------------------------------------------------- process (pinned scrollytelling) */
+.pscroll {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
 
-.process__list {
+.pscroll__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pscroll__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(6, 6, 8, 0.9) 0%, rgba(6, 6, 8, 0.55) 45%, rgba(6, 6, 8, 0.7) 100%);
+}
+
+.pscroll__intro {
+  position: absolute;
+  top: calc(var(--nav-h) + 1.5rem);
+  left: var(--gutter);
+  z-index: 3;
+  max-width: 30ch;
+}
+
+.pscroll__heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: -0.02em;
+  margin-top: 0.3rem;
+}
+
+.pscroll__hint {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: opacity 0.4s var(--ease);
+}
+
+/* Card stack — one active at a time, occupying the lower-right of the stage. */
+.pscroll__cards {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(3rem, 8vh, 6rem);
+  z-index: 3;
+  width: min(420px, calc(100% - 2 * var(--gutter)));
+  height: 320px;
+}
+
+.pcard {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
+  padding: 1.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(20, 20, 26, 0.86), rgba(10, 10, 14, 0.86));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
 }
 
-.process__step {
+.pcard.is-active { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.pcard.is-prev { opacity: 0; transform: translateY(-28px) scale(0.98); }
+
+.pcard__glow {
+  position: absolute;
+  top: -40%;
+  left: -20%;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: var(--c);
+  opacity: 0.18;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.pcard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+
+.pcard__num {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+.pcard__num strong { color: var(--c); font-weight: 700; }
+
+.pcard__icon { color: var(--c); font-size: 1.1rem; }
+
+.pcard__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.7rem;
+}
+
+.pcard__desc { color: var(--text-dim); font-size: 0.95rem; flex: 1; }
+
+.pcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.pcard__ticks { display: flex; gap: 0.4rem; flex: 1; }
+
+.pcard__tick {
+  position: relative;
+  height: 3px;
+  flex: 1;
+  border-radius: 3px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+
+.pcard__tick span {
+  position: absolute;
+  inset: 0;
+  background: var(--c);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.pcard__label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.pscroll__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 100%;
+  height: 3px;
+  background: rgba(240, 239, 233, 0.08);
+}
+
+.pscroll__progress-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+}
+
+.pscroll__fallback { display: none; }
+
+@media (max-width: 560px) {
+  .pscroll__cards { right: var(--gutter); left: var(--gutter); width: auto; height: 300px; }
+}
+
+/* No JS / reduced motion: unpin and show the plain numbered list. */
+.pscroll.is-static {
+  height: auto;
+  padding-block: var(--section-y);
+}
+.pscroll.is-static .pscroll__media,
+.pscroll.is-static .pscroll__overlay,
+.pscroll.is-static .pscroll__cards,
+.pscroll.is-static .pscroll__progress,
+.pscroll.is-static .pscroll__hint { display: none; }
+
+.pscroll.is-static .pscroll__intro {
+  position: static;
+  max-width: none;
+  padding-inline: var(--gutter);
+  margin-bottom: 2rem;
+}
+
+.pscroll.is-static .pscroll__fallback {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.pscroll__fallback li {
   display: grid;
-  grid-template-columns: minmax(90px, 0.4fr) 1fr;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  align-items: baseline;
-  padding-block: clamp(1.6rem, 3vw, 2.4rem);
+  grid-template-columns: minmax(70px, 0.35fr) 1fr;
+  gap: clamp(1rem, 3vw, 3rem);
+  padding-block: clamp(1.4rem, 3vw, 2.2rem);
   border-top: 1px solid var(--line);
 }
+.pscroll__fallback li:last-child { border-bottom: 1px solid var(--line); }
 
-.process__step:last-child { border-bottom: 1px solid var(--line); }
-
-.process__num {
+.pscroll__fallback-num {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.4rem, 3vw, 2.2rem);
   color: var(--accent);
 }
-
-.process__step-title {
+.pscroll__fallback h3 {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(1.4rem, 3vw, 2.2rem);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
-
-.process__text p { color: var(--text-dim); max-width: 60ch; }
-
-@media (max-width: 560px) {
-  .process__step { grid-template-columns: 1fr; gap: 0.6rem; }
-}
+.pscroll__fallback p { color: var(--text-dim); max-width: 60ch; }
 
 /* --------------------------------------------------------------- cta banner */
 .cta-banner {

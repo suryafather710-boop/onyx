@@ -243,30 +243,62 @@
       </div>
     </section>
 
-    <!-- 11. Process -->
-    <section class="process" id="process">
-      <div class="container">
-        <span class="section-label reveal">How We Work</span>
-        <h2 class="section-heading reveal">Our Process</h2>
-        <ol class="process__list">
-          <% const steps = [
-            { n: '01', t: 'Discovery', d: 'We dig into your goals, audience, and market so every decision that follows has a reason behind it.' },
-            { n: '02', t: 'Strategy', d: 'We shape the positioning, structure, and success metrics — the blueprint the whole project is built on.' },
-            { n: '03', t: 'Design', d: 'We craft the visual system and interface, iterating until it feels effortless and unmistakably yours.' },
-            { n: '04', t: 'Build', d: 'We engineer it for real — clean code, fast load times, and performance you can measure.' },
-            { n: '05', t: 'Launch', d: 'We ship, monitor, and refine — then set you up to grow with confidence after go-live.' }
-          ]; %>
-          <% steps.forEach(function (step) { %>
-          <li class="process__step reveal">
-            <span class="process__num"><%= step.n %> //</span>
-            <div class="process__text">
-              <h3 class="process__step-title"><%= step.t %></h3>
-              <p><%= step.d %></p>
-            </div>
-          </li>
-          <% }); %>
-        </ol>
+    <!-- 11. Process — pinned scroll-scrubbed scrollytelling -->
+    <% const steps = [
+      { n: '01', t: 'Discovery', d: 'We dig into your goals, audience, and market so every decision that follows has a reason behind it.', c: '#c9a84c', icon: '✦' },
+      { n: '02', t: 'Strategy', d: 'We shape the positioning, structure, and success metrics — the blueprint the whole project is built on.', c: '#d89a4a', icon: '◐' },
+      { n: '03', t: 'Design', d: 'We craft the visual system and interface, iterating until it feels effortless and unmistakably yours.', c: '#6f9bd8', icon: '▣' },
+      { n: '04', t: 'Build', d: 'We engineer it for real — clean code, fast load times, and performance you can measure.', c: '#7ccf9a', icon: '⌁' },
+      { n: '05', t: 'Launch', d: 'We ship, monitor, and refine — then set you up to grow with confidence after go-live.', c: '#a98bd8', icon: '✧' }
+    ]; %>
+    <section class="pscroll" id="process" aria-label="Our process">
+      <video
+        class="pscroll__media"
+        id="pscrollVideo"
+        muted
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
+      ></video>
+      <div class="pscroll__overlay" aria-hidden="true"></div>
+
+      <div class="pscroll__intro">
+        <span class="section-label">How We Work</span>
+        <h2 class="pscroll__heading">Our Process</h2>
+        <p class="pscroll__hint" id="pscrollHint">scroll to explore</p>
       </div>
+
+      <div class="pscroll__cards" id="pscrollCards">
+        <% steps.forEach(function (s, i) { %>
+        <article class="pcard" data-step="<%= i %>" style="--c: <%= s.c %>">
+          <span class="pcard__glow" aria-hidden="true"></span>
+          <div class="pcard__head">
+            <span class="pcard__num"><strong><%= s.n %></strong> / 05</span>
+            <span class="pcard__icon" aria-hidden="true"><%= s.icon %></span>
+          </div>
+          <h3 class="pcard__title"><%= s.t %></h3>
+          <p class="pcard__desc"><%= s.d %></p>
+          <div class="pcard__foot">
+            <div class="pcard__ticks">
+              <% steps.forEach(function (_, j) { %><i class="pcard__tick"><span data-tick="<%= j %>"></span></i><% }); %>
+            </div>
+            <span class="pcard__label"><%= s.t %></span>
+          </div>
+        </article>
+        <% }); %>
+      </div>
+
+      <div class="pscroll__progress" aria-hidden="true">
+        <span class="pscroll__progress-fill" id="pscrollProgress"></span>
+      </div>
+
+      <!-- Static, accessible list (shown without JS / under reduced motion) -->
+      <ol class="pscroll__fallback">
+        <% steps.forEach(function (s) { %>
+        <li><span class="pscroll__fallback-num"><%= s.n %></span><div><h3><%= s.t %></h3><p><%= s.d %></p></div></li>
+        <% }); %>
+      </ol>
     </section>
 
     <!-- 12. CTA banner -->
@@ -486,5 +518,6 @@
   <script src="/js/footer.js" defer></script>
   <script src="/js/textblock.js" defer></script>
   <script src="/js/hservices.js" defer></script>
+  <script src="/js/pscroll.js" defer></script>
 </body>
 </html>
