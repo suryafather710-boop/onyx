@@ -504,43 +504,125 @@
   .hpanel__media { order: -1; }
 }
 
-/* --------------------------------------------------------------- process */
-.process { padding-block: var(--section-y); }
+/* --------------------------------------------------------------- process (scattered cards + dashed path) */
+.howwork { padding-block: var(--section-y); overflow: hidden; }
 
-.process__list {
+.howwork__head { margin-bottom: 2rem; }
+
+.howwork__stage {
+  position: relative;
+  max-width: 1000px;
+  margin-inline: auto;
+  /* Desktop: fixed-height canvas the cards are absolutely placed on. */
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 }
 
-.process__step {
-  display: grid;
-  grid-template-columns: minmax(90px, 0.4fr) 1fr;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  align-items: baseline;
-  padding-block: clamp(1.6rem, 3vw, 2.4rem);
-  border-top: 1px solid var(--line);
+.howwork__path { display: none; }
+
+/* --- the pin-note card, restyled dark/gold --- */
+.hcard { width: 100%; }
+
+.hcard__inner {
+  position: relative;
+  padding: 1.6rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  box-shadow: 0 24px 46px -22px rgba(0, 0, 0, 0.7);
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease);
 }
 
-.process__step:last-child { border-bottom: 1px solid var(--line); }
+.hcard__pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+}
 
-.process__num {
+.hcard__num {
+  display: block;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--accent);
+  margin-bottom: 0.8rem;
 }
 
-.process__step-title {
+.hcard__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
-  margin-bottom: 0.6rem;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
 }
 
-.process__text p { color: var(--text-dim); max-width: 60ch; }
+.hcard__desc { color: var(--text-dim); font-size: 0.92rem; line-height: 1.5; }
 
-@media (max-width: 560px) {
-  .process__step { grid-template-columns: 1fr; gap: 0.6rem; }
+/* --- desktop: scatter the cards and draw the animated dashed link --- */
+@media (min-width: 768px) {
+  .howwork__stage {
+    display: block;
+    height: 1130px;
+  }
+
+  .howwork__path {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .howwork__path-line {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-dasharray: 8 6;
+    stroke-linecap: round;
+    opacity: 0.55;
+    vector-effect: non-scaling-stroke;
+    animation: howwork-march 3s linear infinite;
+  }
+
+  .hcard {
+    position: absolute;
+    width: 280px;
+    z-index: 1;
+  }
+
+  .hcard__inner { transform: rotate(var(--rot, 0deg)); }
+
+  .hcard:hover { z-index: 30; }
+  .hcard:hover .hcard__inner {
+    transform: rotate(0deg) scale(1.05);
+    border-color: rgba(201, 168, 76, 0.4);
+  }
+
+  .hcard--pos1 { top: 0; left: 15%; --rot: 7deg; }
+  .hcard--pos2 { top: 120px; right: 15%; --rot: -7deg; }
+  .hcard--pos3 { top: 450px; left: 15%; --rot: 7deg; }
+  .hcard--pos4 { top: 570px; right: 10%; --rot: -7deg; }
+  .hcard--pos5 { top: 850px; left: 15%; --rot: 7deg; }
+}
+
+@keyframes howwork-march {
+  to { stroke-dashoffset: -140; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .howwork__path-line { animation: none !important; }
 }
 
 /* --------------------------------------------------------------- cta banner */
