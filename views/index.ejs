@@ -229,7 +229,7 @@
             <h3 class="hpanel__title"><%= s.t %></h3>
             <p class="hpanel__desc"><%= s.d %></p>
           </div>
-          <div class="hpanel__media">
+          <div class="hpanel__media" data-img-reveal>
             <% if (s.photo) { %>
             <img src="/images/<%= s.img %>.jpg"
                  onerror="this.onerror=null;this.src='/images/<%= s.img %>.svg'"
@@ -304,7 +304,7 @@
           data-img="/images/<%= p.img %>.svg"
           data-desc="<%= p.d %>">
           <span class="work-card__count"><%= p.n %>/<%= String(projects.length).padStart(2, '0') %></span>
-          <div class="work-card__media">
+          <div class="work-card__media" data-img-reveal>
             <img src="/images/<%= p.img %>.svg" alt="<%= p.t %> preview" loading="lazy" width="720" height="520" />
             <span class="work-card__overlay" aria-hidden="true"></span>
           </div>
@@ -486,5 +486,6 @@
   <script src="/js/footer.js" defer></script>
   <script src="/js/textblock.js" defer></script>
   <script src="/js/hservices.js" defer></script>
+  <script src="/js/imgreveal.js" defer></script>
 </body>
 </html>
