@@ -142,21 +142,44 @@
       </div>
     </section>
 
-    <!-- 7. Showreel -->
-    <section class="reel" id="reel">
-      <div class="container">
-        <span class="section-label reveal">Our Reel</span>
-        <h2 class="reel__title">
-          <span class="reveal">CRAFTING DIGITAL</span>
-          <span class="reveal">REALITIES</span>
-        </h2>
-        <div class="reel__frame reveal" role="img" aria-label="Showreel coming soon">
-          <button class="reel__play" aria-label="Play showreel (coming soon)">
-            <span class="reel__play-icon" aria-hidden="true">▶</span>
-          </button>
-          <span class="reel__frame-text">Showreel Coming Soon</span>
+    <!-- 7. Testimonials bento (blur-up reveal) -->
+    <section class="bento" id="reel" data-bento aria-label="Client testimonials">
+      <div class="container bento__head">
+        <span class="section-label reveal">Kind Words</span>
+        <h2 class="bento__title reveal">Loved by the teams we build for</h2>
+        <p class="bento__sub reveal">What our clients say about working with ONYX. <span class="bento__sub-note">(Placeholder testimonials.)</span></p>
+      </div>
+
+      <% const tst = [
+        { q: "ONYX treated our launch like it was their own company. The site is fast, the brand finally feels like us, and the numbers moved.", n: 'Priya Raman', r: 'Founder, DTC Skincare', v: 'feature' },
+        { q: "Rare to find this much taste and technical rigor in one team. They shipped early and the details were flawless.", n: 'Daniel Osei', r: 'Product Lead, SaaS', v: 'accent' },
+        { q: "Working with a founder who genuinely cares changes everything. The whole process felt effortless.", n: 'Sofia Marchetti', r: 'Creative Director', v: '' },
+        { q: "They rebuilt our product experience from the ground up — cleaner, faster, and finally on-brand.", n: 'Marcus Lee', r: 'CEO, Fintech', v: '' },
+        { q: "Our conversion jumped after the redesign. ONYX obsesses over the details most teams skip.", n: 'Amara Okafor', r: 'Head of Growth', v: '' },
+        { q: "A true partner, not a vendor. They pushed our ideas further than we imagined.", n: 'Tomás Rivera', r: 'Founder, Studio', v: 'accent' },
+        { q: "From strategy to launch, ONYX made a complex rebrand feel calm and considered. Easily the best studio we've worked with.", n: 'Hannah Weiss', r: 'CMO', v: 'feature' }
+      ];
+      function tInitials(name) { return name.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase(); }
+      const tCols = [[0, 1], [2, 3, 4], [5, 6]]; %>
+
+      <div class="container bento__grid">
+        <% tCols.forEach(function (col) { %>
+        <div class="bento__col">
+          <% col.forEach(function (idx) { const t = tst[idx]; %>
+          <article class="tcard<%= t.v ? ' tcard--' + t.v : '' %>" style="--i: <%= idx %>">
+            <% if (t.v === 'feature') { %><span class="tcard__gridbg" aria-hidden="true"></span><% } %>
+            <p class="tcard__quote">&ldquo;<%= t.q %>&rdquo;</p>
+            <div class="tcard__person">
+              <div class="tcard__meta">
+                <h3 class="tcard__name"><%= t.n %></h3>
+                <p class="tcard__role"><%= t.r %></p>
+              </div>
+              <span class="tcard__avatar" aria-hidden="true"><%= tInitials(t.n) %></span>
+            </div>
+          </article>
+          <% }); %>
         </div>
-        <p class="reel__tags reveal">Immersive Web · Brand Identity · UI/UX · Growth</p>
+        <% }); %>
       </div>
     </section>
 
@@ -499,5 +522,6 @@
   <script src="/js/textblock.js" defer></script>
   <script src="/js/hservices.js" defer></script>
   <script src="/js/imgreveal.js" defer></script>
+  <script src="/js/bento.js" defer></script>
 </body>
 </html>
