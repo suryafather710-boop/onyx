@@ -568,9 +568,46 @@
 }
 
 /* --------------------------------------------------------------- process (scattered cards + dashed path) */
-.howwork { padding-block: var(--section-y); overflow: hidden; }
+.howwork {
+  position: relative;
+  padding-block: var(--section-y);
+  overflow: hidden;
+}
+
+/* Floating paths background — flowing gold strokes behind the cards. */
+.howwork__paths {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.howwork__paths path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-dasharray: 0.35 0.65; /* fractions of pathLength=1 */
+  opacity: var(--op, 0.2);
+  animation: fp-flow var(--dur, 22s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fp-flow {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -1; }
+}
+
+.howwork__head,
+.howwork__stage { position: relative; z-index: 1; }
 
 .howwork__head { margin-bottom: 2rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .howwork__paths path { animation: none; stroke-dasharray: none; }
+}
 
 .howwork__stage {
   position: relative;

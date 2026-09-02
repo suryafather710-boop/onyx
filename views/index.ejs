@@ -268,6 +268,23 @@
 
     <!-- 11. Process — scattered cards linked by an animated dashed path -->
     <section class="howwork" id="process">
+      <!-- Floating paths background (36 flowing strokes, CSS-animated) -->
+      <svg class="howwork__paths" viewBox="0 0 696 316" fill="none" preserveAspectRatio="none" aria-hidden="true">
+        <% const _P = -1; for (let i = 0; i < 36; i++) {
+          const A = 380 - i*5*_P, B = 189 + i*6, C = 312 - i*5*_P, D = 216 - i*6,
+                E = 152 - i*5*_P, F = 343 - i*6, G = 616 - i*5*_P, H = 470 - i*6,
+                I2 = 684 - i*5*_P, J = 875 - i*6;
+          const _d = `M-${A} -${B}C-${A} -${B} -${C} ${D} ${E} ${F}C${G} ${H} ${I2} ${J} ${I2} ${J}`;
+          const _w = (0.5 + i*0.03).toFixed(2);
+          const _op = Math.min(0.42, 0.05 + i*0.012).toFixed(3);
+          const _dur = (20 + i*0.5).toFixed(1);
+          const _delay = (i * -0.6).toFixed(1);
+        %>
+        <path d="<%= _d %>" stroke="currentColor" stroke-width="<%= _w %>" pathLength="1"
+              style="--op: <%= _op %>; --dur: <%= _dur %>s; --delay: <%= _delay %>s;" />
+        <% } %>
+      </svg>
+
       <div class="container howwork__head">
         <span class="section-label reveal">How We Work</span>
         <h2 class="section-heading reveal">Our Process</h2>
