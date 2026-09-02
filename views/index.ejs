@@ -266,59 +266,62 @@
       </div>
     </section>
 
-    <!-- 11. Process — scattered cards linked by an animated dashed path -->
-    <section class="howwork" id="process">
-      <!-- Floating paths background (36 flowing strokes, CSS-animated) -->
-      <svg class="howwork__paths" viewBox="0 0 696 316" fill="none" preserveAspectRatio="none" aria-hidden="true">
-        <% const _P = -1; for (let i = 0; i < 36; i++) {
-          const A = 380 - i*5*_P, B = 189 + i*6, C = 312 - i*5*_P, D = 216 - i*6,
-                E = 152 - i*5*_P, F = 343 - i*6, G = 616 - i*5*_P, H = 470 - i*6,
-                I2 = 684 - i*5*_P, J = 875 - i*6;
-          const _d = `M-${A} -${B}C-${A} -${B} -${C} ${D} ${E} ${F}C${G} ${H} ${I2} ${J} ${I2} ${J}`;
-          const _w = (0.5 + i*0.03).toFixed(2);
-          const _op = Math.min(0.14, 0.025 + i*0.005).toFixed(3);
-          const _dur = (20 + i*0.5).toFixed(1);
-          const _delay = (i * -0.6).toFixed(1);
-        %>
-        <path d="<%= _d %>" stroke="currentColor" stroke-width="<%= _w %>" pathLength="1"
-              style="--op: <%= _op %>; --dur: <%= _dur %>s; --delay: <%= _delay %>s;" />
-        <% } %>
-      </svg>
-
-      <div class="container howwork__head">
-        <span class="section-label reveal">How We Work</span>
-        <h2 class="section-heading reveal">Our Process</h2>
-      </div>
-
-      <% const steps = [
-        { n: '01', t: 'Discovery', d: 'We dig into your goals, audience, and market so every decision that follows has a reason behind it.' },
-        { n: '02', t: 'Strategy', d: 'We shape the positioning, structure, and success metrics — the blueprint the whole project is built on.' },
-        { n: '03', t: 'Design', d: 'We craft the visual system and interface, iterating until it feels effortless and unmistakably yours.' },
-        { n: '04', t: 'Build', d: 'We engineer it for real — clean code, fast load times, and performance you can measure.' },
-        { n: '05', t: 'Launch', d: 'We ship, monitor, and refine — then set you up to grow with confidence after go-live.' }
-      ]; %>
-
-      <div class="howwork__stage">
-        <svg class="howwork__path" viewBox="0 0 1000 1130" preserveAspectRatio="none" aria-hidden="true">
-          <path
-            class="howwork__path-line"
-            d="M 290 150 C 500 150, 550 270, 710 270 C 850 270, 500 350, 290 450 C 290 600, 550 720, 750 720 C 950 720, 500 800, 290 850"
-          />
-        </svg>
-
-        <% steps.forEach(function (s, i) { %>
-        <article class="hcard hcard--pos<%= i + 1 %>">
-          <div class="hcard__inner">
-            <span class="hcard__pin" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z"/></svg>
-            </span>
-            <span class="hcard__num"><%= s.n %></span>
-            <h3 class="hcard__title"><%= s.t %></h3>
-            <p class="hcard__desc"><%= s.d %></p>
+    <!-- 11. Process — full-screen scroll slideshow -->
+    <% const fsx = [
+      { t: 'Discovery', l: 'Listen', r: 'Research' },
+      { t: 'Strategy', l: 'Plan', r: 'Blueprint' },
+      { t: 'Design', l: 'Craft', r: 'Systemise' },
+      { t: 'Build', l: 'Engineer', r: 'Perform' },
+      { t: 'Launch', l: 'Ship', r: 'Grow' }
+    ]; %>
+    <section class="fsx" id="process" aria-label="Our process">
+      <div class="fsx__pin-section">
+        <div class="fsx__pin">
+          <div class="fsx__bgs" aria-hidden="true">
+            <% fsx.forEach(function (s, i) { %><div class="fsx__bg fsx__bg--<%= i + 1 %>"></div><% }); %>
           </div>
-        </article>
-        <% }); %>
+
+          <div class="fsx__grid">
+            <div class="fsx__header">
+              <span class="fsx__eyebrow">How We Work</span>
+              <span class="fsx__heading">Our Process</span>
+            </div>
+
+            <div class="fsx__content">
+              <div class="fsx__side fsx__left"><div class="fsx__track">
+                <% fsx.forEach(function (s) { %><div class="fsx__item"><%= s.l %></div><% }); %>
+              </div></div>
+
+              <div class="fsx__center">
+                <% fsx.forEach(function (s) { %>
+                <h3 class="fsx__title"><span class="fsx__word-mask"><span class="fsx__word"><%= s.t %></span></span></h3>
+                <% }); %>
+              </div>
+
+              <div class="fsx__side fsx__right"><div class="fsx__track">
+                <% fsx.forEach(function (s) { %><div class="fsx__item"><%= s.r %></div><% }); %>
+              </div></div>
+            </div>
+
+            <div class="fsx__footer">
+              <div class="fsx__progress">
+                <div class="fsx__progress-numbers">
+                  <span class="fsx__num-cur">01</span>
+                  <span><%= String(fsx.length).padStart(2, '0') %></span>
+                </div>
+                <div class="fsx__progress-bar"><span class="fsx__progress-fill"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- Fallback (no JS / reduced motion): plain numbered list -->
+      <ol class="fsx__fallback container">
+        <% fsx.forEach(function (s, i) { %>
+        <li><span class="fsx__fallback-num"><%= String(i + 1).padStart(2, '0') %></span> <span class="fsx__fallback-title"><%= s.t %></span></li>
+        <% }); %>
+      </ol>
     </section>
 
     <!-- 12. CTA banner -->
@@ -540,5 +543,6 @@
   <script src="/js/hservices.js" defer></script>
   <script src="/js/imgreveal.js" defer></script>
   <script src="/js/bento.js" defer></script>
+  <script src="/js/fsx.js" defer></script>
 </body>
 </html>

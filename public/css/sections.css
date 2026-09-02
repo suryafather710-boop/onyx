@@ -567,163 +567,154 @@
   .hpanel__media { order: -1; }
 }
 
-/* --------------------------------------------------------------- process (scattered cards + dashed path) */
-.howwork {
-  position: relative;
-  padding-block: var(--section-y);
-  overflow: hidden;
-}
 
-/* Floating paths background — flowing gold strokes behind the cards. */
-.howwork__paths {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+/* --------------------------------------------------------------- process (full-screen scroll fx) */
+.fsx { position: relative; background: var(--bg); }
+
+.fsx__pin-section { position: relative; height: 500vh; } /* 5 steps × ~100vh */
+
+.fsx__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   width: 100%;
-  height: 100%;
-  color: var(--text); /* neutral off-white threads, not gold */
-  pointer-events: none;
+  overflow: hidden;
+  background: var(--bg);
 }
 
-.howwork__paths path {
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-dasharray: 0.35 0.65; /* fractions of pathLength=1 */
-  opacity: var(--op, 0.2);
-  animation: fp-flow var(--dur, 22s) linear infinite;
-  animation-delay: var(--delay, 0s);
-}
+/* Dark gradient panels, crossfaded by JS. */
+.fsx__bgs { position: absolute; inset: 0; z-index: 0; }
+.fsx__bg { position: absolute; inset: 0; opacity: 0; }
+.fsx__bg--1 { background: radial-gradient(70% 90% at 20% 22%, rgba(201, 168, 76, 0.11), transparent 60%), linear-gradient(160deg, #0c0b10, #060608); }
+.fsx__bg--2 { background: radial-gradient(70% 90% at 80% 26%, rgba(201, 168, 76, 0.10), transparent 60%), linear-gradient(200deg, #100e0a, #060608); }
+.fsx__bg--3 { background: radial-gradient(80% 80% at 50% 50%, rgba(201, 168, 76, 0.09), transparent 62%), linear-gradient(180deg, #0a0a0f, #060608); }
+.fsx__bg--4 { background: radial-gradient(70% 90% at 24% 80%, rgba(201, 168, 76, 0.10), transparent 60%), linear-gradient(20deg, #0c0e10, #060608); }
+.fsx__bg--5 { background: radial-gradient(75% 90% at 80% 78%, rgba(201, 168, 76, 0.12), transparent 60%), linear-gradient(320deg, #110f0b, #060608); }
 
-@keyframes fp-flow {
-  from { stroke-dashoffset: 0; }
-  to { stroke-dashoffset: -1; }
-}
-
-.howwork__head,
-.howwork__stage { position: relative; z-index: 1; }
-
-.howwork__head { margin-bottom: 2rem; }
-
-@media (prefers-reduced-motion: reduce) {
-  .howwork__paths path { animation: none; stroke-dasharray: none; }
-}
-
-.howwork__stage {
+.fsx__grid {
   position: relative;
-  max-width: 1000px;
-  margin-inline: auto;
-  /* Desktop: fixed-height canvas the cards are absolutely placed on. */
+  z-index: 2;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  padding: 0 var(--gutter);
 }
 
-.howwork__path { display: none; }
-
-/* --- the pin-note card, restyled dark/gold --- */
-.hcard { width: 100%; }
-
-.hcard__inner {
-  position: relative;
-  padding: 1.6rem 1.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--line-strong);
-  border-radius: 18px;
-  box-shadow: 0 24px 46px -22px rgba(0, 0, 0, 0.7);
-  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease);
-}
-
-.hcard__pin {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin-bottom: 1rem;
-  border-radius: 50%;
+.fsx__header { text-align: center; padding-top: calc(var(--nav-h) + 3vh); }
+.fsx__eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
   color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid rgba(201, 168, 76, 0.25);
+  margin-bottom: 0.5rem;
 }
-
-.hcard__num {
+.fsx__heading {
   display: block;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 2rem;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--accent);
-  margin-bottom: 0.8rem;
+  font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
 }
 
-.hcard__title {
+.fsx__content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  align-items: center;
+}
+
+.fsx__side { height: 60vh; overflow: hidden; display: grid; align-content: center; }
+.fsx__left { justify-items: start; }
+.fsx__right { justify-items: end; }
+.fsx__track { will-change: transform; }
+
+.fsx__item {
+  position: relative;
+  margin: 0.55rem 0;
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.4rem;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: clamp(1rem, 2vw, 1.6rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.28;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
 }
-
-.hcard__desc { color: var(--text-dim); font-size: 0.92rem; line-height: 1.5; }
-
-/* --- desktop: scatter the cards and draw the animated dashed link --- */
-@media (min-width: 768px) {
-  .howwork__stage {
-    display: block;
-    height: 1130px;
-  }
-
-  .howwork__path {
-    display: block;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .howwork__path-line {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 2;
-    stroke-dasharray: 8 6;
-    stroke-linecap: round;
-    opacity: 0.55;
-    vector-effect: non-scaling-stroke;
-    animation: howwork-march 3s linear infinite;
-  }
-
-  .hcard {
-    position: absolute;
-    width: 280px;
-    z-index: 1;
-  }
-
-  .hcard__inner { transform: rotate(var(--rot, 0deg)); }
-
-  .hcard:hover { z-index: 30; }
-  .hcard:hover .hcard__inner {
-    transform: rotate(0deg) scale(1.05);
-    border-color: rgba(201, 168, 76, 0.4);
-  }
-
-  .hcard--pos1 { top: 0; left: 15%; --rot: 7deg; }
-  .hcard--pos2 { top: 120px; right: 15%; --rot: -7deg; }
-  .hcard--pos3 { top: 450px; left: 15%; --rot: 7deg; }
-  .hcard--pos4 { top: 570px; right: 10%; --rot: -7deg; }
-  .hcard--pos5 { top: 850px; left: 15%; --rot: 7deg; }
+.fsx__item.is-active { opacity: 1; }
+.fsx__left .fsx__item.is-active { transform: translateX(14px); }
+.fsx__right .fsx__item.is-active { transform: translateX(-14px); }
+.fsx__item.is-active::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
 }
+.fsx__left .fsx__item.is-active::before { left: -16px; }
+.fsx__right .fsx__item.is-active::before { right: -16px; }
 
-@keyframes howwork-march {
-  to { stroke-dashoffset: -140; }
+.fsx__center { position: relative; height: 60vh; display: grid; place-items: center; }
+.fsx__title {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 9vw, 8rem);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text);
 }
+.fsx__word-mask { display: inline-block; overflow: hidden; padding: 0.12em 0.04em; }
+.fsx__word { display: inline-block; }
 
-@media (prefers-reduced-motion: reduce) {
-  .howwork__path-line { animation: none !important; }
+.fsx__footer { padding-bottom: 5vh; display: flex; justify-content: center; }
+.fsx__progress { position: relative; width: 220px; max-width: 60vw; }
+.fsx__progress-numbers {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
 }
+.fsx__progress-bar { position: relative; height: 2px; background: rgba(240, 239, 233, 0.18); }
+.fsx__progress-fill { position: absolute; inset: 0 auto 0 0; height: 100%; width: 0%; background: var(--accent); transition: width 0.5s var(--ease); }
+
+/* Fallback list (mobile / no-JS / reduced motion) */
+.fsx__fallback { display: none; }
+
+.fsx.is-static .fsx__pin-section { height: auto; }
+.fsx.is-static .fsx__pin { position: static; height: auto; overflow: visible; padding-block: var(--section-y); }
+.fsx.is-static .fsx__content,
+.fsx.is-static .fsx__footer,
+.fsx.is-static .fsx__bgs { display: none; }
+.fsx.is-static .fsx__header { padding-top: 0; margin-bottom: 1.5rem; }
+.fsx.is-static .fsx__heading { color: var(--text); font-size: clamp(2rem, 6vw, 3.4rem); }
+.fsx.is-static .fsx__fallback { display: block; max-width: var(--container); margin-inline: auto; }
+
+.fsx__fallback li {
+  display: flex;
+  align-items: baseline;
+  gap: 1.4rem;
+  padding-block: clamp(1.2rem, 3vw, 2rem);
+  border-top: 1px solid var(--line);
+  font-family: var(--font-display);
+}
+.fsx__fallback li:last-child { border-bottom: 1px solid var(--line); }
+.fsx__fallback-num { color: var(--accent); font-weight: 700; font-size: clamp(1.2rem, 3vw, 2rem); }
+.fsx__fallback-title { font-weight: 600; font-size: clamp(1.4rem, 3vw, 2.2rem); }
 
 /* --------------------------------------------------------------- cta banner */
 .cta-banner {
