@@ -45,14 +45,16 @@
     });
 
     // Subtle parallax on each panel's image, tied to the horizontal scroll.
+    // Move the <img> within its scale(1.12) buffer so edges never show.
     panels.forEach((panel) => {
-      const media = panel.querySelector('.hpanel__media');
-      if (!media) return;
+      const img = panel.querySelector('.hpanel__media img');
+      if (!img) return;
       window.gsap.fromTo(
-        media,
-        { xPercent: 10 },
+        img,
+        { scale: 1.12, xPercent: 5 },
         {
-          xPercent: -10,
+          scale: 1.12,
+          xPercent: -5,
           ease: 'none',
           scrollTrigger: {
             trigger: panel,
@@ -70,8 +72,8 @@
       section.classList.remove('is-hscroll');
       window.gsap.set(track, { clearProps: 'transform' });
       panels.forEach((panel) => {
-        const media = panel.querySelector('.hpanel__media');
-        if (media) window.gsap.set(media, { clearProps: 'transform' });
+        const img = panel.querySelector('.hpanel__media img');
+        if (img) window.gsap.set(img, { clearProps: 'transform' });
       });
     };
   });

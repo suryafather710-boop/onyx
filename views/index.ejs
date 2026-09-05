@@ -240,18 +240,21 @@
 
       <div class="hservices__track">
         <% const services = [
-          { n: '01', t: 'Web Design & Development', d: 'Immersive, fast, hand-built sites that feel inevitable — from concept to a production codebase you own.', img: 'service-web', photo: true },
-          { n: '02', t: 'Branding & Identity', d: 'Names, marks, and systems with a spine. Identities that stay sharp across every surface and scale.', img: 'service-brand', photo: true },
-          { n: '03', t: 'UI & UX Design', d: 'Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.', img: 'service-uiux', photo: true },
-          { n: '04', t: 'Growth & Automation', d: 'Funnels, analytics, and automations that turn a great launch into compounding, measurable momentum.', img: 'service-growth', photo: false }
+          { n: '01', t: 'Web Design & Development', img: 'service-web', photo: true,
+            p: ['Immersive, fast, hand-built sites that feel inevitable — from first concept to a production codebase.',
+                'You own what we ship: clean, documented code built to scale with you, not lock you in.'] },
+          { n: '02', t: 'Branding & Identity', img: 'service-brand', photo: true,
+            p: ['Names, marks, and systems with a spine — identities that stay sharp across every surface and scale.',
+                'Brand work that gives you a point of view, not just a logo, and holds up as you grow.'] },
+          { n: '03', t: 'UI & UX Design', img: 'service-uiux', photo: true,
+            p: ['Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.',
+                'We prototype, test, and refine until the product feels effortless, then hand it over pixel-perfect.'] },
+          { n: '04', t: 'Growth & Automation', img: 'service-growth', photo: false,
+            p: ['Funnels, analytics, and automations that turn a strong launch into compounding momentum.',
+                'Measurable systems that keep working after go-live — so growth is engineered, not hoped for.'] }
         ]; %>
         <% services.forEach(function (s) { %>
         <article class="hpanel">
-          <div class="hpanel__text">
-            <span class="hpanel__num"><%= s.n %> //</span>
-            <h3 class="hpanel__title"><%= s.t %></h3>
-            <p class="hpanel__desc"><%= s.d %></p>
-          </div>
           <div class="hpanel__media">
             <% if (s.photo) { %>
             <img src="/images/<%= s.img %>.jpg"
@@ -260,6 +263,13 @@
             <% } else { %>
             <img src="/images/<%= s.img %>.svg" alt="<%= s.t %>" loading="lazy" />
             <% } %>
+          </div>
+          <div class="hpanel__text">
+            <span class="hpanel__num"><%= s.n %></span>
+            <h3 class="hpanel__title"><%= s.t %></h3>
+            <div class="hpanel__body">
+              <% s.p.forEach(function (para) { %><p class="hpanel__desc"><%= para %></p><% }); %>
+            </div>
           </div>
         </article>
         <% }); %>
