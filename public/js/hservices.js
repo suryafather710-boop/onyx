@@ -1,9 +1,10 @@
 /* ONYX — hservices.js
-   Horizontal scroll deck for Our Services: pin the section and slide the panel
-   track sideways as the page scrolls (vanilla adaptation of the React
-   horizontal-scroll component, driven by the project's GSAP ScrollTrigger).
-   Only engages on wider screens with motion allowed; otherwise the CSS leaves
-   a normal vertical stack. */
+   Horizontal feature deck for Our Services: pin the section and slide the panel
+   track sideways as the page scrolls, with an image parallax tied to the
+   horizontal motion. Content stays visible throughout (no opacity reveals) so
+   the scroll is smooth and nothing can ever be left hidden. Vanilla + the
+   project's GSAP ScrollTrigger. Engages only on wider screens with motion
+   allowed; otherwise the CSS leaves a normal vertical stack. */
 (function () {
   'use strict';
 
@@ -18,19 +19,24 @@
     typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   if (!hasGsap) return; // CSS fallback = vertical stack
 
-  window.gsap.registerPlugin(window.ScrollTrigger);
+  const gsap = window.gsap;
+  const ScrollTrigger = window.ScrollTrigger;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Don't let mobile browser-chrome resize thrash the pin (a common jitter source).
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   // gsap.matchMedia sets up on match and auto-reverts everything created inside
   // when the query stops matching (resize, or motion preference change).
-  const mm = window.gsap.matchMedia();
+  const mm = gsap.matchMedia();
 
   mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
     section.classList.add('is-hscroll');
 
-    const distance = () => track.scrollWidth - window.innerWidth;
+    const distance = () => Math.max(1, track.scrollWidth - window.innerWidth);
 
-    // Main horizontal slide, pinned.
-    const hz = window.gsap.to(track, {
+    // Main horizontal slide, pinned. scrub:1 gives a smooth catch-up feel.
+    const hz = gsap.to(track, {
       x: () => -distance(),
       ease: 'none',
       scrollTrigger: {
@@ -38,42 +44,47 @@
         start: 'top top',
         end: () => '+=' + distance(),
         pin: true,
+        pinSpacing: true,
         scrub: 1,
         anticipatePin: 1,
         invalidateOnRefresh: true
       }
     });
 
-    // Subtle parallax on each panel's image, tied to the horizontal scroll.
-    // Move the <img> within its scale(1.12) buffer so edges never show.
+    // Image parallax within its scale buffer (edges never show). Transform-only,
+    // tied to the horizontal scroll — always in sync, never leaves a blank.
     panels.forEach((panel) => {
       const img = panel.querySelector('.hpanel__media img');
       if (!img) return;
-      window.gsap.fromTo(
+      gsap.fromTo(
         img,
-        { scale: 1.12, xPercent: 5 },
+        { scale: 1.2, xPercent: 8 },
         {
-          scale: 1.12,
-          xPercent: -5,
+          scale: 1.2,
+          xPercent: -8,
           ease: 'none',
           scrollTrigger: {
             trigger: panel,
             containerAnimation: hz,
             start: 'left right',
             end: 'right left',
-            scrub: true
+            scrub: true,
+            invalidateOnRefresh: true
           }
         }
       );
     });
 
+    // Recompute once fonts/layout settle.
+    ScrollTrigger.refresh();
+
     // Cleanup when the query no longer matches.
     return () => {
       section.classList.remove('is-hscroll');
-      window.gsap.set(track, { clearProps: 'transform' });
+      gsap.set(track, { clearProps: 'transform' });
       panels.forEach((panel) => {
         const img = panel.querySelector('.hpanel__media img');
-        if (img) window.gsap.set(img, { clearProps: 'transform' });
+        if (img) gsap.set(img, { clearProps: 'transform' });
       });
     };
   });
