@@ -640,7 +640,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  will-change: transform, opacity;
+  background: var(--bg); /* opaque so each card fully covers the one it slides over */
+  will-change: transform;
 }
 
 .stsvc.is-live .stsvc__p { max-width: 40ch; }

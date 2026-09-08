@@ -33,17 +33,13 @@
 
   const N = contents.length;
 
-  // Tuning. The source component leaves a beat where the outgoing card is gone
-  // and the incoming one hasn't arrived — fine with snap (you never rest there),
-  // but with snap removed that beat becomes a blank-text gap you can stop in. So
-  // the crossfade overlaps (never blank) and the transition finishes inside the
-  // first part of each step, leaving a settle zone where exactly one card and
-  // one image sit fully resolved — smooth to scrub through, stable to stop on.
-  const ENTER_Y = 2;      // yPercent a card enters from
-  const EXIT_Y = -2;      // yPercent a card exits to
-  const CROSS = 0.9;      // true simultaneous crossfade: both cards share this
-                          // window so their opacities always sum to ~1 (no blank)
-  const TRANS = 1.1;      // image wipe / scale window
+  // Transition. A simultaneous opacity crossfade briefly shows two texts stacked
+  // in the same spot — they read as colliding words. Instead each card is an
+  // opaque panel that SLIDES up over the previous one: the incoming card covers
+  // the outgoing one, so two texts are never visible at once, and because the
+  // outgoing card stays put until it's covered there's never a blank beat either.
+  const DRIFT = -10;      // yPercent the covered card drifts to (parallax depth)
+  const TRANS = 1.1;      // slide / image-wipe window
   const STEP = 2;         // scroll length of one service step (rest fills the tail)
   const SCALE_INITIAL = 1.5; // an image waiting off-screen
   const SCALE_ACTIVE = 1.2;  // the image on screen
@@ -58,12 +54,13 @@
 
     const imgs = medias.map((m) => m.querySelector('img'));
 
-    // Initial state.
+    // Initial state. Card 0 sits in place; the rest wait fully below the column
+    // (yPercent 100), each stacked above the previous so it covers when it rises.
     contents.forEach((c, i) => {
       gsap.set(c, {
-        autoAlpha: i === 0 ? 1 : 0,
-        yPercent: i === 0 ? 0 : ENTER_Y,
-        zIndex: N - i
+        autoAlpha: 1,
+        yPercent: i === 0 ? 0 : 100,
+        zIndex: i + 1
       });
     });
     medias.forEach((m, i) => {
@@ -92,13 +89,13 @@
       const nextImg = imgs[i + 1];
       const start = i * STEP;
 
-      tl.to(cur, { autoAlpha: 0, yPercent: EXIT_Y, duration: CROSS, ease: 'sine.inOut' }, start)
-        .fromTo(
+      tl.fromTo(
           next,
-          { autoAlpha: 0, yPercent: ENTER_Y },
-          { autoAlpha: 1, yPercent: 0, duration: CROSS, ease: 'sine.inOut' },
+          { yPercent: 100 },
+          { yPercent: 0, duration: TRANS, ease: 'power2.inOut' },
           start
         )
+        .to(cur, { yPercent: DRIFT, duration: TRANS, ease: 'power2.inOut' }, start)
         .to(medias[i], { clipPath: 'inset(0% 0% 100% 0%)', duration: TRANS, ease: 'power2.inOut' }, start);
 
       if (curImg) tl.to(curImg, { scale: SCALE_EXIT, duration: TRANS, ease: 'power2.inOut' }, start);
