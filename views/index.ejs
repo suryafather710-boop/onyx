@@ -231,31 +231,50 @@
       </div>
     </section>
 
-    <!-- 10. Services — horizontal scroll deck -->
-    <section class="hservices" id="services">
-      <div class="hservices__head">
-        <span class="section-label">Capabilities</span>
-        <h2 class="hservices__title">Our Services</h2>
-      </div>
+    <!-- 10. Services — sticky content scroll -->
+    <% const services = [
+      { n: '01', t: 'Web Design & Development', img: 'service-web', photo: true,
+        p: ['Immersive, fast, hand-built sites that feel inevitable — from first concept to a production codebase.',
+            'You own what we ship: clean, documented code built to scale with you, not lock you in.'],
+        list: ['Design systems & interface', 'Production build & CMS', 'Performance & SEO baked in'] },
+      { n: '02', t: 'Branding & Identity', img: 'service-brand', photo: true,
+        p: ['Names, marks, and systems with a spine — identities that stay sharp across every surface and scale.',
+            'Brand work that gives you a point of view, not just a logo, and holds up as you grow.'],
+        list: ['Naming & positioning', 'Logo, type & colour system', 'Brand guidelines'] },
+      { n: '03', t: 'UI & UX Design', img: 'service-uiux', photo: true,
+        p: ['Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.',
+            'We prototype, test, and refine until the product feels effortless, then hand it over pixel-perfect.'],
+        list: ['Research & user flows', 'Prototyping & testing', 'Pixel-perfect handoff'] },
+      { n: '04', t: 'Growth & Automation', img: 'service-growth', photo: false,
+        p: ['Funnels, analytics, and automations that turn a strong launch into compounding momentum.',
+            'Measurable systems that keep working after go-live — so growth is engineered, not hoped for.'],
+        list: ['Funnels & landing pages', 'Analytics & tracking', 'Automations & CRM'] }
+    ]; %>
+    <section class="stsvc" id="services">
+      <div class="stsvc__sticky">
+        <div class="stsvc__head">
+          <span class="section-label">Capabilities</span>
+          <h2 class="stsvc__title">Our Services</h2>
+        </div>
 
-      <div class="hservices__track">
-        <% const services = [
-          { n: '01', t: 'Web Design & Development', img: 'service-web', photo: true,
-            p: ['Immersive, fast, hand-built sites that feel inevitable — from first concept to a production codebase.',
-                'You own what we ship: clean, documented code built to scale with you, not lock you in.'] },
-          { n: '02', t: 'Branding & Identity', img: 'service-brand', photo: true,
-            p: ['Names, marks, and systems with a spine — identities that stay sharp across every surface and scale.',
-                'Brand work that gives you a point of view, not just a logo, and holds up as you grow.'] },
-          { n: '03', t: 'UI & UX Design', img: 'service-uiux', photo: true,
-            p: ['Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.',
-                'We prototype, test, and refine until the product feels effortless, then hand it over pixel-perfect.'] },
-          { n: '04', t: 'Growth & Automation', img: 'service-growth', photo: false,
-            p: ['Funnels, analytics, and automations that turn a strong launch into compounding momentum.',
-                'Measurable systems that keep working after go-live — so growth is engineered, not hoped for.'] }
-        ]; %>
         <% services.forEach(function (s) { %>
-        <article class="hpanel">
-          <div class="hpanel__media">
+        <div class="stsvc__row">
+          <div class="stsvc__text" data-content>
+            <span class="stsvc__num"><%= s.n %></span>
+            <h3 class="stsvc__heading"><%= s.t %></h3>
+            <% s.p.forEach(function (para) { %><p class="stsvc__p"><%= para %></p><% }); %>
+            <ul class="stsvc__list">
+              <% s.list.forEach(function (li) { %><li><%= li %></li><% }); %>
+            </ul>
+            <a class="stsvc__link" href="#contact">
+              <span class="stsvc__link-text">Start a project</span>
+              <svg class="stsvc__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+          <div class="stsvc__media" data-image>
             <% if (s.photo) { %>
             <img src="/images/<%= s.img %>.jpg"
                  onerror="this.onerror=null;this.src='/images/<%= s.img %>.svg'"
@@ -264,15 +283,17 @@
             <img src="/images/<%= s.img %>.svg" alt="<%= s.t %>" loading="lazy" />
             <% } %>
           </div>
-          <div class="hpanel__text">
-            <span class="hpanel__num"><%= s.n %></span>
-            <h3 class="hpanel__title"><%= s.t %></h3>
-            <div class="hpanel__body">
-              <% s.p.forEach(function (para) { %><p class="hpanel__desc"><%= para %></p><% }); %>
-            </div>
-          </div>
-        </article>
+        </div>
         <% }); %>
+
+        <div class="stsvc__scroll" aria-hidden="true">
+          <span>Scroll</span>
+          <svg viewBox="0 0 20 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline class="stsvc__chev stsvc__chev--1" points="2,2 10,9 18,2" />
+            <polyline class="stsvc__chev stsvc__chev--2" points="2,10 10,17 18,10" />
+            <polyline class="stsvc__chev stsvc__chev--3" points="2,18 10,25 18,18" />
+          </svg>
+        </div>
       </div>
     </section>
 
@@ -550,7 +571,7 @@
   <script src="/js/auralis.js" defer></script>
   <script src="/js/footer.js" defer></script>
   <script src="/js/textblock.js" defer></script>
-  <script src="/js/hservices.js" defer></script>
+  <script src="/js/stickysvc.js" defer></script>
   <script src="/js/imgreveal.js" defer></script>
   <script src="/js/bento.js" defer></script>
   <script src="/js/fsx.js" defer></script>
