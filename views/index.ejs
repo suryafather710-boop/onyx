@@ -366,40 +366,52 @@
       </div>
     </section>
 
-    <!-- 13. Selected work -->
+    <!-- 13. Selected work — pinned horizontal cinematic gallery -->
+    <% const projects = [
+      { n: '01', t: 'Aurora Commerce', tag: 'Web · Brand', img: 'work-01', d: 'A headless storefront rebuild that cut load times in half and lifted conversion for a growing DTC label. (Placeholder project — replace with real work.)' },
+      { n: '02', t: 'Helix Studio', tag: 'Identity · UI', img: 'work-02', d: 'A full identity system and portfolio site for a creative studio, built to scale across future ventures. (Placeholder project — replace with real work.)' },
+      { n: '03', t: 'Nimbus SaaS', tag: 'Product · UX', img: 'work-03', d: 'Onboarding and dashboard UX for an early-stage SaaS, designed to make a complex tool feel obvious. (Placeholder project — replace with real work.)' },
+      { n: '04', t: 'Vertex Growth', tag: 'Growth · Automation', img: 'work-04', d: 'A conversion-focused landing system with analytics and automations wired in from day one. (Placeholder project — replace with real work.)' }
+    ]; %>
     <section class="work" id="work">
-      <div class="container work__head">
-        <h2 class="section-heading reveal">Selected Archives</h2>
-        <p class="work__instruction reveal">
-          <span class="work__instruction--desktop">SCROLL TO EXPLORE. CLICK TO EXPAND.</span>
-          <span class="work__instruction--mobile">SWIPE TO EXPLORE. TAP TO EXPAND.</span>
-        </p>
-      </div>
-      <div class="work__scroller" id="workScroller">
-        <% const projects = [
-          { n: '01', t: 'Aurora Commerce', tag: 'Web · Brand', img: 'work-01', d: 'A headless storefront rebuild that cut load times in half and lifted conversion for a growing DTC label. (Placeholder project — replace with real work.)' },
-          { n: '02', t: 'Helix Studio', tag: 'Identity · UI', img: 'work-02', d: 'A full identity system and portfolio site for a creative studio, built to scale across future ventures. (Placeholder project — replace with real work.)' },
-          { n: '03', t: 'Nimbus SaaS', tag: 'Product · UX', img: 'work-03', d: 'Onboarding and dashboard UX for an early-stage SaaS, designed to make a complex tool feel obvious. (Placeholder project — replace with real work.)' },
-          { n: '04', t: 'Vertex Growth', tag: 'Growth · Automation', img: 'work-04', d: 'A conversion-focused landing system with analytics and automations wired in from day one. (Placeholder project — replace with real work.)' }
-        ]; %>
-        <% projects.forEach(function (p, i) { %>
-        <button class="work-card reveal"
-          data-project-index="<%= i %>"
-          data-title="<%= p.t %>"
-          data-tag="<%= p.tag %>"
-          data-img="/images/<%= p.img %>.svg"
-          data-desc="<%= p.d %>">
-          <span class="work-card__count"><%= p.n %>/<%= String(projects.length).padStart(2, '0') %></span>
-          <div class="work-card__media" data-img-reveal>
-            <img src="/images/<%= p.img %>.svg" alt="<%= p.t %> preview" loading="lazy" width="720" height="520" />
-            <span class="work-card__overlay" aria-hidden="true"></span>
-          </div>
-          <div class="work-card__meta">
-            <h3 class="work-card__title"><%= p.t %></h3>
-            <span class="work-card__tag"><%= p.tag %></span>
-          </div>
-        </button>
-        <% }); %>
+      <div class="work__stage">
+        <div class="work__head">
+          <span class="section-label">Selected Work</span>
+          <h2 class="work__title">The Archive</h2>
+          <p class="work__instruction">
+            <span class="work__instruction--desktop">Scroll to explore — click to expand</span>
+            <span class="work__instruction--mobile">Swipe to explore — tap to expand</span>
+          </p>
+        </div>
+
+        <div class="work__track" id="workTrack">
+          <% projects.forEach(function (p, i) { %>
+          <button class="wproject work-card"
+            data-project-index="<%= i %>"
+            data-title="<%= p.t %>"
+            data-tag="<%= p.tag %>"
+            data-img="/images/<%= p.img %>.jpg"
+            data-desc="<%= p.d %>">
+            <span class="wproject__index" aria-hidden="true"><%= p.n %></span>
+            <div class="wproject__media" data-work-media>
+              <img src="/images/<%= p.img %>.jpg"
+                   onerror="this.onerror=null;this.src='/images/<%= p.img %>.svg'"
+                   alt="<%= p.t %> preview" loading="lazy" width="900" height="1100" />
+              <span class="wproject__grain" aria-hidden="true"></span>
+              <span class="wproject__view" aria-hidden="true">View<span>→</span></span>
+            </div>
+            <div class="wproject__meta">
+              <h3 class="wproject__name"><%= p.t %></h3>
+              <span class="wproject__tag"><%= p.tag %></span>
+            </div>
+          </button>
+          <% }); %>
+        </div>
+
+        <div class="work__progress" aria-hidden="true">
+          <span class="work__counter"><span id="workCounter">01</span> — <%= String(projects.length).padStart(2, '0') %></span>
+          <span class="work__bar"><i id="workBar"></i></span>
+        </div>
       </div>
     </section>
 
@@ -408,7 +420,8 @@
       <div class="lightbox__backdrop" data-lightbox-close></div>
       <div class="lightbox__panel">
         <button class="lightbox__close" id="lightboxClose" aria-label="Close project">✕</button>
-        <div class="lightbox__media"><img id="lightboxImg" src="" alt="" /></div>
+        <div class="lightbox__media"><img id="lightboxImg" src="" alt=""
+              onerror="this.onerror=null;this.src=this.src.replace('.jpg','.svg');" /></div>
         <div class="lightbox__body">
           <span class="lightbox__tag" id="lightboxTag"></span>
           <h3 class="lightbox__title" id="lightboxTitle"></h3>
@@ -575,5 +588,6 @@
   <script src="/js/imgreveal.js" defer></script>
   <script src="/js/bento.js" defer></script>
   <script src="/js/fsx.js" defer></script>
+  <script src="/js/work.js" defer></script>
 </body>
 </html>
