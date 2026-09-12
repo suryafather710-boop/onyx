@@ -91,6 +91,85 @@
   55%, 100% { transform: translateY(100%); }
 }
 
+/* Live text rebuilt over the plate — PRESENTING (top-left) + paragraph
+   (bottom-right). The giant ONYX stays inside the image (behind the hand). */
+.hero__text {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero__eyebrow {
+  position: absolute;
+  top: calc(var(--nav-h) + clamp(0.8rem, 3.5vh, 2.6rem));
+  left: var(--gutter);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(240, 239, 233, 0.9);
+}
+
+.hero__para {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(3.5rem, 12vh, 7rem);
+  max-width: 30ch;
+  font-size: clamp(1rem, 1.5vw, 1.28rem);
+  line-height: 1.45;
+  color: #f4e7e2;
+}
+
+.h-word--lead {
+  color: #ff8a5c;
+  font-weight: 700;
+}
+
+/* Block-level reveal neutralised; the chars/words animate individually. */
+.hero__eyebrow.reveal,
+.hero__para.reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.h-char,
+.h-word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s var(--ease),
+    filter 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+
+.h-char { transition-delay: calc(0.25s + var(--i) * 0.04s); }
+.h-word { transition-delay: calc(0.5s + var(--i) * 0.03s); }
+
+.hero__eyebrow.is-visible .h-char,
+.hero__para.is-visible .h-word {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+.no-js .h-char,
+.no-js .h-word { opacity: 1; filter: none; transform: none; }
+
+@media (max-width: 640px) {
+  .hero__para {
+    right: var(--gutter);
+    left: var(--gutter);
+    bottom: clamp(4.5rem, 16vh, 8rem);
+    max-width: none;
+    font-size: 1rem;
+  }
+}
+
 /* Screen-reader-only heading (visual copy lives inside the image). */
 .sr-only {
   position: absolute;

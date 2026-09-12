@@ -76,10 +76,19 @@
         <img
           class="hero__img"
           id="heroImg"
-          src="/images/hero-onyx.png"
+          src="/images/hero-onyx-plate.png"
           alt="A hand holding a phone in front of a giant glowing ONYX wordmark on a red backdrop"
           onerror="this.onerror=null; this.src='/images/hero-onyx.svg';"
         />
+      </div>
+
+      <!-- Live text rebuilt over the plate (the image keeps the ONYX wordmark);
+           decorative here because the sr-only h1 above carries the real copy. -->
+      <div class="hero__text" aria-hidden="true">
+        <span class="hero__eyebrow reveal"><% 'PRESENTING'.split('').forEach(function (ch, i) { %><span class="h-char" style="--i: <%= i %>"><%= ch %></span><% }); %></span>
+        <p class="hero__para reveal">
+          <% 'ONYX designs immersive websites, sharp brand systems, and growth engines that turn first impressions into lasting momentum.'.split(' ').forEach(function (w, i) { %><span class="h-word<%= i === 0 ? ' h-word--lead' : '' %>" style="--i: <%= i %>"><%= w %></span> <% }); %>
+        </p>
       </div>
 
       <a class="hero__scroll" href="#philosophy" data-scroll aria-label="Scroll down">
