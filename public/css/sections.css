@@ -3,136 +3,110 @@
    Section-specific layout and styling.
    ========================================================================= */
 
-/* --------------------------------------------------------------- hero */
+/* --------------------------------------------------------------- hero (key visual) */
 .hero {
   position: relative;
   min-height: 100svh;
   display: flex;
   overflow: hidden;
-  background: var(--bg-soft); /* fallback behind the video */
+  background: #0a0304; /* fallback behind the image */
 }
 
-.hero__video {
+/* If the image is missing, paint a red-to-dark wash so it never looks broken. */
+.hero--noimg {
+  background: radial-gradient(120% 90% at 50% 40%, #e23b16 0%, #7a1408 45%, #1a0405 100%);
+}
+
+.hero__media {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
+}
+
+.hero__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  will-change: transform;
 }
 
-/* Noise + gradient wash to keep text legible over any video frame. */
-.hero__noise {
+/* Entrance: the visual settles in with a gentle scale + fade (reveal is toggled
+   after the preloader by main.js). Overrides the generic .reveal transform. */
+.hero__media.reveal {
+  opacity: 0;
+  transform: scale(1.12);
+  transition:
+    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero__media.reveal.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Scroll cue, bottom-centre. */
+.hero__scroll {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  opacity: 0.7;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(6, 6, 8, 0.4), rgba(6, 6, 8, 0.05) 34%, rgba(6, 6, 8, 0.78));
-}
-
-.hero__content {
-  position: relative;
-  z-index: 2;
-  align-self: flex-end;
-  width: 100%;
-  padding: var(--nav-h) var(--gutter) clamp(1rem, 3vw, 2.2rem);
-}
-
-.hero__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: end;
-  gap: clamp(1.2rem, 3vw, 2rem);
-}
-
-@media (min-width: 1024px) {
-  .hero__grid { grid-template-columns: 2fr 1fr; gap: 2.5rem; }
-}
-
-/* Giant bottom-anchored wordmark with an accent asterisk. */
-.hero__wordmark {
-  display: inline-flex;
-  align-items: flex-start;
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(5rem, 22vw, 21rem);
-  line-height: 0.82;
-  letter-spacing: -0.07em;
-  color: var(--text);
-}
-
-.hero__asterisk {
-  font-size: 0.31em;
-  line-height: 1;
-  margin-top: 0.35em;
-  margin-left: 0.04em;
-  color: var(--accent);
-}
-
-.hero__aside {
+  left: 50%;
+  bottom: clamp(1.2rem, 3.5vh, 2.4rem);
+  transform: translateX(-50%);
+  z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  padding-bottom: clamp(0.4rem, 2vw, 2.2rem);
+  align-items: center;
+  gap: 0.7rem;
+  color: rgba(240, 239, 233, 0.82);
+  text-decoration: none;
 }
 
-.hero__label {
+.hero__scroll-label {
   font-family: var(--font-display);
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--accent);
 }
 
-.hero__para {
-  max-width: 42ch;
-  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-  line-height: 1.35;
-  color: rgba(240, 239, 233, 0.78);
+.hero__scroll-line {
+  position: relative;
+  width: 1px;
+  height: clamp(28px, 5vh, 46px);
+  background: rgba(240, 239, 233, 0.28);
+  overflow: hidden;
 }
 
-/* Prisma-style pill CTA: label + circular arrow, gap grows on hover. */
-.hero__cta {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.3rem 0.35rem 0.3rem 1.25rem;
-  background: var(--accent);
-  color: #060608;
-  border-radius: 100px;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.92rem;
-  transition: gap 0.3s var(--ease);
+.hero__scroll-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--text);
+  transform: translateY(-100%);
+  animation: hero-scroll-cue 2s var(--ease) infinite;
 }
 
-.hero__cta:hover { gap: 0.85rem; }
-
-.hero__cta-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.3rem;
-  height: 2.3rem;
-  border-radius: 50%;
-  background: #060608;
-  color: var(--accent);
-  font-size: 1rem;
-  transition: transform 0.3s var(--ease);
+@keyframes hero-scroll-cue {
+  0% { transform: translateY(-100%); }
+  55%, 100% { transform: translateY(100%); }
 }
 
-.hero__cta:hover .hero__cta-icon { transform: scale(1.1); }
+/* Screen-reader-only heading (visual copy lives inside the image). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-line::after { animation: none; }
+}
 
 /* --------------------------------------------------------------- philosophy */
 /* Tall scroller + sticky block drive a word-by-word reveal on scroll. */

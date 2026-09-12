@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1706" height="963" viewBox="0 0 1706 963" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ONYX hero placeholder">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#f0431a"/>
+      <stop offset="42%" stop-color="#a81a09"/>
+      <stop offset="78%" stop-color="#3d0a06"/>
+      <stop offset="100%" stop-color="#120303"/>
+    </radialGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.35"/>
+      <stop offset="45%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1706" height="963" fill="url(#glow)"/>
+  <rect width="1706" height="963" fill="url(#fade)"/>
+
+  <text x="88" y="96" font-family="'Space Grotesk','Arial',sans-serif" font-size="30" letter-spacing="14" fill="#f7f2ee" opacity="0.92">PRESENTING</text>
+
+  <text x="853" y="560" text-anchor="middle" font-family="'Space Grotesk','Arial Black',sans-serif" font-weight="800" font-size="440" letter-spacing="-8" fill="#ffb199" opacity="0.96">ONYX</text>
+
+  <text x="1180" y="565" font-family="'Inter','Arial',sans-serif" font-size="30" fill="#f4e7e2" opacity="0.9">
+    <tspan x="1180" dy="0" font-weight="700" fill="#ffb199">ONYX</tspan><tspan> designs immersive</tspan>
+    <tspan x="1180" dy="42">websites, sharp brand systems,</tspan>
+    <tspan x="1180" dy="42">and growth engines that turn</tspan>
+    <tspan x="1180" dy="42">first impressions into lasting</tspan>
+    <tspan x="1180" dy="42">momentum.</tspan>
+  </text>
+
+  <text x="853" y="905" text-anchor="middle" font-family="'Inter','Arial',sans-serif" font-size="18" letter-spacing="4" fill="#f7f2ee" opacity="0.32">PLACEHOLDER — REPLACE WITH hero-onyx.jpg</text>
+</svg>
