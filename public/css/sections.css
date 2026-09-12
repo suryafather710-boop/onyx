@@ -282,13 +282,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  color: var(--text-dim);
-  opacity: 0.62;
-  transition: opacity 0.3s var(--ease), color 0.3s var(--ease);
+  color: var(--text-dim); /* fallback; each logo sets its own brand colour inline */
+  opacity: 0.9;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
-.techcloud__marquee:hover .tc-logo { opacity: 0.82; }
-.tc-logo:hover { opacity: 1; color: var(--text); }
+.tc-logo:hover { opacity: 1; transform: translateY(-2px); }
 
 .tc-logo__mark {
   display: inline-flex;
