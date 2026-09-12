@@ -623,11 +623,13 @@
 }
 
 .stsvc.is-live .stsvc__title {
-  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
   margin-top: 0.1rem;
 }
 
-/* Text column: all cards absolutely stacked in the left half, crossfaded by JS. */
+/* Text column: all cards absolutely stacked in the left half, crossfaded by JS.
+   The content centres inside a band that clears the fixed header (top) and the
+   scroll hint (bottom), so a tall card never rides up into "Our Services". */
 .stsvc.is-live .stsvc__text {
   position: absolute;
   top: 0;
@@ -636,7 +638,7 @@
   height: 100%;
   max-width: none;
   margin: 0;
-  padding: 0 clamp(2rem, 5vw, 5rem);
+  padding: calc(var(--nav-h) + 4rem) clamp(2rem, 5vw, 5rem) clamp(3.5rem, 9vh, 4.5rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -644,7 +646,23 @@
   will-change: transform;
 }
 
-.stsvc.is-live .stsvc__p { max-width: 40ch; }
+/* Tighter type / spacing in the pinned column so the whole card fits shorter
+   desktop viewports without colliding with the header. */
+.stsvc.is-live .stsvc__heading {
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  margin-bottom: 0.7rem;
+}
+
+.stsvc.is-live .stsvc__p {
+  max-width: 42ch;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+}
+
+.stsvc.is-live .stsvc__list { margin-top: 0.9rem; gap: 0.35rem; }
+.stsvc.is-live .stsvc__list li { font-size: clamp(0.85rem, 1vw, 0.95rem); }
+.stsvc.is-live .stsvc__link { margin-top: 1.1rem; }
 
 /* Image column: all media absolutely stacked in the right half. The clip-path
    wipe lives on this wrapper; the scale lives on the <img> inside — kept on
