@@ -189,49 +189,125 @@
   margin-top: 0.8rem;
 }
 
-/* --------------------------------------------------------------- marquee */
-.marquee-section {
-  padding-block: clamp(3rem, 6vw, 5rem);
+/* --------------------------------------------------------------- built-with logo cloud */
+.techcloud {
+  position: relative;
+  padding-block: clamp(4rem, 8vw, 7rem);
   border-block: 1px solid var(--line);
+  background: var(--bg);
+  overflow: hidden;
 }
 
-.marquee-section__heading {
+.techcloud__head { text-align: center; }
+
+/* Block-level reveal is neutralised; the words animate individually below. */
+.techcloud__title.reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.techcloud__title {
   font-family: var(--font-display);
-  font-size: 0.72rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 4.4vw, 3.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+  margin-inline: auto;
 }
 
-.marquee {
+.tc-word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(12px);
+  transition: opacity 0.5s var(--ease), filter 0.5s var(--ease), transform 0.5s var(--ease);
+  transition-delay: calc(var(--wi, 0) * 0.07s);
+}
+
+.techcloud__title.is-visible .tc-word {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+.techcloud__desc {
+  margin: 1.2rem auto 0;
+  max-width: 56ch;
+  color: var(--text-dim);
+  font-size: clamp(0.98rem, 1.4vw, 1.12rem);
+  line-height: 1.55;
+}
+
+.techcloud__marquee {
+  position: relative;
+  margin-top: clamp(2.6rem, 5vw, 4.2rem);
   overflow: hidden;
   white-space: nowrap;
   user-select: none;
 }
 
-.marquee + .marquee { margin-top: 1.2rem; }
+/* Edge fades so logos dissolve into the background at both ends. */
+.techcloud__marquee::before,
+.techcloud__marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(60px, 12vw, 170px);
+  z-index: 2;
+  pointer-events: none;
+}
 
-.marquee__track {
+.techcloud__marquee::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+.techcloud__marquee::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+
+.techcloud__track {
   display: inline-flex;
   will-change: transform;
+  animation: marquee-left 38s linear infinite;
 }
 
-.marquee__track--left { animation: marquee-left 32s linear infinite; }
-.marquee__track--right { animation: marquee-right 40s linear infinite; }
+.techcloud__marquee:hover .techcloud__track { animation-play-state: paused; }
 
-.marquee:hover .marquee__track { animation-play-state: paused; }
+.techcloud__group {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(2.4rem, 5vw, 4.5rem);
+  padding-right: clamp(2.4rem, 5vw, 4.5rem);
+}
 
-.marquee__group {
+.tc-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-dim);
+  opacity: 0.62;
+  transition: opacity 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.techcloud__marquee:hover .tc-logo { opacity: 0.82; }
+.tc-logo:hover { opacity: 1; color: var(--text); }
+
+.tc-logo__mark {
+  display: inline-flex;
+  flex: none;
+  width: clamp(20px, 2.2vw, 26px);
+  color: inherit;
+}
+
+.tc-logo__mark svg { width: 100%; height: auto; display: block; }
+
+.tc-logo__name {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.4rem, 4vw, 2.6rem);
+  font-size: clamp(1.1rem, 2.4vw, 1.7rem);
   letter-spacing: -0.01em;
-  padding-right: 0.4em;
-  color: var(--text);
+  white-space: nowrap;
 }
 
-.marquee__group--muted { color: var(--text-faint); font-weight: 500; }
+.no-js .tc-word { opacity: 1; filter: none; transform: none; }
 
 @keyframes marquee-left {
   from { transform: translateX(0); }
