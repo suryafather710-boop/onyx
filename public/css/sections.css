@@ -576,6 +576,53 @@
 
 .core__highlights li { white-space: nowrap; }
 
+/* --------------------------------------------------------------- brand portal (scroll zoom into services) */
+.portal { position: relative; background: var(--bg); }
+
+/* Base / fallback (no JS, reduced motion, mobile): a normal full-bleed still. */
+.portal__stage {
+  position: relative;
+  height: 82svh;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.portal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.portal__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(6, 6, 8, 0.25), transparent 30%, rgba(6, 6, 8, 0.55));
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+/* Live / pinned mode: JS adds .is-portal on desktop with motion. The tall
+   section gives the sticky stage room to scrub; the image zooms in and dissolves
+   as you scroll, opening into Our Services. */
+.portal.is-portal {
+  height: 220vh;
+}
+
+.portal.is-portal .portal__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+.portal.is-portal .portal__img {
+  transform-origin: 50% 42%; /* zoom toward the figure, not dead centre */
+  will-change: transform, opacity;
+}
+
+.portal.is-portal .portal__scrim { opacity: 1; }
+
 /* --------------------------------------------------------------- services (sticky content scroll) */
 .stsvc { position: relative; background: var(--bg); }
 

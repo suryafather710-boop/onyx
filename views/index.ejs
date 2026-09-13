@@ -231,6 +231,19 @@
       </div>
     </section>
 
+    <!-- 9b. Brand portal — image zooms in on scroll, opening into Our Services -->
+    <section class="portal" id="brandportal" aria-label="We build brands that lead">
+      <div class="portal__stage">
+        <img
+          class="portal__img"
+          src="/images/brand-leads.jpg"
+          onerror="this.onerror=null; this.src='/images/brand-leads.svg';"
+          alt="We build brands that lead"
+        />
+        <div class="portal__scrim" aria-hidden="true"></div>
+      </div>
+    </section>
+
     <!-- 10. Services — sticky content scroll -->
     <% const services = [
       { n: '01', t: 'Web Design & Development', img: 'service-web', photo: true,
@@ -590,5 +603,6 @@
   <script src="/js/fsx.js" defer></script>
   <script src="/js/work.js" defer></script>
   <script src="/js/hero.js" defer></script>
+  <script src="/js/portal.js" defer></script>
 </body>
 </html>

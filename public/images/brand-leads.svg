@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1706" height="960" viewBox="0 0 1706 960" preserveAspectRatio="xMidYMid slice" role="img" aria-label="We build brands that lead placeholder">
+  <defs>
+    <radialGradient id="bl-glow" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#e6381a"/>
+      <stop offset="45%" stop-color="#9c1608"/>
+      <stop offset="100%" stop-color="#160404"/>
+    </radialGradient>
+  </defs>
+  <rect width="1706" height="960" fill="url(#bl-glow)"/>
+
+  <!-- silhouette hint -->
+  <g fill="#0b0303" opacity="0.9">
+    <ellipse cx="853" cy="430" rx="150" ry="185"/>
+    <path d="M620 960c0-165 104-300 233-300s233 135 233 300z"/>
+  </g>
+
+  <g font-family="'Space Grotesk','Arial Black',sans-serif" font-weight="800" fill="#f7f2ee" opacity="0.96" letter-spacing="-4">
+    <text x="60" y="300" font-size="150">WE BUILD</text>
+    <text x="60" y="470" font-size="150">BRANDS</text>
+    <text x="60" y="640" font-size="150">THAT LEAD</text>
+  </g>
+
+  <text x="853" y="915" text-anchor="middle" font-family="'Inter','Arial',sans-serif" font-size="18" letter-spacing="4" fill="#f7f2ee" opacity="0.32">PLACEHOLDER — REPLACE WITH brand-leads.jpg</text>
+</svg>
