@@ -1,17 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Vertex Growth">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100" viewBox="0 0 900 1100" role="img" aria-label="Vertex Growth — growth and automation">
   <defs>
-    <linearGradient id="w4" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#181510"/>
-      <stop offset="1" stop-color="#08080b"/>
+    <linearGradient id="w4bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0c10"/><stop offset="1" stop-color="#060608"/>
+    </linearGradient>
+    <radialGradient id="w4glow" cx="70%" cy="24%" r="62%">
+      <stop offset="0" stop-color="#c9a84c" stop-opacity="0.22"/><stop offset="62%" stop-color="#c9a84c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="w4red" cx="20%" cy="90%" r="55%">
+      <stop offset="0" stop-color="#e23b16" stop-opacity="0.16"/><stop offset="70%" stop-color="#e23b16" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="w4bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9a84c"/><stop offset="1" stop-color="#c9a84c" stop-opacity="0.35"/>
     </linearGradient>
   </defs>
-  <rect width="720" height="520" fill="url(#w4)"/>
-  <polyline points="140,360 260,300 360,320 470,220 580,150" fill="none" stroke="#c9a84c" stroke-opacity="0.7" stroke-width="3"/>
-  <g fill="#c9a84c" fill-opacity="0.18">
-    <rect x="200" y="320" width="34" height="70"/>
-    <rect x="300" y="290" width="34" height="100"/>
-    <rect x="400" y="250" width="34" height="140"/>
-    <rect x="500" y="200" width="34" height="190"/>
+  <rect width="900" height="1100" fill="url(#w4bg)"/>
+  <rect width="900" height="1100" fill="url(#w4glow)"/>
+  <rect width="900" height="1100" fill="url(#w4red)"/>
+  <g stroke="#f0efe9" stroke-opacity="0.06">
+    <line x1="150" y1="620" x2="750" y2="620"/><line x1="150" y1="500" x2="750" y2="500"/><line x1="150" y1="380" x2="750" y2="380"/>
   </g>
-  <text x="50" y="470" font-family="'Space Grotesk',sans-serif" font-size="34" font-weight="700" fill="#f0efe9" fill-opacity="0.9">Vertex Growth</text>
+
+  <!-- ascending bars -->
+  <g>
+    <rect x="180" y="500" width="80" height="120" rx="8" fill="#16161c"/>
+    <rect x="290" y="440" width="80" height="180" rx="8" fill="#1c1c22"/>
+    <rect x="400" y="360" width="80" height="260" rx="8" fill="url(#w4bar)" fill-opacity="0.55"/>
+    <rect x="510" y="280" width="80" height="340" rx="8" fill="url(#w4bar)" fill-opacity="0.8"/>
+    <rect x="620" y="190" width="80" height="430" rx="8" fill="url(#w4bar)"/>
+  </g>
+  <!-- growth trend line + arrow -->
+  <g fill="none" stroke="#f0efe9" stroke-opacity="0.9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M200 560 L330 500 L440 430 L550 350 L680 250"/>
+  </g>
+  <g fill="#f0efe9">
+    <path d="M680 250 l-42 6 l24 22 z" transform="rotate(-38 680 250)"/>
+  </g>
+  <circle cx="200" cy="560" r="8" fill="#c9a84c"/>
+  <circle cx="440" cy="430" r="8" fill="#c9a84c"/>
+
+  <!-- automation nodes -->
+  <g transform="translate(180 690)" stroke="#c9a84c" stroke-opacity="0.6" fill="none">
+    <line x1="0" y1="20" x2="120" y2="20"/><line x1="180" y1="20" x2="300" y2="20"/><line x1="360" y1="20" x2="480" y2="20"/>
+  </g>
+  <g transform="translate(180 690)" fill="#101016" stroke="#c9a84c">
+    <circle cx="0" cy="20" r="18"/><circle cx="150" cy="20" r="18"/><circle cx="330" cy="20" r="18"/><circle cx="510" cy="20" r="18" fill="#c9a84c"/>
+  </g>
+
+  <text x="150" y="900" font-family="'Space Grotesk','Arial',sans-serif" font-weight="700" font-size="30" letter-spacing="6" fill="#f0efe9" fill-opacity="0.9">VERTEX GROWTH</text>
+  <text x="150" y="940" font-family="'Inter','Arial',sans-serif" font-size="20" letter-spacing="2" fill="#c9a84c">GROWTH · AUTOMATION</text>
 </svg>

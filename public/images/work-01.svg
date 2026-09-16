@@ -1,12 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Aurora Commerce">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100" viewBox="0 0 900 1100" role="img" aria-label="Aurora Commerce — web and brand">
   <defs>
-    <linearGradient id="w1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1a1420"/>
-      <stop offset="1" stop-color="#08080b"/>
+    <linearGradient id="w1bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0c10"/><stop offset="1" stop-color="#060608"/>
+    </linearGradient>
+    <radialGradient id="w1glow" cx="50%" cy="26%" r="60%">
+      <stop offset="0" stop-color="#c9a84c" stop-opacity="0.22"/><stop offset="60%" stop-color="#c9a84c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="w1red" cx="80%" cy="92%" r="55%">
+      <stop offset="0" stop-color="#e23b16" stop-opacity="0.16"/><stop offset="70%" stop-color="#e23b16" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="w1screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17171d"/><stop offset="1" stop-color="#0e0e12"/>
     </linearGradient>
   </defs>
-  <rect width="720" height="520" fill="url(#w1)"/>
-  <circle cx="360" cy="260" r="150" fill="none" stroke="#c9a84c" stroke-opacity="0.3" stroke-width="1.5"/>
-  <circle cx="360" cy="260" r="100" fill="none" stroke="#c9a84c" stroke-opacity="0.5" stroke-width="1.5"/>
-  <text x="50" y="470" font-family="'Space Grotesk',sans-serif" font-size="34" font-weight="700" fill="#f0efe9" fill-opacity="0.9">Aurora Commerce</text>
+  <rect width="900" height="1100" fill="url(#w1bg)"/>
+  <rect width="900" height="1100" fill="url(#w1glow)"/>
+  <rect width="900" height="1100" fill="url(#w1red)"/>
+  <g stroke="#f0efe9" stroke-opacity="0.05">
+    <line x1="150" y1="0" x2="150" y2="1100"/><line x1="450" y1="0" x2="450" y2="1100"/><line x1="750" y1="0" x2="750" y2="1100"/>
+  </g>
+
+  <!-- layered screens in perspective -->
+  <g transform="translate(150 300)">
+    <rect x="70" y="70" width="600" height="470" rx="22" fill="#0e0e12" stroke="#f0efe9" stroke-opacity="0.08"/>
+    <rect x="35" y="35" width="600" height="470" rx="22" fill="#121218" stroke="#f0efe9" stroke-opacity="0.10"/>
+    <rect x="0" y="0" width="600" height="470" rx="22" fill="url(#w1screen)" stroke="#c9a84c" stroke-opacity="0.55"/>
+    <!-- top bar -->
+    <circle cx="34" cy="34" r="6" fill="#f0efe9" fill-opacity="0.25"/>
+    <circle cx="56" cy="34" r="6" fill="#f0efe9" fill-opacity="0.18"/>
+    <circle cx="78" cy="34" r="6" fill="#f0efe9" fill-opacity="0.12"/>
+    <!-- hero band -->
+    <rect x="34" y="70" width="532" height="150" rx="12" fill="#1b1b22"/>
+    <rect x="58" y="104" width="230" height="16" rx="8" fill="#f0efe9" fill-opacity="0.5"/>
+    <rect x="58" y="132" width="150" height="12" rx="6" fill="#f0efe9" fill-opacity="0.22"/>
+    <rect x="58" y="168" width="120" height="34" rx="17" fill="#c9a84c"/>
+    <!-- product grid -->
+    <g>
+      <rect x="34" y="248" width="164" height="180" rx="10" fill="#16161c"/>
+      <rect x="218" y="248" width="164" height="180" rx="10" fill="#16161c"/>
+      <rect x="402" y="248" width="164" height="180" rx="10" fill="#16161c"/>
+      <rect x="50" y="264" width="132" height="96" rx="7" fill="#c9a84c" fill-opacity="0.25"/>
+      <rect x="234" y="264" width="132" height="96" rx="7" fill="#c9a84c" fill-opacity="0.18"/>
+      <rect x="418" y="264" width="132" height="96" rx="7" fill="#c9a84c" fill-opacity="0.32"/>
+      <rect x="50" y="374" width="90" height="10" rx="5" fill="#f0efe9" fill-opacity="0.3"/>
+      <rect x="234" y="374" width="90" height="10" rx="5" fill="#f0efe9" fill-opacity="0.3"/>
+      <rect x="418" y="374" width="90" height="10" rx="5" fill="#f0efe9" fill-opacity="0.3"/>
+    </g>
+  </g>
+
+  <text x="150" y="900" font-family="'Space Grotesk','Arial',sans-serif" font-weight="700" font-size="30" letter-spacing="6" fill="#f0efe9" fill-opacity="0.9">AURORA COMMERCE</text>
+  <text x="150" y="940" font-family="'Inter','Arial',sans-serif" font-size="20" letter-spacing="2" fill="#c9a84c">WEB · BRAND</text>
 </svg>
