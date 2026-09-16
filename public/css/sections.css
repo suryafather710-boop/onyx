@@ -1037,8 +1037,15 @@
   font-size: clamp(7rem, 22vw, 16rem);
   line-height: 1;
   letter-spacing: -0.04em;
-  color: rgba(240, 239, 233, 0.08);
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(201, 168, 76, 0.55);
+  text-shadow: 0 0 60px rgba(201, 168, 76, 0.18);
   will-change: transform;
+}
+
+/* Solid gold fallback where text-stroke isn't supported. */
+@supports not ((-webkit-text-stroke: 1px #000)) {
+  .hproc__bignum { color: rgba(201, 168, 76, 0.45); }
 }
 
 .hproc__num {
