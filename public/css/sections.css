@@ -187,6 +187,77 @@
   .hero__scroll-line::after { animation: none; }
 }
 
+/* --------------------------------------------------------------- floating dock */
+.dock {
+  position: absolute;
+  top: calc(var(--nav-h) + 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.55rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 22px;
+  background: rgba(10, 10, 12, 0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(240, 239, 233, 0.14);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dock__item {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  background: rgba(240, 239, 233, 0.08);
+  transition: width 0.2s ease, height 0.2s ease, background 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.dock__item:hover { background: var(--accent); color: #060608; }
+
+.dock__icon { width: 45%; height: 45%; }
+
+/* Tooltip on hover. */
+.dock__item::after {
+  content: attr(data-title);
+  position: absolute;
+  top: -2.1rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(10, 10, 12, 0.9);
+  border: 1px solid rgba(240, 239, 233, 0.16);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.dock__item:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.dock__item:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .dock { gap: 0.4rem; padding: 0.4rem 0.55rem; border-radius: 18px; }
+  .dock__item { width: 38px; height: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock__item { transition: background 0.3s, color 0.3s; }
+}
+
 /* --------------------------------------------------------------- philosophy */
 /* Tall scroller + sticky block drive a word-by-word reveal on scroll. */
 .philosophy { padding: 0; }

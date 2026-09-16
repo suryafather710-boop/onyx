@@ -91,6 +91,22 @@
         </p>
       </div>
 
+      <!-- Floating dock: quick nav to the existing sections (magnify on hover). -->
+      <nav class="dock" aria-label="Quick navigation" data-dock>
+        <% const dockItems = [
+          { href: '#home', title: 'Home', icon: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>' },
+          { href: '#about', title: 'About', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>' },
+          { href: '#services', title: 'Services', icon: '<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/>' },
+          { href: '#work', title: 'Work', icon: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/>' },
+          { href: '#contact', title: 'Contact', icon: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>' }
+        ]; %>
+        <% dockItems.forEach(function (d) { %>
+        <a class="dock__item" href="<%= d.href %>" data-scroll data-title="<%= d.title %>" aria-label="<%= d.title %>">
+          <svg class="dock__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><%- d.icon %></svg>
+        </a>
+        <% }); %>
+      </nav>
+
       <a class="hero__scroll" href="#philosophy" data-scroll aria-label="Scroll down">
         <span class="hero__scroll-label">Scroll</span>
         <span class="hero__scroll-line" aria-hidden="true"></span>
@@ -634,5 +650,6 @@
   <script src="/js/hero.js" defer></script>
   <script src="/js/portal.js" defer></script>
   <script src="/js/faq.js" defer></script>
+  <script src="/js/dock.js" defer></script>
 </body>
 </html>
