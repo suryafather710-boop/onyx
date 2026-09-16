@@ -479,28 +479,57 @@
       </div>
     </section>
 
-    <!-- 15. FAQ -->
-    <section class="faq" id="faq">
-      <div class="container">
-        <span class="section-label reveal">Questions</span>
-        <h2 class="section-heading reveal">FAQ</h2>
-        <div class="faq__list">
-          <% const faqs = [
-            { q: 'What does your process look like?', a: 'Five clear stages — Discovery, Strategy, Design, Build, and Launch. You always know what phase we\'re in, what\'s next, and what we need from you. No black boxes, no surprises.' },
-            { q: 'How long does a project typically take?', a: 'Most projects land between 3 and 8 weeks depending on scope. A focused landing page is fast; a full brand and site build takes longer. We\'ll give you a realistic timeline before we start.' },
-            { q: 'Do you work with international clients?', a: 'Absolutely. We\'re remote-first and already work across multiple countries and time zones. Async-friendly communication keeps everything smooth no matter where you are.' },
-            { q: 'What do you need from me to get started?', a: 'A clear sense of your goals, any existing brand assets, and a point of contact who can give feedback. We handle the rest and guide you through anything we still need.' },
-            { q: 'Do you offer post-launch support?', a: 'Yes. Launch is a milestone, not the finish line. We monitor, refine, and offer ongoing support and growth retainers so your project keeps performing after go-live.' }
-          ]; %>
-          <% faqs.forEach(function (f, i) { %>
-          <div class="faq__item reveal">
-            <button class="faq__q" aria-expanded="false" aria-controls="faq-a-<%= i %>" id="faq-q-<%= i %>">
-              <span><%= f.q %></span>
-              <span class="faq__icon" aria-hidden="true">+</span>
-            </button>
-            <div class="faq__a" id="faq-a-<%= i %>" role="region" aria-labelledby="faq-q-<%= i %>">
-              <p><%= f.a %></p>
+    <!-- 15. FAQ — tabbed categories + accordion -->
+    <% const faqCategories = { process: 'Process', working: 'Working Together', pricing: 'Pricing & Support' };
+       const faqData = {
+         process: [
+           { q: 'What does your process look like?', a: 'Five clear stages — Discovery, Strategy, Design, Build, and Launch. You always know what phase we\'re in, what\'s next, and what we need from you. No black boxes, no surprises.' },
+           { q: 'How long does a project typically take?', a: 'Most projects land between 3 and 8 weeks depending on scope. A focused landing page is fast; a full brand and site build takes longer. We\'ll give you a realistic timeline before we start.' },
+           { q: 'Will I see the work as it progresses?', a: 'Yes. We share progress at every stage and review together before moving on, so there are never any surprises at the end.' }
+         ],
+         working: [
+           { q: 'Do you work with international clients?', a: 'Absolutely. We\'re remote-first and already work across multiple countries and time zones. Async-friendly communication keeps everything smooth no matter where you are.' },
+           { q: 'What do you need from me to get started?', a: 'A clear sense of your goals, any existing brand assets, and a point of contact who can give feedback. We handle the rest and guide you through anything we still need.' },
+           { q: 'Who will I be working with?', a: 'You work directly with the founder and the small, senior team actually building your project — no account managers, no handoffs.' }
+         ],
+         pricing: [
+           { q: 'How does pricing work?', a: 'Every project is quoted up front based on scope, so you know the full investment before we begin. No hourly surprises.' },
+           { q: 'Do you offer post-launch support?', a: 'Yes. Launch is a milestone, not the finish line. We monitor, refine, and offer ongoing support so your project keeps performing after go-live.' },
+           { q: 'Do you offer ongoing retainers?', a: 'Many clients keep us on a monthly retainer for continued design, development, and growth work once the initial project ships.' }
+         ]
+       }; %>
+    <section class="faqx" id="faq" aria-label="Frequently asked questions">
+      <div class="container faqx__inner">
+        <div class="faqx__head">
+          <span class="faqx__eyebrow reveal">Let’s answer some questions</span>
+          <h2 class="faqx__title reveal">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faqx__tabs reveal" role="tablist" aria-label="FAQ categories">
+          <% Object.entries(faqCategories).forEach(function (entry, i) { const key = entry[0], label = entry[1]; %>
+          <button class="faqx__tab<%= i === 0 ? ' is-active' : '' %>" role="tab"
+                  aria-selected="<%= i === 0 ? 'true' : 'false' %>" tabindex="<%= i === 0 ? '0' : '-1' %>"
+                  data-tab="<%= key %>" id="faqtab-<%= key %>" aria-controls="faqpanel-<%= key %>">
+            <span><%= label %></span>
+          </button>
+          <% }); %>
+        </div>
+
+        <div class="faqx__panels">
+          <% Object.entries(faqData).forEach(function (entry, ci) { const key = entry[0], items = entry[1]; %>
+          <div class="faqx__panel<%= ci === 0 ? ' is-active' : '' %>" role="tabpanel"
+               id="faqpanel-<%= key %>" aria-labelledby="faqtab-<%= key %>" data-panel="<%= key %>" <%= ci === 0 ? '' : 'hidden' %>>
+            <% items.forEach(function (f, i) { %>
+            <div class="faqx__item">
+              <button class="faqx__q" aria-expanded="false" aria-controls="fa-<%= key %>-<%= i %>" id="fq-<%= key %>-<%= i %>">
+                <span><%= f.q %></span>
+                <span class="faqx__icon" aria-hidden="true"></span>
+              </button>
+              <div class="faqx__a" id="fa-<%= key %>-<%= i %>" role="region" aria-labelledby="fq-<%= key %>-<%= i %>">
+                <p><%= f.a %></p>
+              </div>
             </div>
+            <% }); %>
           </div>
           <% }); %>
         </div>
@@ -604,5 +633,6 @@
   <script src="/js/work.js" defer></script>
   <script src="/js/hero.js" defer></script>
   <script src="/js/portal.js" defer></script>
+  <script src="/js/faq.js" defer></script>
 </body>
 </html>

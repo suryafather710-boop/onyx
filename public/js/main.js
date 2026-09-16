@@ -179,34 +179,7 @@
   // Delay slightly so it doesn't fight the preloader.
   setTimeout(showCookie, 1400);
 
-  /* ---------------------------------------------------- FAQ accordion */
-  const faqItems = document.querySelectorAll('.faq__item');
-  faqItems.forEach((item) => {
-    const btn = item.querySelector('.faq__q');
-    const panel = item.querySelector('.faq__a');
-    if (!btn || !panel) return;
-    btn.addEventListener('click', () => {
-      const isOpen = item.classList.contains('is-open');
-      // Close all others.
-      faqItems.forEach((other) => {
-        if (other === item) return;
-        other.classList.remove('is-open');
-        const oBtn = other.querySelector('.faq__q');
-        const oPanel = other.querySelector('.faq__a');
-        if (oBtn) oBtn.setAttribute('aria-expanded', 'false');
-        if (oPanel) oPanel.style.maxHeight = null;
-      });
-      if (isOpen) {
-        item.classList.remove('is-open');
-        btn.setAttribute('aria-expanded', 'false');
-        panel.style.maxHeight = null;
-      } else {
-        item.classList.add('is-open');
-        btn.setAttribute('aria-expanded', 'true');
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-      }
-    });
-  });
+  /* FAQ (tabs + accordion) is handled in faq.js. */
 
   /* Testimonials are handled by the stagger deck in stagger.js. */
 
