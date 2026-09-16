@@ -982,6 +982,135 @@
 }
 
 
+/* --------------------------------------------------------------- process (horizontal feature reveal) */
+.hproc { position: relative; background: var(--bg); }
+
+.hproc__stage { position: relative; padding-block: var(--section-y); overflow: hidden; }
+
+.hproc__head {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 0 var(--gutter);
+  margin-bottom: clamp(1.8rem, 4vw, 3rem);
+}
+
+.hproc__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 6vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-top: 0.4rem;
+}
+
+/* Base / fallback: readable vertical stack. */
+.hproc__track { display: flex; flex-direction: column; gap: clamp(2.5rem, 6vw, 4rem); }
+
+.hproc__card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.4rem, 3vw, 2.5rem);
+  max-width: var(--container);
+  margin-inline: auto;
+  width: 100%;
+  padding: 0 var(--gutter);
+}
+
+.hproc__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background:
+    radial-gradient(120% 120% at 20% 10%, rgba(201, 168, 76, 0.16), transparent 46%),
+    radial-gradient(120% 120% at 90% 100%, rgba(226, 59, 22, 0.14), transparent 50%),
+    linear-gradient(135deg, #0e0e12, #060608);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hproc__bignum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(7rem, 22vw, 16rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(240, 239, 233, 0.08);
+  will-change: transform;
+}
+
+.hproc__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.hproc__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4.5vw, 3.1rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.2rem;
+}
+
+.hproc__body { display: flex; flex-direction: column; gap: 0.9rem; }
+.hproc__p { color: var(--text-dim); font-size: clamp(0.98rem, 1.4vw, 1.12rem); line-height: 1.55; max-width: 46ch; }
+
+/* Live / pinned mode: JS pins the stage and scrubs the track sideways. */
+.hproc.is-hscroll .hproc__stage {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-block: 0;
+}
+
+.hproc.is-hscroll .hproc__head {
+  position: absolute;
+  top: calc(var(--nav-h) + 0.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 5;
+  margin: 0;
+  pointer-events: none;
+}
+
+.hproc.is-hscroll .hproc__title { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+
+.hproc.is-hscroll .hproc__track {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: clamp(4rem, 8vw, 9vw);
+  padding-inline: max(var(--gutter), 8vw);
+  align-items: center;
+  will-change: transform;
+}
+
+.hproc.is-hscroll .hproc__card {
+  flex: 0 0 min(80vw, 1000px);
+  grid-template-columns: 0.95fr 1.05fr;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hproc.is-hscroll .hproc__media {
+  aspect-ratio: auto;
+  height: min(60vh, 620px);
+}
+
+@media (max-width: 767px) {
+  .hproc__media { aspect-ratio: 16 / 11; }
+}
+
 /* --------------------------------------------------------------- process (full-screen scroll fx) */
 .fsx { position: relative; background: var(--bg); }
 

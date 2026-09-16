@@ -300,62 +300,38 @@
       </div>
     </section>
 
-    <!-- 11. Process — full-screen scroll slideshow -->
-    <% const fsx = [
-      { t: 'Discovery', l: 'Listen', r: 'Research' },
-      { t: 'Strategy', l: 'Plan', r: 'Blueprint' },
-      { t: 'Design', l: 'Craft', r: 'Systemise' },
-      { t: 'Build', l: 'Engineer', r: 'Perform' },
-      { t: 'Launch', l: 'Ship', r: 'Grow' }
+    <!-- 11. Process — horizontal feature reveal -->
+    <% const proc = [
+      { n: '01', t: 'Discovery', p: ['We start by listening — a deep dive into your goals, audience and market to understand what success actually looks like.', 'No assumptions, just research and the questions that surface the problem worth solving.'] },
+      { n: '02', t: 'Strategy', p: ['We turn insight into a plan: positioning, structure and priorities mapped before a single pixel is drawn.', 'A blueprint everyone aligns on, so the build is deliberate — never guesswork.'] },
+      { n: '03', t: 'Design', p: ['Craft meets systems. We design interfaces and identity that are beautiful, consistent and built to scale.', 'Every detail is considered, tested and refined until it feels effortless.'] },
+      { n: '04', t: 'Build', p: ['Hand-built, performant code — engineered for speed, accessibility and long-term maintainability.', 'You own what we ship: clean, documented, and ready to grow with you.'] },
+      { n: '05', t: 'Launch', p: ['We ship with confidence, then watch the numbers. Launch is a milestone, not the finish line.', 'Ongoing support and growth work keep the momentum compounding after go-live.'] }
     ]; %>
-    <section class="fsx" id="process" aria-label="Our process">
-      <div class="fsx__pin-section">
-        <div class="fsx__pin">
-          <div class="fsx__bgs" aria-hidden="true">
-            <% fsx.forEach(function (s, i) { %><div class="fsx__bg fsx__bg--<%= i + 1 %>"></div><% }); %>
-          </div>
+    <section class="hproc" id="process" aria-label="Our process">
+      <div class="hproc__stage">
+        <div class="hproc__head">
+          <span class="section-label">How We Work</span>
+          <h2 class="hproc__title">Our Process</h2>
+        </div>
 
-          <div class="fsx__grid">
-            <div class="fsx__header">
-              <span class="fsx__eyebrow">How We Work</span>
-              <span class="fsx__heading">Our Process</span>
+        <div class="hproc__track" id="hprocTrack">
+          <% proc.forEach(function (s) { %>
+          <article class="hproc__card">
+            <div class="hproc__media">
+              <span class="hproc__bignum" data-hproc-num aria-hidden="true"><%= s.n %></span>
             </div>
-
-            <div class="fsx__content">
-              <div class="fsx__side fsx__left"><div class="fsx__track">
-                <% fsx.forEach(function (s) { %><div class="fsx__item"><%= s.l %></div><% }); %>
-              </div></div>
-
-              <div class="fsx__center">
-                <% fsx.forEach(function (s) { %>
-                <h3 class="fsx__title"><span class="fsx__word-mask"><span class="fsx__word"><%= s.t %></span></span></h3>
-                <% }); %>
-              </div>
-
-              <div class="fsx__side fsx__right"><div class="fsx__track">
-                <% fsx.forEach(function (s) { %><div class="fsx__item"><%= s.r %></div><% }); %>
-              </div></div>
-            </div>
-
-            <div class="fsx__footer">
-              <div class="fsx__progress">
-                <div class="fsx__progress-numbers">
-                  <span class="fsx__num-cur">01</span>
-                  <span><%= String(fsx.length).padStart(2, '0') %></span>
-                </div>
-                <div class="fsx__progress-bar"><span class="fsx__progress-fill"></span></div>
+            <div class="hproc__text">
+              <span class="hproc__num"><%= s.n %> — <%= String(proc.length).padStart(2, '0') %></span>
+              <h3 class="hproc__name"><%= s.t %></h3>
+              <div class="hproc__body">
+                <% s.p.forEach(function (para) { %><p class="hproc__p"><%= para %></p><% }); %>
               </div>
             </div>
-          </div>
+          </article>
+          <% }); %>
         </div>
       </div>
-
-      <!-- Fallback (no JS / reduced motion): plain numbered list -->
-      <ol class="fsx__fallback container">
-        <% fsx.forEach(function (s, i) { %>
-        <li><span class="fsx__fallback-num"><%= String(i + 1).padStart(2, '0') %></span> <span class="fsx__fallback-title"><%= s.t %></span></li>
-        <% }); %>
-      </ol>
     </section>
 
     <!-- 12. CTA banner -->
@@ -645,7 +621,7 @@
   <script src="/js/stickysvc.js" defer></script>
   <script src="/js/imgreveal.js" defer></script>
   <script src="/js/bento.js" defer></script>
-  <script src="/js/fsx.js" defer></script>
+  <script src="/js/hproc.js" defer></script>
   <script src="/js/work.js" defer></script>
   <script src="/js/hero.js" defer></script>
   <script src="/js/portal.js" defer></script>
