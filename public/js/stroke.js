@@ -20,10 +20,10 @@
   const gsap = window.gsap;
   gsap.registerPlugin(window.ScrollTrigger);
 
-  // pathLength="1" makes the dash unit-based: offset 0.72 -> 0 draws it in.
+  // pathLength="1" makes the dash unit-based: offset 1 -> 0 draws it in.
   gsap.fromTo(
     path,
-    { strokeDashoffset: 0.72 },
+    { strokeDashoffset: 1 },
     {
       strokeDashoffset: 0,
       ease: 'none',

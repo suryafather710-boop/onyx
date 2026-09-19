@@ -627,7 +627,7 @@
 .stroke {
   --stroke-accent: #c2f84f; /* deliberately not gold — a fresh colour pop */
   position: relative;
-  height: 260vh;
+  height: 180vh;
   background: var(--bg);
 }
 
@@ -644,12 +644,12 @@
 .stroke__svg {
   position: absolute;
   z-index: 0;
-  width: min(1500px, 150vw);
+  width: min(1180px, 118vw);
   height: auto;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(-6deg);
-  opacity: 0.9;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  opacity: 0.95;
   overflow: visible;
   pointer-events: none;
 }
@@ -657,12 +657,12 @@
 .stroke__path {
   fill: none;
   stroke: var(--stroke-accent);
-  stroke-width: 14;
+  stroke-width: 5;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 1;
-  stroke-dashoffset: 0.72; /* JS draws it to 0 on scroll; static fallback below */
-  filter: drop-shadow(0 0 26px rgba(194, 248, 79, 0.35));
+  stroke-dashoffset: 1; /* JS draws it 1 -> 0 on scroll; static fallback below */
+  filter: drop-shadow(0 0 14px rgba(194, 248, 79, 0.28));
 }
 
 .stroke__intro {
