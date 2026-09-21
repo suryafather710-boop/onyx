@@ -329,52 +329,47 @@
       </div>
     </section>
 
-    <!-- 13. Selected work — pinned horizontal cinematic gallery -->
+    <!-- 13. Projects — 3D works wheel (ring -> drum, scroll-driven) -->
     <% const projects = [
       { n: '01', t: 'Aurora Commerce', tag: 'Web · Brand', img: 'work-01', d: 'A headless storefront rebuild that cut load times in half and lifted conversion for a growing DTC label. (Placeholder project — replace with real work.)' },
       { n: '02', t: 'Helix Studio', tag: 'Identity · UI', img: 'work-02', d: 'A full identity system and portfolio site for a creative studio, built to scale across future ventures. (Placeholder project — replace with real work.)' },
       { n: '03', t: 'Nimbus SaaS', tag: 'Product · UX', img: 'work-03', d: 'Onboarding and dashboard UX for an early-stage SaaS, designed to make a complex tool feel obvious. (Placeholder project — replace with real work.)' },
       { n: '04', t: 'Vertex Growth', tag: 'Growth · Automation', img: 'work-04', d: 'A conversion-focused landing system with analytics and automations wired in from day one. (Placeholder project — replace with real work.)' }
     ]; %>
-    <section class="work" id="work">
-      <div class="work__stage">
-        <div class="work__head">
-          <span class="section-label">Projects Delivered</span>
-          <h2 class="work__title">Projects We've Completed</h2>
-          <p class="work__instruction">
-            <span class="work__instruction--desktop">Scroll to explore — click to expand</span>
-            <span class="work__instruction--mobile">Swipe to explore — tap to expand</span>
-          </p>
-        </div>
+    <section class="wheel" id="work" aria-label="Projects we've completed">
+      <div class="wheel__head">
+        <span class="section-label">Projects Delivered</span>
+        <h2 class="wheel__heading">Projects We've Completed</h2>
+      </div>
 
-        <div class="work__track" id="workTrack">
+      <div class="wheel__pin" data-wheel-pin>
+        <div class="wheel__ring" data-wheel-ring>
           <% projects.forEach(function (p, i) { %>
-          <button class="wproject work-card"
+          <button class="wheel__card work-card" data-wheel-card
             data-project-index="<%= i %>"
             data-title="<%= p.t %>"
             data-tag="<%= p.tag %>"
             data-img="/images/<%= p.img %>.jpg"
-            data-desc="<%= p.d %>">
-            <span class="wproject__index" aria-hidden="true"><%= p.n %></span>
-            <div class="wproject__media" data-work-media>
+            data-desc="<%= p.d %>"
+            aria-label="<%= p.t %>">
+            <span class="wheel__face" data-wheel-face>
               <img src="/images/<%= p.img %>.jpg"
                    onerror="this.onerror=null;this.src='/images/<%= p.img %>.svg'"
-                   alt="<%= p.t %> preview" loading="eager" width="900" height="1100" />
-              <span class="wproject__grain" aria-hidden="true"></span>
-              <span class="wproject__view" aria-hidden="true">View<span>→</span></span>
-            </div>
-            <div class="wproject__meta">
-              <h3 class="wproject__name"><%= p.t %></h3>
-              <span class="wproject__tag"><%= p.tag %></span>
-            </div>
+                   alt="<%= p.t %>" draggable="false" loading="eager" width="900" height="620" />
+              <span class="wheel__cardname"><%= p.t %></span>
+            </span>
           </button>
           <% }); %>
         </div>
 
-        <div class="work__progress" aria-hidden="true">
-          <span class="work__counter"><span id="workCounter">01</span> — <%= String(projects.length).padStart(2, '0') %></span>
-          <span class="work__bar"><i id="workBar"></i></span>
-        </div>
+        <div class="wheel__label" data-wheel-label aria-hidden="true">Our Work</div>
+        <div class="wheel__title" data-wheel-title aria-hidden="true"></div>
+
+        <ol class="wheel__index" data-wheel-index aria-hidden="true">
+          <% projects.forEach(function (p, i) { %>
+          <li><button type="button" data-wheel-jump="<%= i %>"><%= p.t %></button></li>
+          <% }); %>
+        </ol>
       </div>
     </section>
 
@@ -606,7 +601,7 @@
   <script src="/js/imgreveal.js" defer></script>
   <script src="/js/bento.js" defer></script>
   <script src="/js/hproc.js" defer></script>
-  <script src="/js/work.js" defer></script>
+  <script src="/js/workswheel.js" defer></script>
   <script src="/js/hero.js" defer></script>
   <script src="/js/portal.js" defer></script>
   <script src="/js/faq.js" defer></script>
