@@ -103,12 +103,42 @@
     }
 
     tl.duration(total);
+
+    // Entrance: coming out of the brand portal, show the first service's PICTURE
+    // first, then fade its text up. Only the inner text bits animate (not the
+    // card container, which the timeline drives via yPercent) so nothing fights.
+    const firstItems = contents[0].querySelectorAll(
+      '.stsvc__num, .stsvc__heading, .stsvc__p, .stsvc__list, .stsvc__link'
+    );
+    let introST = null;
+    const reveal = () =>
+      gsap.to(firstItems, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.09,
+        ease: 'power2.out'
+      });
+    // Only arm the hidden state when the section is still below the fold, so a
+    // reload already scrolled onto Services never leaves the text stuck hidden.
+    if (firstItems.length && section.getBoundingClientRect().top > window.innerHeight * 0.6) {
+      gsap.set(firstItems, { autoAlpha: 0, y: 36 });
+      introST = ScrollTrigger.create({
+        trigger: section,
+        start: 'top 62%',
+        once: true,
+        onEnter: reveal
+      });
+    }
+
     ScrollTrigger.refresh();
 
     // Cleanup when the query stops matching (resize / motion pref change).
     return () => {
       section.classList.remove('is-live');
       section.style.height = '';
+      if (introST) introST.kill();
+      gsap.set(firstItems, { clearProps: 'all' });
       contents.forEach((c) => gsap.set(c, { clearProps: 'all' }));
       medias.forEach((m) => gsap.set(m, { clearProps: 'all' }));
       imgs.forEach((img) => { if (img) gsap.set(img, { clearProps: 'all' }); });
