@@ -414,42 +414,6 @@
       </div>
     </section>
 
-    <!-- 14. Testimonials — staggered card deck -->
-    <section class="testimonials" id="testimonials" aria-label="Client testimonials">
-      <div class="container">
-        <span class="section-label reveal">Client Voices</span>
-        <h2 class="section-heading reveal">What They Say</h2>
-      </div>
-
-      <% const quotes = [
-        { q: 'ONYX treated our launch like it was their own company. The site is fast, the brand finally feels like us, and the numbers moved. (Placeholder testimonial.)', name: 'Priya Raman', role: 'Founder, DTC Skincare', loc: 'Bengaluru, IN' },
-        { q: 'Rare to find this level of taste and technical rigor in one team. They shipped early and the details were flawless. (Placeholder testimonial.)', name: 'Daniel Osei', role: 'Product Lead, SaaS', loc: 'Accra, GH' },
-        { q: 'Working with a founder who genuinely cares changes everything. ONYX made the whole process feel effortless. (Placeholder testimonial.)', name: 'Sofia Marchetti', role: 'Creative Director', loc: 'Milan, IT' }
-      ]; %>
-
-      <div class="stagger" data-stagger>
-        <% quotes.forEach(function (c, i) {
-             const initials = c.name.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase(); %>
-        <article class="testi-card" data-index="<%= i %>" tabindex="0" role="button"
-                 aria-label="Show testimonial from <%= c.name %>">
-          <span class="testi-card__slash" aria-hidden="true"></span>
-          <span class="testi-card__avatar" aria-hidden="true"><%= initials %></span>
-          <h3 class="testi-card__quote">"<%= c.q %>"</h3>
-          <p class="testi-card__by">- <%= c.name %>, <%= c.role %> · <%= c.loc %></p>
-        </article>
-        <% }); %>
-
-        <div class="stagger__nav">
-          <button class="stagger__arrow" data-stagger-prev aria-label="Previous testimonial">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          </button>
-          <button class="stagger__arrow" data-stagger-next aria-label="Next testimonial">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
     <!-- 15. FAQ — tabbed categories + accordion -->
     <% const faqCategories = { process: 'Process', working: 'Working Together', pricing: 'Pricing & Support' };
        const faqData = {
@@ -593,7 +557,6 @@
   <script src="/js/main.js" defer></script>
   <script src="/js/gsap-init.js" defer></script>
   <script src="/js/form.js" defer></script>
-  <script src="/js/stagger.js" defer></script>
   <script src="/js/auralis.js" defer></script>
   <script src="/js/footer.js" defer></script>
   <script src="/js/textblock.js" defer></script>

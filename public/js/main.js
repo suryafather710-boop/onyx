@@ -181,8 +181,6 @@
 
   /* FAQ (tabs + accordion) is handled in faq.js. */
 
-  /* Testimonials are handled by the stagger deck in stagger.js. */
-
   /* ---------------------------------------------------- work lightbox */
   const lightbox = document.getElementById('lightbox');
   const lbImg = document.getElementById('lightboxImg');
