@@ -9,6 +9,7 @@
   min-height: 100svh;
   display: flex;
   overflow: hidden;
+  isolation: isolate; /* contain the hero's own compositing layers */
   background: #0a0304; /* fallback behind the image */
 }
 
@@ -30,6 +31,7 @@
   object-fit: cover;
   object-position: center;
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* Entrance: the visual settles in with a gentle scale + fade (reveal is toggled

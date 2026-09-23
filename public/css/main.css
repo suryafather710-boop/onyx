@@ -321,6 +321,10 @@ ol {
   z-index: 700;
   transition: background 0.4s var(--ease), backdrop-filter 0.4s var(--ease), border-color 0.4s var(--ease);
   border-bottom: 1px solid transparent;
+  /* Own compositing layer so the fixed bar never smears the transformed hero
+     beneath it (double-paint / ghosting in embedded browsers). */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .nav.is-scrolled {
