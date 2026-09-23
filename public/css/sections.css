@@ -623,6 +623,13 @@
 
 .portal.is-portal .portal__scrim { opacity: 1; }
 
+/* Mobile: the tagline is baked into a wide image, so cover would crop it off.
+   Show the whole composition at its natural aspect instead. */
+@media (max-width: 767px) {
+  .portal__stage { height: auto; min-height: 0; }
+  .portal__img { height: auto; aspect-ratio: 1672 / 941; object-fit: contain; }
+}
+
 /* --------------------------------------------------------------- services (sticky content scroll) */
 .stsvc { position: relative; background: var(--bg); }
 
