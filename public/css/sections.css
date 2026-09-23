@@ -868,6 +868,33 @@
 
 .stsvc.is-live .stsvc__media img {
   will-change: transform;
+  /* A consistent moody grade so the disparate stock covers read as one set. */
+  filter: saturate(1.05) contrast(1.05) brightness(0.9);
+}
+
+/* Grain — a touch of film texture over every cover. */
+.stsvc.is-live .stsvc__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Blend the cover into the dark text column (soft seam), vignette the edges,
+   and lay a faint red brand wash so a cool stock photo joins the warm ones. */
+.stsvc.is-live .stsvc__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--bg) 0%, rgba(6, 6, 8, 0.35) 12%, transparent 36%),
+    linear-gradient(0deg, rgba(6, 6, 8, 0.5), transparent 26%, transparent 74%, rgba(6, 6, 8, 0.4)),
+    radial-gradient(120% 90% at 88% 12%, rgba(226, 59, 22, 0.16), transparent 55%);
 }
 
 .stsvc.is-live .stsvc__scroll {
