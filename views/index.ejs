@@ -414,6 +414,39 @@
       </div>
     </section>
 
+    <!-- 14b. Founder's Promise — trust block -->
+    <section class="promise" id="promise" aria-label="The founder's promise">
+      <div class="container promise__inner">
+        <div class="promise__portrait reveal">
+          <img src="/images/founder.jpg"
+               onerror="this.onerror=null;this.src='/images/founder.svg'"
+               alt="Suryanshu, founder of ONYX" loading="lazy" width="720" height="900" />
+          <span class="promise__portrait-glow" aria-hidden="true"></span>
+        </div>
+
+        <div class="promise__body">
+          <span class="section-label reveal">The Founder's Promise</span>
+          <blockquote class="promise__quote reveal">
+            <span class="promise__mark" aria-hidden="true">“</span>
+            You work directly with me — never an account manager. You'll see the first
+            concept before you commit a rupee, and if it isn't right, you walk away.
+            I only take on work I'd put my own name on.
+          </blockquote>
+
+          <ul class="promise__points reveal">
+            <li><span aria-hidden="true">→</span> Work directly with the founder — no handoffs</li>
+            <li><span aria-hidden="true">→</span> See the first concept before you pay</li>
+            <li><span aria-hidden="true">→</span> Every message answered within 24 hours</li>
+          </ul>
+
+          <div class="promise__sign reveal">
+            <span class="promise__signature">Suryanshu</span>
+            <span class="promise__role">Founder, ONYX — building since 17</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 15. FAQ — tabbed categories + accordion -->
     <% const faqCategories = { process: 'Process', working: 'Working Together', pricing: 'Pricing & Support' };
        const faqData = {
@@ -475,11 +508,21 @@
     <section class="contact" id="contact">
       <div class="container contact__inner">
         <div class="contact__intro">
-          <span class="section-label reveal">Initiate</span>
-          <h2 class="section-heading reveal">Let's Connect.</h2>
+          <span class="contact__slots reveal"><span class="contact__slots-dot" aria-hidden="true"></span> Taking 2 new projects this month</span>
+          <span class="section-label reveal">Start here</span>
+          <h2 class="section-heading reveal">Let's talk.</h2>
           <p class="contact__sub reveal">
-            Our books are open. Share your details and we'll set up a discovery call.
+            Not ready for a full brief? <strong>Send me your site and I'll record a free 3-minute teardown</strong> — no pitch, no obligation. Or book a quick call and we'll map it out together.
           </p>
+          <div class="contact__cta-row reveal">
+            <a class="btn btn--sweep" href="<%= (typeof site !== 'undefined' && site.bookingUrl) ? site.bookingUrl : '#contactForm' %>" data-book-call>
+              Book a 15-min call <span aria-hidden="true">→</span>
+            </a>
+            <a class="contact__teardown" href="mailto:<%= site.email %>?subject=Free%20teardown%20request&body=Here's%20my%20site%3A%20">
+              Get a free teardown <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <p class="contact__or reveal">Prefer to send the details? Fill in the brief below.</p>
         </div>
 
         <form class="contact__form reveal" id="contactForm" novalidate>

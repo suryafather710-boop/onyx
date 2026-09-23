@@ -24,6 +24,9 @@ const SITE = {
   founderLine: 'Led by Suryanshu — founder at 17, obsessed with craft since day one.',
   url: process.env.SITE_URL || `http://localhost:${PORT}`,
   email: process.env.CONTACT_EMAIL || 'hello@onyx.studio',
+  // Set BOOKING_URL to your Cal.com/Calendly link to make "Book a call" open it;
+  // until then the button scrolls to the brief form.
+  bookingUrl: process.env.BOOKING_URL || '',
   year: 2024
 };
 
