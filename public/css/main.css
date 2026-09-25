@@ -20,6 +20,15 @@
   /* Type */
   --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Georgia', 'Times New Roman', serif;
+
+  /* Light "paper" palette — for the inverted contrast section */
+  --paper: #ece6da;
+  --paper-soft: #e2dbcb;
+  --ink: #17140d;
+  --ink-dim: #4f4a3f;
+  --gold-deep: #6f540b; /* deep enough for WCAG AA (4.5:1+) on --paper */
+  --ember-deep: #a5331f;
 
   /* Layout */
   --container: 1240px;

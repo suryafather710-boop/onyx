@@ -1947,3 +1947,67 @@
 @media (max-width: 560px) {
   .contact__form { grid-template-columns: 1fr; }
 }
+
+/* =========================================================================
+   Editorial serif accent + light "paper" inversion (studiors-inspired
+   contrast beat). ONYX keeps its gold/ember — this is a deliberate
+   palette-cleanser, not a monochrome copy.
+   ========================================================================= */
+
+/* Bold-sans + italic-serif pairing used inside display headings. */
+.serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ---- Promise section, inverted to a warm light panel ---- */
+.promise {
+  position: relative;
+  z-index: 0;
+  background: var(--paper);
+  border-top: none;
+  color: var(--ink);
+  isolation: isolate;
+}
+/* Soft top/bottom feathering so the flip reads as a deliberate slab. */
+.promise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(120% 90% at 82% 0%, rgba(165, 51, 31, 0.08), transparent 55%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-soft) 100%);
+}
+
+.promise .section-label { color: var(--ember-deep); }
+.promise .section-label::before,
+.promise .section-label::after { background: rgba(23, 20, 13, 0.25); }
+
+.promise__quote {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.7rem, 3.6vw, 2.9rem);
+  line-height: 1.22;
+  letter-spacing: 0;
+  max-width: 24ch;
+}
+.promise__mark { color: var(--gold-deep); }
+.promise__points li { color: var(--ink-dim); }
+.promise__points li span { color: var(--ember-deep); }
+.promise__signature { color: var(--gold-deep); }
+.promise__role { color: rgba(23, 20, 13, 0.6); }
+
+.promise__portrait {
+  border-color: rgba(23, 20, 13, 0.16);
+  background: var(--paper-soft);
+}
+.promise__portrait-glow {
+  background:
+    radial-gradient(120% 80% at 80% 8%, rgba(165, 51, 31, 0.16), transparent 55%),
+    linear-gradient(to top, rgba(23, 20, 13, 0.28), transparent 45%);
+}
