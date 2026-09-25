@@ -42,6 +42,9 @@
     } else if (!isValidEmail(data.email)) {
       errors.email = 'Please enter a valid email address.';
     }
+    if (!data.consent) {
+      errors.consent = 'Please agree to the Privacy Policy so we can reply.';
+    }
     return errors;
   }
 

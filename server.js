@@ -70,11 +70,9 @@ function clean(value, max = 2000) {
 }
 
 const ALLOWED_SERVICES = [
-  'Web Development',
-  'UI/UX Design',
-  'Branding',
-  'Growth & Automation',
-  'Full Digital Setup',
+  'Website Design & Development',
+  'SEO',
+  'Website + SEO',
   'Other'
 ];
 
@@ -95,22 +93,17 @@ app.get('/', (req, res) => {
   res.render('index', { site: SITE });
 });
 
-// Placeholder legal pages so footer links resolve.
-app.get('/privacy', (req, res) => {
-  res.render('legal', {
-    site: SITE,
-    heading: 'Privacy Policy',
-    body:
-      'This is a placeholder privacy policy for ONYX. We respect your data and only use the information you submit through our contact form to respond to your inquiry. A full policy will be published soon.'
-  });
-});
-
-app.get('/terms', (req, res) => {
-  res.render('legal', {
-    site: SITE,
-    heading: 'Terms of Use',
-    body:
-      'This is a placeholder terms of use page for ONYX. By using this site you agree to engage with it in good faith. Full terms will be published soon.'
+// Legal pages. Content lives in views/legal/<page>.ejs.
+const LEGAL_UPDATED = new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+const LEGAL_PAGES = {
+  privacy: 'Privacy Policy',
+  terms: 'Terms & Conditions',
+  cookies: 'Cookies Policy',
+  refund: 'Refund Policy'
+};
+Object.entries(LEGAL_PAGES).forEach(([page, heading]) => {
+  app.get('/' + page, (req, res) => {
+    res.render('legal', { site: SITE, heading, updated: LEGAL_UPDATED, page });
   });
 });
 
@@ -130,6 +123,9 @@ app.post('/contact', async (req, res) => {
       description: clean(body.description, 4000)
     };
 
+    // Explicit consent is required before we store anything (DPDP: consent-based).
+    const consent = body.consent === true || body.consent === 'on' || body.consent === 'true';
+
     const errors = {};
     if (!inquiry.fullName) errors.fullName = 'Please enter your name.';
     if (!inquiry.email) {
@@ -143,6 +139,9 @@ app.post('/contact', async (req, res) => {
     if (inquiry.budget && !ALLOWED_BUDGETS.includes(inquiry.budget)) {
       errors.budget = 'Please choose a valid budget.';
     }
+    if (!consent) {
+      errors.consent = 'Please agree to the Privacy Policy so we can reply.';
+    }
 
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({
@@ -152,11 +151,13 @@ app.post('/contact', async (req, res) => {
       });
     }
 
+    // Data minimisation: store only what's needed to respond, plus a consent
+    // record. We do not store IP addresses or build any profile.
     const record = {
       id: `onyx_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       ...inquiry,
-      submittedAt: new Date().toISOString(),
-      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress || null
+      consent: true,
+      submittedAt: new Date().toISOString()
     };
 
     ensureDataStore();

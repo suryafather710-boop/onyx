@@ -11,7 +11,7 @@
   --bg-card: #101015;
   --text: #f0efe9;
   --text-dim: #9b9a93;
-  --text-faint: #55554f;
+  --text-faint: #7e7d75; /* bumped for WCAG AA contrast (was #55554f, 2.7:1) */
   --accent: #c9a84c;
   --accent-soft: rgba(201, 168, 76, 0.14);
   --line: rgba(240, 239, 233, 0.08);
@@ -552,3 +552,48 @@ ol {
 .legal__body { color: var(--text-dim); margin-bottom: 1.6rem; }
 .legal__meta { font-size: 0.85rem; color: var(--text-faint); }
 .legal__meta a { color: var(--accent); }
+
+/* ------------------------------------------------------------------ a11y: skip link */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -120%);
+  z-index: 1000;
+  padding: 0.7rem 1.2rem;
+  background: var(--accent);
+  color: #060608;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 0 0 10px 10px;
+  text-decoration: none;
+  transition: transform 0.25s var(--ease);
+}
+.skip-link:focus { transform: translate(-50%, 0); outline: 2px solid #060608; outline-offset: -4px; }
+
+/* ------------------------------------------------------------------ contact consent */
+.field--consent { margin-top: 0.4rem; }
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.consent input[type="checkbox"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 0.15rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.consent a { color: var(--accent); }
+.field--consent.has-error .consent { color: var(--text); }
+.field--consent .field__error { display: block; margin-top: 0.4rem; }
+
+/* Cookie notice inline link */
+.cookie__link { color: var(--accent); text-decoration: underline; }
