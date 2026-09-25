@@ -33,6 +33,8 @@
   const Y_SQUASH = 0.46; // flattens the circle into an ellipse (perspective)
 
   let phi = 0; // global disk rotation (driven by scroll)
+  let clock = 0; // ever-increasing time, for autonomous drift
+  let flowX = 0, flowY = 0; // scroll-driven travel of the disk centre
   const pointer = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
   let lastScroll = getScroll();
   let scrollVel = 0;
@@ -140,11 +142,15 @@
   function draw() {
     ctx.clearRect(0, 0, w, h);
 
-    // Centre drifts gently toward the pointer for a parallax feel.
+    // Centre drifts gently toward the pointer, wanders on its own, and
+    // travels with scroll — so the field is always moving and clearly flows
+    // as you scroll.
     const ox = (pointer.x - 0.5) * 40;
     const oy = (pointer.y - 0.5) * 40;
-    const centerX = cx + ox;
-    const centerY = cy + oy;
+    const wanderX = Math.sin(clock * 0.00016) * w * 0.06;
+    const wanderY = Math.cos(clock * 0.00012) * h * 0.05;
+    const centerX = cx + ox + wanderX + flowX;
+    const centerY = cy + oy + wanderY + flowY;
 
     // Steady accretion rim (drawn under the motes).
     if (rimSprite) {
@@ -208,8 +214,19 @@
     else if (dv < -80) dv = -80;
     scrollVel += (dv - scrollVel) * 0.1;
 
+    clock += 16;
+
     // The disk always turns slowly; scrolling spins it noticeably faster.
-    phi += 0.0009 + scrollVel * 0.00045;
+    phi += 0.0016 + scrollVel * 0.0006;
+
+    // Scroll pushes the disk centre (it "travels"); it eases back when idle.
+    flowY += scrollVel * 0.9;
+    flowX += scrollVel * 0.18;
+    flowY *= 0.92;
+    flowX *= 0.92;
+    const maxFlow = Math.min(w, h) * 0.5;
+    if (flowY > maxFlow) flowY = maxFlow; else if (flowY < -maxFlow) flowY = -maxFlow;
+    if (flowX > maxFlow) flowX = maxFlow; else if (flowX < -maxFlow) flowX = -maxFlow;
 
     draw();
     if (running) raf = requestAnimationFrame(tick);

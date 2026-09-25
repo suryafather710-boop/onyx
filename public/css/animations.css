@@ -54,6 +54,27 @@
   transition-delay: calc(var(--i, 0) * 0.08s);
 }
 
+/* -------------------------------------------------- masked word reveal */
+/* Byotōne-style heading reveal — words rise out of a clipped baseline.
+   Built by reveal-text.js on [data-split="words"] elements. */
+.rt {
+  /* keep the layout identical to plain text */
+}
+.rt-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders so 'g'/'y' aren't clipped once revealed */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.rt-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+/* Before JS splits/animates (or if GSAP is absent), text shows normally. */
+[data-split="words"]:not(.rt-ready) { opacity: 1; }
+
 /* -------------------------------------------------- reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -85,6 +106,9 @@
     padding-block: var(--section-y);
   }
   .reveal-word { opacity: 1 !important; }
+
+  /* Masked word reveal: show fully, no transform. */
+  .rt-word { opacity: 1 !important; transform: none !important; }
 
   .preloader { display: none !important; }
 }
