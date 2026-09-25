@@ -67,29 +67,28 @@
   <%- include('partials/nav') %>
 
   <main id="main">
-    <!-- 4. Hero — full-bleed key visual -->
-    <section class="hero" id="home">
-      <!-- Accessible heading: the wordmark + copy live inside the image, so mirror
-           them here for screen readers and SEO. -->
-      <h1 class="sr-only">ONYX — ONYX designs immersive websites, sharp brand systems, and growth engines that turn first impressions into lasting momentum.</h1>
+    <!-- 4. Hero — giant live display type over the animated field -->
+    <section class="hero hero--type" id="home">
+      <!-- Real heading for SEO + screen readers; the visible display type below
+           mirrors it and is marked decorative to avoid a double read. -->
+      <h1 class="sr-only">ONYX — websites that rank &amp; convert. A founder-led digital studio designing immersive sites, sharp brand systems, and growth engines.</h1>
 
-      <div class="hero__media reveal" data-hero-media>
-        <img
-          class="hero__img"
-          id="heroImg"
-          src="/images/hero-onyx-plate.png"
-          alt="A hand holding a phone in front of a giant glowing ONYX wordmark on a red backdrop"
-          onerror="this.onerror=null; this.src='/images/hero-onyx.svg';"
-        />
-      </div>
+      <span class="hero__wm" aria-hidden="true">ONYX</span>
 
-      <!-- Live text rebuilt over the plate (the image keeps the ONYX wordmark);
-           decorative here because the sr-only h1 above carries the real copy. -->
-      <div class="hero__text" aria-hidden="true">
-        <span class="hero__eyebrow reveal"><% 'PRESENTING'.split('').forEach(function (ch, i) { %><span class="h-char" style="--i: <%= i %>"><%= ch %></span><% }); %></span>
-        <p class="hero__para reveal">
-          <% 'ONYX designs immersive websites, sharp brand systems, and growth engines that turn first impressions into lasting momentum.'.split(' ').forEach(function (w, i) { %><span class="h-word<%= i === 0 ? ' h-word--lead' : '' %>" style="--i: <%= i %>"><%= w %></span> <% }); %>
-        </p>
+      <div class="hero__inner" aria-hidden="true">
+        <span class="hero__tag reveal"><span class="hero__tag-dot"></span> Digital Studio — Est. 2024</span>
+
+        <div class="hero__display">
+          <span class="hero__mark" data-split="words">ONYX</span>
+          <span class="hero__accent" data-split="words">websites that rank &amp; convert.</span>
+        </div>
+
+        <p class="hero__lead reveal">A founder-led studio designing immersive websites, sharp brand systems, and growth engines that turn first impressions into lasting momentum.</p>
+
+        <div class="hero__actions reveal">
+          <a class="btn btn--sweep" href="#contact" data-scroll>Start a project <span aria-hidden="true">→</span></a>
+          <a class="hero__ghost" href="#work" data-scroll>See the work <span aria-hidden="true">↓</span></a>
+        </div>
       </div>
 
       <a class="hero__scroll" href="#philosophy" data-scroll aria-label="Scroll down">

@@ -3,50 +3,140 @@
    Section-specific layout and styling.
    ========================================================================= */
 
-/* --------------------------------------------------------------- hero (key visual) */
+/* --------------------------------------------------------------- hero (giant live type) */
 .hero {
   position: relative;
   min-height: 100svh;
   display: flex;
+  align-items: center;
   overflow: hidden;
-  isolation: isolate; /* contain the hero's own compositing layers */
-  background: #0a0304; /* fallback behind the image */
+  isolation: isolate;
+  background: transparent; /* the animated field shows through */
 }
 
-/* If the image is missing, paint a red-to-dark wash so it never looks broken. */
-.hero--noimg {
-  background: radial-gradient(120% 90% at 50% 40%, #e23b16 0%, #7a1408 45%, #1a0405 100%);
-}
-
-.hero__media {
+/* Ambient ember depth behind the type. */
+.hero::before {
+  content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
-  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(80% 60% at 50% 42%, rgba(226, 59, 22, 0.1), transparent 60%),
+    radial-gradient(120% 90% at 50% 118%, rgba(6, 6, 8, 0.92), transparent 72%);
 }
 
-.hero__img {
+/* Ghosted background wordmark (studiors motif). */
+.hero__wm {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(9rem, 34vw, 30rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: rgba(240, 239, 233, 0.035);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  will-change: transform;
-  backface-visibility: hidden;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: calc(var(--nav-h) + 4vh) var(--gutter) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.1rem, 2.2vh, 1.8rem);
+  pointer-events: none;
+}
+.hero__inner a { pointer-events: auto; }
+
+/* HUD tag chip. */
+.hero__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-size: clamp(0.68rem, 0.9vw, 0.82rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.hero__tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px 1px rgba(201, 168, 76, 0.7);
 }
 
-/* Entrance: the visual settles in with a gentle scale + fade (reveal is toggled
-   after the preloader by main.js). Overrides the generic .reveal transform. */
-.hero__media.reveal {
-  opacity: 0;
-  transform: scale(1.12);
-  transition:
-    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.7s cubic-bezier(0.22, 1, 0.36, 1);
+/* Giant display type: bold sans mark + italic-serif accent line. */
+.hero__display {
+  display: flex;
+  flex-direction: column;
+  margin: 0.2rem 0;
+}
+.hero__mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(4.5rem, 18vw, 15rem);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+.hero__accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2rem, 8.5vw, 6.4rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+  color: var(--accent);
+  margin-top: clamp(0.1rem, 0.5vh, 0.4rem);
 }
 
-.hero__media.reveal.is-visible {
-  opacity: 1;
-  transform: scale(1);
+.hero__lead {
+  max-width: 46ch;
+  font-size: clamp(1rem, 1.4vw, 1.22rem);
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem 1.6rem;
+  margin-top: 0.4rem;
+}
+.hero__ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.98rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.hero__ghost:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Scroll cue, bottom-centre. */
@@ -93,86 +183,12 @@
   55%, 100% { transform: translateY(100%); }
 }
 
-/* Live text rebuilt over the plate — PRESENTING (top-left) + paragraph
-   (bottom-right). The giant ONYX stays inside the image (behind the hand). */
-.hero__text {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.hero__eyebrow {
-  position: absolute;
-  top: calc(var(--nav-h) + clamp(0.8rem, 3.5vh, 2.6rem));
-  left: var(--gutter);
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(0.7rem, 1vw, 0.9rem);
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: rgba(240, 239, 233, 0.9);
-}
-
-.hero__para {
-  position: absolute;
-  right: var(--gutter);
-  bottom: clamp(3.5rem, 12vh, 7rem);
-  max-width: 30ch;
-  font-size: clamp(1rem, 1.5vw, 1.28rem);
-  line-height: 1.45;
-  color: #f4e7e2;
-}
-
-.h-word--lead {
-  color: #ff8a5c;
-  font-weight: 700;
-}
-
-/* Block-level reveal neutralised; the chars/words animate individually. */
-.hero__eyebrow.reveal,
-.hero__para.reveal {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-.h-char,
-.h-word {
-  display: inline-block;
-  opacity: 0;
-  filter: blur(6px);
-  transform: translateY(12px);
-  transition:
-    opacity 0.5s var(--ease),
-    filter 0.5s var(--ease),
-    transform 0.5s var(--ease);
-}
-
-.h-char { transition-delay: calc(0.25s + var(--i) * 0.04s); }
-.h-word { transition-delay: calc(0.5s + var(--i) * 0.03s); }
-
-.hero__eyebrow.is-visible .h-char,
-.hero__para.is-visible .h-word {
-  opacity: 1;
-  filter: blur(0);
-  transform: none;
-}
-
-.no-js .h-char,
-.no-js .h-word { opacity: 1; filter: none; transform: none; }
-
 @media (max-width: 640px) {
-  .hero__para {
-    right: var(--gutter);
-    left: var(--gutter);
-    bottom: clamp(4.5rem, 16vh, 8rem);
-    max-width: none;
-    font-size: 1rem;
-  }
+  .hero__lead { font-size: 1rem; }
+  .hero__actions { gap: 0.9rem 1.2rem; }
 }
 
-/* Screen-reader-only heading (visual copy lives inside the image). */
+/* Screen-reader-only heading (visual copy is decorative display type). */
 .sr-only {
   position: absolute;
   width: 1px;
