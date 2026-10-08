@@ -1,6 +1,6 @@
 node_modules/
 .env
-.DS_Store
+data/*.json
 npm-debug.log*
-data/inquiries.json
-*.log
+.DS_Store
+.mcp.json

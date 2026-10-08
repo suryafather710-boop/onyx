@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <% var pageTitle = 'Page not found — ' + site.name; %>
+  <% var pageDescription = "This page doesn't exist. Go back to the ONYX home page, see our work, or start a project."; %>
+  <%- include('partials/head', { pageTitle, pageDescription, noindex: true }) %>
+</head>
+<body class="legal-body" id="top">
+  <a class="skip" href="#notfound">Skip to content</a>
+
+  <header class="nav nav--static">
+    <a href="/" class="nav__logo" aria-label="ONYX — home">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M32 4 58 32 32 60 6 32Z" stroke="currentColor" stroke-width="3"/>
+        <path d="M32 18 45 32 32 46 19 32Z" fill="currentColor"/>
+      </svg>
+      <span>ONYX</span>
+    </a>
+    <div class="nav__right"><a href="/#contact" class="nav__cta mono">Start a project</a></div>
+  </header>
+
+  <main class="notfound" id="notfound" tabindex="-1">
+    <p class="mono notfound__eyebrow"><i aria-hidden="true"></i>Error 404 · Page not found</p>
+    <h1 class="notfound__code" aria-label="404">4<span>0</span>4</h1>
+    <p class="notfound__lede">This stone was never cut. The page you are looking for has moved, or never existed.</p>
+
+    <nav class="notfound__links" aria-label="Where to next">
+      <a href="/"><span class="mono">01</span>Home<i aria-hidden="true">→</i></a>
+      <a href="/#work"><span class="mono">02</span>Our work<i aria-hidden="true">→</i></a>
+      <a href="/#services"><span class="mono">03</span>Services<i aria-hidden="true">→</i></a>
+      <a href="/#contact"><span class="mono">04</span>Start a project<i aria-hidden="true">→</i></a>
+    </nav>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

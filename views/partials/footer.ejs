@@ -1,72 +1,22 @@
-<!-- Cinematic footer with a clip-path "curtain reveal" -->
-<div class="footer-reveal" id="footerReveal">
-  <footer class="cine-footer" id="cineFooter">
-    <!-- Ambient aurora + grid -->
-    <div class="cine-footer__aurora" aria-hidden="true"></div>
-    <div class="cine-footer__grid" aria-hidden="true"></div>
-
-    <!-- Giant background wordmark -->
-    <div class="cine-footer__giant" id="footerGiant" aria-hidden="true">ONYX</div>
-
-    <!-- Diagonal marquee -->
-    <div class="cine-footer__marquee" aria-hidden="true">
-      <div class="cine-footer__marquee-track">
-        <% for (let m = 0; m < 2; m++) { %>
-        <div class="cine-footer__marquee-group">
-          <span>Website Design</span> <span class="cine-footer__spark">&#10022;</span>
-          <span>SEO That Ranks</span> <span class="cine-footer__spark cine-footer__spark--2">&#10022;</span>
-          <span>Fast &amp; Accessible</span> <span class="cine-footer__spark">&#10022;</span>
-          <span>Founder-Led Studio</span> <span class="cine-footer__spark cine-footer__spark--2">&#10022;</span>
-        </div>
-        <% } %>
-      </div>
+<footer class="footer">
+  <div class="footer__top">
+    <div>
+      <span class="mono muted">Say hello</span>
+      <a href="mailto:<%= site.email %>" class="footer__mail"><%= site.email %></a>
     </div>
-
-    <!-- Center content -->
-    <div class="cine-footer__main">
-      <h2 class="cine-footer__heading" id="footerHeading">Let&rsquo;s build.</h2>
-
-      <div class="cine-footer__links" id="footerLinks">
-        <div class="cine-footer__pills cine-footer__pills--primary">
-          <a href="#contact" class="glass-pill glass-pill--lg magnetic" data-scroll>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            Start a Project
-          </a>
-          <a href="mailto:<%= site.email %>" class="glass-pill glass-pill--lg magnetic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><polyline points="3 7 12 13 21 7"></polyline></svg>
-            Email Us
-          </a>
-        </div>
-
-        <div class="cine-footer__pills cine-footer__pills--secondary">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="glass-pill magnetic">Instagram</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="glass-pill magnetic">LinkedIn</a>
-          <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="glass-pill magnetic">Twitter / X</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom bar -->
-    <div class="cine-footer__bar">
-      <div class="cine-footer__copy">&copy; <%= site.year %> ONYX. All rights reserved.</div>
-
-      <nav class="cine-footer__legal" aria-label="Legal">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <a href="/cookies">Cookies</a>
-        <a href="/refund">Refund</a>
-      </nav>
-
-      <div class="glass-pill cine-footer__made">
-        <span>Crafted with</span>
-        <span class="cine-footer__heart" aria-hidden="true">&#10084;</span>
-        <span>by</span>
-        <span class="cine-footer__made-name">Suryanshu</span>
-      </div>
-
-      <button class="glass-pill cine-footer__top magnetic" id="footerTop" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-      </button>
-    </div>
-  </footer>
-</div>
+    <nav class="footer__legal mono" aria-label="Legal">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/cookies">Cookie Policy</a>
+      <a href="/terms">Terms &amp; Conditions</a>
+      <a href="/refund-policy">Refund Policy</a>
+    </nav>
+  </div>
+  <div class="footer__word" aria-hidden="true"><span>O</span><span>N</span><span>Y</span><span>X</span></div>
+  <div class="footer__bottom mono">
+    <span>© <%= site.year %> <%= biz.legalName || 'ONYX' %>. All rights reserved.</span>
+    <% if (biz.address) { %><span><%= biz.address %></span><% } %>
+    <% if (biz.gstin) { %><span>GSTIN <%= biz.gstin %></span><% } %>
+    <% if (biz.cin) { %><span>CIN <%= biz.cin %></span><% } %>
+    <a href="#top" class="to-top">Back to top ↑</a>
+  </div>
+</footer>

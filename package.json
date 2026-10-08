@@ -1,29 +1,30 @@
 {
   "name": "onyx-website",
-  "version": "1.0.0",
-  "description": "ONYX — Precision-Built Digital Experiences. Production single-page site for the ONYX digital agency.",
+  "version": "2.0.0",
+  "description": "ONYX — digital agency website. Express + EJS, GSAP scroll-triggered animation and a WebGL particle field.",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "node --watch server.js"
   },
-  "keywords": [
-    "onyx",
-    "digital-agency",
-    "express",
-    "ejs",
-    "gsap"
-  ],
+  "engines": {
+    "node": ">=18"
+  },
   "author": "Suryanshu — ONYX",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@fontsource/inter-tight": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/unbounded": "^5.3.0",
+    "compression": "^1.7.4",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "express": "^4.19.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.4"
+    "express": "^4.21.0",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.13",
+    "nodemailer": "^10.0.14",
+    "three": "^0.160.0"
   }
 }

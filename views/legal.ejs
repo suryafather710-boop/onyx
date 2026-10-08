@@ -1,100 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= heading %> — ONYX</title>
-  <meta name="robots" content="noindex" />
-  <meta name="theme-color" content="#060608" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/main.css" />
-  <style>
-    .legal {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: clamp(4.5rem, 10vw, 7rem) var(--gutter) clamp(4rem, 8vw, 6rem);
-      color: var(--text-dim);
-    }
-    .legal__back {
-      display: inline-block;
-      margin-bottom: 2.4rem;
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      letter-spacing: 0.04em;
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.3s var(--ease);
-    }
-    .legal__back:hover { color: var(--accent); }
-    .legal__title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 0.6rem;
-    }
-    .legal__updated {
-      font-size: 0.85rem;
-      color: var(--text-faint);
-      margin-bottom: 2.6rem;
-    }
-    .legal__doc h2 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: clamp(1.2rem, 2.4vw, 1.5rem);
-      color: var(--text);
-      letter-spacing: -0.01em;
-      margin: 2.4rem 0 0.8rem;
-    }
-    .legal__doc h3 {
-      font-family: var(--font-display);
-      font-weight: 500;
-      font-size: 1.05rem;
-      color: var(--text);
-      margin: 1.4rem 0 0.5rem;
-    }
-    .legal__doc p, .legal__doc li { font-size: 1rem; line-height: 1.7; }
-    .legal__doc p { margin: 0 0 1rem; }
-    .legal__doc ul { margin: 0 0 1.2rem; padding-left: 1.2rem; }
-    .legal__doc li { margin-bottom: 0.45rem; }
-    .legal__doc a { color: var(--accent); }
-    .legal__doc strong { color: var(--text); }
-    .legal__note {
-      margin: 2.8rem 0 0;
-      padding: 1rem 1.2rem;
-      border: 1px solid var(--line-strong);
-      border-radius: 10px;
-      background: var(--bg-soft);
-      font-size: 0.88rem;
-      color: var(--text-faint);
-    }
-    .legal__ph {
-      color: var(--accent);
-      background: rgba(201, 168, 76, 0.12);
-      padding: 0 0.25em;
-      border-radius: 3px;
-      font-style: normal;
-    }
-  </style>
+  <%- include('partials/head') %>
+  <meta name="robots" content="index,follow" />
 </head>
-<body class="legal-page">
-  <main class="legal">
-    <a class="legal__back" href="/">← Back to ONYX</a>
-    <h1 class="legal__title"><%= heading %></h1>
-    <p class="legal__updated">Last updated: <%= updated %></p>
-    <div class="legal__doc"><%- include('legal/' + page, { site: site }) %></div>
-    <p class="legal__note">
-      Questions about this policy? Contact us at
-      <a href="mailto:<%= site.email %>"><%= site.email %></a>. This document is
-      provided for general information and is not legal advice.
-    </p>
+<body class="legal-body" id="top">
+  <a class="skip" href="#doc">Skip to content</a>
+
+  <header class="nav nav--static">
+    <a href="/" class="nav__logo" aria-label="ONYX — home">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M32 4 58 32 32 60 6 32Z" stroke="currentColor" stroke-width="3"/>
+        <path d="M32 18 45 32 32 46 19 32Z" fill="currentColor"/>
+      </svg>
+      <span>ONYX</span>
+    </a>
+    <div class="nav__right">
+      <a href="/#contact" class="nav__cta mono">Start a project</a>
+    </div>
+  </header>
+
+  <main class="legal" id="doc" tabindex="-1">
+    <aside class="legal__nav">
+      <span class="mono muted">Legal</span>
+      <nav aria-label="Legal documents">
+        <ul>
+          <% Object.entries(legalPages).forEach(function ([slug, label]) { %>
+            <li><a href="/<%= slug %>" class="mono" <% if (slug === doc) { %>aria-current="page"<% } %>><%= label %></a></li>
+          <% }) %>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="legal__doc">
+      <p class="mono muted">Last updated <%= biz.legalUpdated %></p>
+      <h1><%= title %></h1>
+      <%- include('legal/' + doc) %>
+
+      <section class="legal__who">
+        <h2>Who we are</h2>
+        <ul class="legal__facts">
+          <li><b>Business</b><span><%= need(biz.legalName, 'legal name') %>, trading as ONYX</span></li>
+          <li><b>Type</b><span><%= need(biz.entityType, 'business type') %></span></li>
+          <li><b>Address</b><span><%= need(biz.address, 'postal address') %></span></li>
+          <li><b>Email</b><span><a class="link" href="mailto:<%= biz.email %>"><%= biz.email %></a></span></li>
+          <% if (biz.phone) { %><li><b>Phone</b><span><%= biz.phone %></span></li><% } %>
+          <% if (biz.gstin) { %><li><b>GSTIN</b><span><%= biz.gstin %></span></li><% } %>
+          <% if (biz.cin) { %><li><b>CIN / LLPIN</b><span><%= biz.cin %></span></li><% } %>
+        </ul>
+      </section>
+
+      <nav class="legal__next" aria-label="Continue">
+        <a href="/#contact"><span class="mono">Questions about this?</span>Contact us<i aria-hidden="true">→</i></a>
+        <a href="/#work"><span class="mono">See what we make</span>Our work<i aria-hidden="true">→</i></a>
+        <a href="/"><span class="mono">Back to</span>Home<i aria-hidden="true">→</i></a>
+      </nav>
+    </article>
   </main>
-  <script src="/js/blackhole.js" defer></script>
+
+  <%- include('partials/footer') %>
 </body>
 </html>

@@ -1,582 +1,433 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>ONYX — Precision-Built Digital Experiences</title>
-  <meta name="description" content="ONYX is a next-gen digital studio crafting immersive websites, brand systems, UI/UX, and growth engines for ambitious brands. Founder-led, globally available." />
-  <meta name="theme-color" content="#060608" />
-  <meta name="author" content="Suryanshu — ONYX" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="ONYX" />
-  <meta property="og:title" content="ONYX — Precision-Built Digital Experiences" />
-  <meta property="og:description" content="A next-gen digital studio crafting immersive web, brand systems, UI/UX, and growth. Founder-led by Suryanshu." />
-  <meta property="og:url" content="<%= site.url %>" />
-  <meta property="og:image" content="<%= site.url %>/images/og-cover.svg" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ONYX — Precision-Built Digital Experiences" />
-  <meta name="twitter:description" content="A next-gen digital studio crafting immersive web, brand systems, UI/UX, and growth." />
-  <meta name="twitter:image" content="<%= site.url %>/images/og-cover.svg" />
-
-  <link rel="canonical" href="<%= site.url %>" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="/css/main.css" />
-  <link rel="stylesheet" href="/css/sections.css" />
-  <link rel="stylesheet" href="/css/animations.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ONYX",
-      "url": "<%= site.url %>",
-      "email": "<%= site.email %>",
-      "founder": { "@type": "Person", "name": "Suryanshu" },
-      "foundingDate": "2024",
-      "slogan": "We build brands that lead.",
-      "description": "A next-gen digital studio crafting immersive web, brand systems, UI/UX, and growth."
-    }
-  </script>
+  <%- include('partials/head') %>
 </head>
+<body class="is-loading">
+  <a class="skip" href="#manifesto">Skip to content</a>
 
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <%- include('partials/preloader') %>
-
-  <!-- 1. Cookie banner -->
-  <div class="cookie" id="cookie" role="dialog" aria-live="polite" aria-label="Cookie notice" hidden>
-    <p class="cookie__text">We use only essential local storage to remember your preferences — no tracking or advertising cookies. <a href="/cookies" class="cookie__link">Learn more</a>.</p>
-    <div class="cookie__actions">
-      <button class="cookie__btn cookie__btn--accept" id="cookieAccept">Accept</button>
-      <button class="cookie__btn cookie__btn--decline" id="cookieDecline">Decline</button>
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <svg class="preloader__mark" viewBox="0 0 64 64" fill="none">
+        <path d="M32 4 58 32 32 60 6 32Z" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M32 16 46 32 32 48 18 32Z" fill="currentColor"/>
+      </svg>
+      <div class="preloader__brand">ONYX</div>
+      <div class="preloader__line mono" data-scramble-loop>Entering the field…</div>
+      <div class="preloader__bar"><span id="preloaderBar"></span></div>
+      <div class="preloader__pct mono"><span id="preloaderPct">000</span>%</div>
     </div>
   </div>
 
-  <%- include('partials/nav') %>
+  <!-- ============ FIELD ============ -->
+  <canvas id="field" class="field" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
-  <main id="main">
-    <!-- 4. Hero — giant live display type over the animated field -->
-    <section class="hero hero--type" id="home">
-      <!-- Real heading for SEO + screen readers; the visible display type below
-           mirrors it and is marked decorative to avoid a double read. -->
-      <h1 class="sr-only">ONYX — websites that rank &amp; convert. A founder-led digital studio designing immersive sites, sharp brand systems, and growth engines.</h1>
+  <!-- Labels pinned to points in the 3D field (positioned by field.js) -->
+  <div class="hotspots mono" aria-hidden="true">
+    <span class="hotspot" data-hotspot="0"><i></i>Brand</span>
+    <span class="hotspot" data-hotspot="0"><i></i>Web</span>
+    <span class="hotspot" data-hotspot="2"><i></i>Identity</span>
+    <span class="hotspot" data-hotspot="2"><i></i>Websites</span>
+    <span class="hotspot" data-hotspot="2"><i></i>Interfaces</span>
+    <span class="hotspot" data-hotspot="2"><i></i>Growth</span>
+    <span class="hotspot" data-hotspot="3"><i></i>Minimal luxury</span>
+    <span class="hotspot" data-hotspot="3"><i></i>Mobile-first</span>
+    <span class="hotspot" data-hotspot="5"><i></i>Clarity</span>
+  </div>
 
-      <span class="hero__wm" aria-hidden="true">ONYX</span>
+  <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
 
-      <div class="hero__inner" aria-hidden="true">
-        <span class="hero__tag reveal"><span class="hero__tag-dot"></span> Digital Studio — Est. 2024</span>
+  <!-- ============ HEADER ============ -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__logo" data-magnetic aria-label="ONYX — back to top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M32 4 58 32 32 60 6 32Z" stroke="currentColor" stroke-width="3"/>
+        <path d="M32 18 45 32 32 46 19 32Z" fill="currentColor"/>
+      </svg>
+      <span>ONYX</span>
+    </a>
 
-        <div class="hero__display">
-          <span class="hero__mark" data-split="words">ONYX</span>
-          <span class="hero__accent" data-split="words">websites that rank &amp; convert.</span>
-        </div>
+    <nav class="chapters" aria-label="Chapters">
+      <ol>
+        <li><a href="#top" data-chapter-link="A"><span>A</span><em>Intro</em></a></li>
+        <li><a href="#manifesto" data-chapter-link="B"><span>B</span><em>Manifesto</em></a></li>
+        <li><a href="#services" data-chapter-link="C"><span>C</span><em>Services</em></a></li>
+        <li><a href="#work" data-chapter-link="D"><span>D</span><em>Work</em></a></li>
+        <li><a href="#process" data-chapter-link="E"><span>E</span><em>Process</em></a></li>
+        <li><a href="#promise" data-chapter-link="F"><span>F</span><em>Promise</em></a></li>
+        <li><a href="#faq" data-chapter-link="G"><span>G</span><em>Questions</em></a></li>
+        <li><a href="#contact" data-chapter-link="H"><span>H</span><em>Contact</em></a></li>
+      </ol>
+    </nav>
 
-        <p class="hero__lead reveal">A founder-led studio designing immersive websites, sharp brand systems, and growth engines that turn first impressions into lasting momentum.</p>
-
-        <div class="hero__actions reveal">
-          <a class="btn btn--sweep" href="#contact" data-scroll>Start a project <span aria-hidden="true">→</span></a>
-          <a class="hero__ghost" href="#work" data-scroll>See the work <span aria-hidden="true">↓</span></a>
-        </div>
-      </div>
-
-      <a class="hero__scroll" href="#philosophy" data-scroll aria-label="Scroll down">
-        <span class="hero__scroll-label">Scroll</span>
-        <span class="hero__scroll-line" aria-hidden="true"></span>
-      </a>
-    </section>
-
-    <!-- 5. Philosophy quote — word-by-word scroll reveal -->
-    <section class="philosophy" id="philosophy">
-      <div class="philosophy__scroller" data-text-reveal>
-        <div class="philosophy__sticky">
-          <blockquote class="philosophy__quote" data-reveal-text>"We don't just build websites — we engineer the moment a visitor becomes a believer."</blockquote>
-          <p class="philosophy__support" data-reveal-text>Craft over noise. Precision over trend. Every pixel and every millisecond is a decision made in service of the people who use what we make.</p>
-          <span class="philosophy__mark" aria-hidden="true">ONYX</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Built-with logo cloud -->
-    <% const techs = [
-      { name: 'Claude', color: '#d97757', mark: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6l1.7 6.9 5-5-2.6 6.6 6.9-1.7-6 3.6 6 3.6-6.9-1.7 2.6 6.6-5-5L12 22.4l-1.7-6.9-5 5 2.6-6.6L1 15.6l6-3.6-6-3.6 6.9 1.7L5.3 3.5l5 5z"/></svg>' },
-      { name: 'Node.js', color: '#8cc84b', mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.2l8.5 4.9v9.8L12 21.8l-8.5-4.9V7.1z"/></svg>' },
-      { name: 'Express', color: '#e9e6dd', mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>' },
-      { name: 'EJS', color: '#e5b640', mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/></svg>' },
-      { name: 'GSAP', color: '#0ae448', mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 15c3.5 0 5-6 9-6s3.5 6 9 6"/></svg>' },
-      { name: 'Lenis', color: '#7fb4ff', mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.2-4.4 4.4-4.4 6.6 0s4.4 4.4 6.6 0 4.4-4.4 6.8 0"/></svg>' },
-      { name: 'JavaScript', color: '#f7df1e', mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>' }
-    ]; %>
-    <section class="techcloud" aria-label="Built with">
-      <div class="container techcloud__head">
-        <h2 class="techcloud__title reveal">
-          <% 'Built with the tools behind the work'.split(' ').forEach(function (w, i) { %><span class="tc-word" style="--wi: <%= i %>"><%= w %></span> <% }); %>
-        </h2>
-        <p class="techcloud__desc reveal">Every pixel of ONYX is hand-built on a modern, no-shortcut stack — and shipped with Claude as our build partner.</p>
-      </div>
-
-      <div class="techcloud__marquee" data-marquee>
-        <div class="techcloud__track">
-          <% for (let rep = 0; rep < 2; rep++) { %>
-          <div class="techcloud__group" <%= rep === 1 ? 'aria-hidden="true"' : '' %>>
-            <% techs.forEach(function (t) { %>
-            <span class="tc-logo" style="color: <%= t.color %>">
-              <span class="tc-logo__mark"><%- t.mark %></span>
-              <span class="tc-logo__name"><%= t.name %></span>
-            </span>
-            <% }); %>
-          </div>
-          <% } %>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6b. Brand portal — image zooms in on scroll -->
-    <section class="portal" id="brandportal" aria-label="We build brands that lead">
-      <div class="portal__stage">
-        <img
-          class="portal__img"
-          src="/images/brand-leads.png"
-          onerror="this.onerror=null; this.src='/images/brand-leads.svg';"
-          alt="We build brands that lead"
-        />
-        <div class="portal__scrim" aria-hidden="true"></div>
-      </div>
-    </section>
-
-    <!-- 10. Services — sticky content scroll -->
-    <% const services = [
-      { n: '01', t: 'Web Design & Development', img: 'service-web', photo: true,
-        p: ['Immersive, fast, hand-built sites that feel inevitable — from first concept to a production codebase.',
-            'You own what we ship: clean, documented code built to scale with you, not lock you in.'],
-        list: ['Design systems & interface', 'Production build & CMS', 'Performance & SEO baked in'] },
-      { n: '02', t: 'Branding & Identity', img: 'service-brand', photo: true,
-        p: ['Names, marks, and systems with a spine — identities that stay sharp across every surface and scale.',
-            'Brand work that gives you a point of view, not just a logo, and holds up as you grow.'],
-        list: ['Naming & positioning', 'Logo, type & colour system', 'Brand guidelines'] },
-      { n: '03', t: 'UI & UX Design', img: 'service-uiux', photo: true,
-        p: ['Interfaces engineered around real behaviour — intuitive, accessible, and quietly delightful to use.',
-            'We prototype, test, and refine until the product feels effortless, then hand it over pixel-perfect.'],
-        list: ['Research & user flows', 'Prototyping & testing', 'Pixel-perfect handoff'] },
-      { n: '04', t: 'Growth & Automation', img: 'service-growth', photo: false,
-        p: ['Funnels, analytics, and automations that turn a strong launch into compounding momentum.',
-            'Measurable systems that keep working after go-live — so growth is engineered, not hoped for.'],
-        list: ['Funnels & landing pages', 'Analytics & tracking', 'Automations & CRM'] }
-    ]; %>
-    <section class="stsvc" id="services">
-      <div class="stsvc__sticky">
-        <div class="stsvc__head">
-          <span class="section-label">Capabilities</span>
-          <h2 class="stsvc__title" data-split="words">Our Services</h2>
-        </div>
-
-        <% services.forEach(function (s) { %>
-        <div class="stsvc__row">
-          <div class="stsvc__text" data-content>
-            <span class="stsvc__num"><%= s.n %></span>
-            <h3 class="stsvc__heading"><%= s.t %></h3>
-            <% s.p.forEach(function (para) { %><p class="stsvc__p"><%= para %></p><% }); %>
-            <ul class="stsvc__list">
-              <% s.list.forEach(function (li) { %><li><%= li %></li><% }); %>
-            </ul>
-            <a class="stsvc__link" href="#contact">
-              <span class="stsvc__link-text">Start a project</span>
-              <svg class="stsvc__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </a>
-          </div>
-          <div class="stsvc__media" data-image>
-            <% if (s.photo) { %>
-            <img src="/images/<%= s.img %>.jpg"
-                 onerror="this.onerror=null;this.src='/images/<%= s.img %>.svg'"
-                 alt="<%= s.t %>" loading="lazy" />
-            <% } else { %>
-            <img src="/images/<%= s.img %>.svg" alt="<%= s.t %>" loading="lazy" />
-            <% } %>
-          </div>
-        </div>
-        <% }); %>
-
-        <div class="stsvc__scroll" aria-hidden="true">
-          <span>Scroll</span>
-          <svg viewBox="0 0 20 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polyline class="stsvc__chev stsvc__chev--1" points="2,2 10,9 18,2" />
-            <polyline class="stsvc__chev stsvc__chev--2" points="2,10 10,17 18,10" />
-            <polyline class="stsvc__chev stsvc__chev--3" points="2,18 10,25 18,18" />
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- 11. Process — horizontal feature reveal -->
-    <% const proc = [
-      { n: '01', t: 'Discovery', p: ['We start by listening — a deep dive into your goals, audience and market to understand what success actually looks like.', 'No assumptions, just research and the questions that surface the problem worth solving.'] },
-      { n: '02', t: 'Strategy', p: ['We turn insight into a plan: positioning, structure and priorities mapped before a single pixel is drawn.', 'A blueprint everyone aligns on, so the build is deliberate — never guesswork.'] },
-      { n: '03', t: 'Design', p: ['Craft meets systems. We design interfaces and identity that are beautiful, consistent and built to scale.', 'Every detail is considered, tested and refined until it feels effortless.'] },
-      { n: '04', t: 'Build', p: ['Hand-built, performant code — engineered for speed, accessibility and long-term maintainability.', 'You own what we ship: clean, documented, and ready to grow with you.'] },
-      { n: '05', t: 'Launch', p: ['We ship with confidence, then watch the numbers. Launch is a milestone, not the finish line.', 'Ongoing support and growth work keep the momentum compounding after go-live.'] }
-    ]; %>
-    <section class="hproc" id="process" aria-label="Our process">
-      <div class="hproc__stage">
-        <div class="hproc__head">
-          <span class="section-label">How We Work</span>
-          <h2 class="hproc__title" data-split="words">Our Process</h2>
-        </div>
-
-        <div class="hproc__track" id="hprocTrack">
-          <% proc.forEach(function (s) { %>
-          <article class="hproc__card">
-            <div class="hproc__media">
-              <span class="hproc__bignum" data-hproc-num aria-hidden="true"><%= s.n %></span>
-            </div>
-            <div class="hproc__text">
-              <span class="hproc__num"><%= s.n %> — <%= String(proc.length).padStart(2, '0') %></span>
-              <h3 class="hproc__name"><%= s.t %></h3>
-              <div class="hproc__body">
-                <% s.p.forEach(function (para) { %><p class="hproc__p"><%= para %></p><% }); %>
-              </div>
-            </div>
-          </article>
-          <% }); %>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8. How we work — honest, verifiable signals (no fabricated metrics) -->
-    <section class="stats" aria-label="How ONYX works">
-      <div class="container stats__grid">
-        <div class="stat reveal">
-          <span class="stat__num" data-count="24" data-suffix="h">0</span>
-          <span class="stat__label">Reply within</span>
-        </div>
-        <div class="stat reveal">
-          <span class="stat__num">Fixed</span>
-          <span class="stat__label">Project pricing</span>
-        </div>
-        <div class="stat reveal">
-          <span class="stat__num" data-count="100" data-suffix="%">0</span>
-          <span class="stat__label">You own the code</span>
-        </div>
-        <div class="stat reveal">
-          <span class="stat__num" data-count="2024" data-raw="true">0</span>
-          <span class="stat__label">Founded</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 12. CTA banner -->
-    <section class="cta-banner" aria-label="Start a project">
-      <!-- Auralis: WebGL ambient background (noise + glow + grain). CSS gradient is the fallback. -->
-      <canvas class="cta-banner__canvas" id="ctaCanvas" aria-hidden="true"></canvas>
-      <div class="container cta-banner__inner">
-        <h2 class="cta-banner__title" data-split="words">Ready to Build Something Bold?</h2>
-        <p class="cta-banner__sub reveal">Every standout brand started with a single decision to stop blending in.</p>
-        <a href="#contact" class="btn btn--sweep reveal" data-scroll>Start Your Project <span aria-hidden="true">→</span></a>
-      </div>
-    </section>
-
-    <!-- 13. Projects — 3D works wheel (ring -> drum, scroll-driven) -->
-    <% const projects = [
-      { n: '01', t: 'Aurora Commerce', tag: 'Web · Brand', img: 'work-01', d: 'A headless storefront rebuild that cut load times in half and lifted conversion for a growing DTC label. (Placeholder project — replace with real work.)' },
-      { n: '02', t: 'Helix Studio', tag: 'Identity · UI', img: 'work-02', d: 'A full identity system and portfolio site for a creative studio, built to scale across future ventures. (Placeholder project — replace with real work.)' },
-      { n: '03', t: 'Nimbus SaaS', tag: 'Product · UX', img: 'work-03', d: 'Onboarding and dashboard UX for an early-stage SaaS, designed to make a complex tool feel obvious. (Placeholder project — replace with real work.)' },
-      { n: '04', t: 'Vertex Growth', tag: 'Growth · Automation', img: 'work-04', d: 'A conversion-focused landing system with analytics and automations wired in from day one. (Placeholder project — replace with real work.)' }
-    ]; %>
-    <section class="wheel" id="work" aria-label="Projects we've completed">
-      <div class="wheel__head">
-        <span class="section-label">Projects Delivered</span>
-        <h2 class="wheel__heading" data-split="words">Projects We've Completed</h2>
-      </div>
-
-      <div class="wheel__pin" data-wheel-pin>
-        <div class="wheel__ring" data-wheel-ring>
-          <% projects.forEach(function (p, i) { %>
-          <button class="wheel__card work-card" data-wheel-card
-            data-project-index="<%= i %>"
-            data-title="<%= p.t %>"
-            data-tag="<%= p.tag %>"
-            data-img="/images/<%= p.img %>.jpg"
-            data-desc="<%= p.d %>"
-            aria-label="<%= p.t %>">
-            <span class="wheel__face" data-wheel-face>
-              <img src="/images/<%= p.img %>.jpg"
-                   onerror="this.onerror=null;this.src='/images/<%= p.img %>.svg'"
-                   alt="<%= p.t %>" draggable="false" loading="eager" width="900" height="620" />
-              <span class="wheel__cardname"><%= p.t %></span>
-            </span>
-          </button>
-          <% }); %>
-        </div>
-
-        <div class="wheel__label" data-wheel-label aria-hidden="true">Our Work</div>
-        <div class="wheel__title" data-wheel-title aria-hidden="true"></div>
-
-        <ol class="wheel__index" data-wheel-index aria-hidden="true">
-          <% projects.forEach(function (p, i) { %>
-          <li><button type="button" data-wheel-jump="<%= i %>"><%= p.t %></button></li>
-          <% }); %>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Work lightbox -->
-    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project details">
-      <div class="lightbox__backdrop" data-lightbox-close></div>
-      <div class="lightbox__panel">
-        <button class="lightbox__close" id="lightboxClose" aria-label="Close project">✕</button>
-        <div class="lightbox__media"><img id="lightboxImg" src="" alt=""
-              onerror="this.onerror=null;this.src=this.src.replace('.jpg','.svg');" /></div>
-        <div class="lightbox__body">
-          <span class="lightbox__tag" id="lightboxTag"></span>
-          <h3 class="lightbox__title" id="lightboxTitle"></h3>
-          <p class="lightbox__desc" id="lightboxDesc"></p>
-        </div>
-      </div>
+    <div class="nav__right">
+      <a href="#contact" class="nav__cta mono" data-magnetic>Start a project</a>
+      <button class="nav__menu mono" id="burger" aria-expanded="false" aria-controls="menu">
+        <span>Menu</span><span class="nav__chip" id="navChip" aria-hidden="true">A</span>
+      </button>
     </div>
+  </header>
 
-    <!-- 13b. Core / About -->
-    <section class="core" id="about">
-      <div class="container core__inner">
-        <span class="section-label reveal">Our Core</span>
-        <h2 class="core__title" data-textblock data-block-color="#c9a84c">Websites that rank and convert.</h2>
-        <div class="core__body">
-          <p data-textblock data-block-color="#c9a84c">
-            ONYX is a founder-led studio with a single focus: websites that win. Fast, immersive
-            sites that make the right first impression — engineered so the details people feel are
-            the same ones search engines reward.
+  <div class="menu" id="menu" aria-hidden="true">
+    <ol class="menu__list">
+      <li><a href="#top"><span class="mono">A</span>Intro</a></li>
+      <li><a href="#manifesto"><span class="mono">B</span>Manifesto</a></li>
+      <li><a href="#services"><span class="mono">C</span>Services</a></li>
+      <li><a href="#work"><span class="mono">D</span>Work</a></li>
+      <li><a href="#process"><span class="mono">E</span>Process</a></li>
+      <li><a href="#promise"><span class="mono">F</span>Promise</a></li>
+      <li><a href="#faq"><span class="mono">G</span>Questions</a></li>
+      <li><a href="#contact"><span class="mono">H</span>Contact</a></li>
+    </ol>
+    <div class="menu__foot">
+      <a class="menu__mail mono" href="mailto:<%= site.email %>"><%= site.email %></a>
+      <nav class="menu__legal mono" aria-label="Legal">
+        <a href="/privacy">Privacy</a><a href="/cookies">Cookies</a><a href="/terms">Terms</a><a href="/refund-policy">Refunds</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="rail" aria-hidden="true"><i id="railThumb"></i></div>
+
+  <!-- ============ HUD ============ -->
+  <div class="hud mono">
+    <div class="hud__left" aria-hidden="true">ONYX — Independent studio · India</div>
+    <div class="hud__right">
+      <button class="motion" id="motionToggle" aria-pressed="false" aria-label="Pause motion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12c2.5-6 5-6 7.5 0s5 6 7.5 0 3.5-4 5-2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <main id="top">
+    <!-- ============ A · HERO (pinned statement) ============ -->
+    <section class="hero" data-chapter="A" data-shape="0">
+      <div class="hero__stage">
+        <h1 class="hero__eyebrow mono" data-hero-in><i aria-hidden="true"></i><%= seo.h1 %></h1>
+
+        <p class="statement" id="statement">
+          <span class="ln"><span class="sw">We</span> <span class="sw">build</span> <span class="sw">brands</span></span>
+          <span class="ln ln--indent"><span class="sw">that</span> <span class="sw sw--accent">lead.</span></span>
+        </p>
+
+        <div class="hero__foot">
+          <p class="hero__lede" data-hero-in>
+            Brand identity, websites and UI/UX for founders who want their brand to look as good
+            as their product. Designed and built by one founder-led studio; most projects go live in 2–3 weeks.
           </p>
-          <p data-textblock data-block-color="#c9a84c">
-            Led by Suryanshu, who started ONYX at 17 with an unreasonable standard for craft. Every
-            site is built to load fast, convert visitors, and climb search — because a beautiful site
-            nobody can find isn't doing its job.
-          </p>
+          <div class="hero__actions" data-hero-in>
+            <a href="#contact" class="btn btn--primary" data-magnetic><span>Start a project</span><i aria-hidden="true">→</i></a>
+            <a href="#work" class="btn btn--ghost" data-magnetic><span>See our work</span></a>
+          </div>
         </div>
-        <ul class="core__highlights reveal">
-          <li>★ Website Design &amp; Build</li>
-          <li>★ SEO Baked In</li>
-          <li>★ Founder-Led — No Handoffs</li>
-          <li>★ Est. 2024</li>
+
+        <ul class="hero__proof mono" data-hero-in aria-label="Why ONYX">
+          <li>Founder-led</li>
+          <li>Fixed-price quotes</li>
+          <li>2–3 week delivery</li>
+          <li>Recent work: UKEE</li>
         </ul>
       </div>
     </section>
 
-    <!-- 14b. Founder's Promise — trust block -->
-    <section class="promise" id="promise" aria-label="The founder's promise">
-      <div class="container promise__inner">
-        <div class="promise__portrait reveal">
-          <img src="/images/founder.jpg"
-               onerror="this.onerror=null;this.src='/images/founder.svg'"
-               alt="Suryanshu, founder of ONYX" loading="lazy" width="720" height="900" />
-          <span class="promise__portrait-glow" aria-hidden="true"></span>
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Brand Identity</span><i>✦</i><span>Web Design</span><i>✦</i><span>Development</span><i>✦</i><span>UI / UX</span><i>✦</i><span>SEO &amp; Growth</span><i>✦</i><span>Motion</span><i>✦</i>
+        <span>Brand Identity</span><i>✦</i><span>Web Design</span><i>✦</i><span>Development</span><i>✦</i><span>UI / UX</span><i>✦</i><span>SEO &amp; Growth</span><i>✦</i><span>Motion</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ============ B · MANIFESTO ============ -->
+    <section class="chapter manifesto" id="manifesto" data-chapter="B" data-shape="1" data-field-dim="0.45" tabindex="-1">
+      <div class="intro">
+        <span class="chip" aria-hidden="true">B</span>
+        <span class="eyebrow mono" data-scramble>The manifesto</span>
+      </div>
+
+      <div class="manifesto__block">
+        <h2 class="manifesto__text" data-lines>
+          Good products deserve<br />brands that are
+        </h2>
+        <p class="manifesto__rotate" aria-live="off">
+          <span class="sr-only">impossible to ignore, built to last, hard to copy and ready to lead.</span>
+          <span class="carousel" aria-hidden="true" data-carousel data-interval="2.2"
+                data-words='["impossible to ignore.", "built to last.", "hard to copy.", "ready to lead."]'>impossible to ignore.</span>
+        </p>
+        <p class="manifesto__desc" data-reveal>
+          We design the identity, build the website and obsess over every detail ourselves.
+          No templates. No hand-offs. No excuses.
+        </p>
+        <a href="#services" class="btn btn--ghost" data-reveal data-magnetic><span>See what we do</span><i aria-hidden="true">↓</i></a>
+      </div>
+    </section>
+
+    <!-- ============ C · SERVICES (pinned sequence) ============ -->
+    <section class="chapter seq" id="services" data-chapter="C" data-shape="2" data-field-dim="0.6" data-seq style="--n:4" tabindex="-1">
+      <div class="seq__stage svc-stage">
+        <div class="seq__meta mono">
+          <span class="chip" aria-hidden="true">C</span>
+          <h2 class="eyebrow" data-scramble>What we do</h2>
+          <span class="seq__count" aria-hidden="true"><b data-seq-index>01</b> / 04</span>
+          <span class="seq__bar" aria-hidden="true"><i data-seq-bar></i></span>
         </div>
 
-        <div class="promise__body">
-          <span class="section-label reveal">The Founder's Promise</span>
-          <blockquote class="promise__quote reveal">
-            <span class="promise__mark" aria-hidden="true">“</span>
-            You work directly with me — never an account manager. You'll see the first
-            concept before you commit a rupee or a dollar, and if it isn't right, you
-            walk away. I only take on work I'd put my own name on.
-          </blockquote>
+        <ol class="svc-names" aria-label="Services">
+          <li data-seq-item>Brand identity</li>
+          <li data-seq-item>Websites</li>
+          <li data-seq-item>UI / UX</li>
+          <li data-seq-item>SEO &amp; Growth</li>
+        </ol>
 
-          <ul class="promise__points reveal">
-            <li><span aria-hidden="true">→</span> Work directly with the founder — no handoffs</li>
-            <li><span aria-hidden="true">→</span> See the first concept before you pay</li>
-            <li><span aria-hidden="true">→</span> Every message answered within 24 hours</li>
-          </ul>
-
-          <div class="promise__sign reveal">
-            <span class="promise__signature">Suryanshu</span>
-            <span class="promise__role">Founder, ONYX — building since 17</span>
+        <div class="svc-details">
+          <div class="svc-detail" data-seq-item>
+            <span class="mono">/01 — Brand identity</span>
+            <p>Naming, logo systems, typography, colour and voice. A brand that looks considered at every size, from favicon to billboard.</p>
+            <ul class="pills mono"><li>Logo</li><li>Visual system</li><li>Guidelines</li><li>Voice</li></ul>
+          </div>
+          <div class="svc-detail" data-seq-item>
+            <span class="mono">/02 — Websites</span>
+            <p>Animated, fast, hand-built websites. Custom code, WebGL where it earns its place, and a CMS where you need to edit.</p>
+            <ul class="pills mono"><li>Node.js</li><li>WebGL</li><li>GSAP</li><li>CMS</li></ul>
+          </div>
+          <div class="svc-detail" data-seq-item>
+            <span class="mono">/03 — UI / UX</span>
+            <p>Interfaces for apps and SaaS, built on research with real users. Screens your customers don't have to think about, and a design system your developers can reuse.</p>
+            <ul class="pills mono"><li>Research</li><li>Wireframes</li><li>Prototypes</li><li>Design systems</li></ul>
+          </div>
+          <div class="svc-detail" data-seq-item>
+            <span class="mono">/04 — SEO &amp; Growth</span>
+            <p>Technical SEO, content and conversion work, so the site you launch keeps finding the people it was built for.</p>
+            <ul class="pills mono"><li>Technical SEO</li><li>Content</li><li>CRO</li><li>Analytics</li></ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 15. FAQ — tabbed categories + accordion -->
-    <% const faqCategories = { process: 'Process', working: 'Working Together', pricing: 'Pricing & Support' };
-       const faqData = {
-         process: [
-           { q: 'What does your process look like?', a: 'Five clear stages — Discovery, Strategy, Design, Build, and Launch. You always know what phase we\'re in, what\'s next, and what we need from you. No black boxes, no surprises.' },
-           { q: 'How long does a project typically take?', a: 'Most projects land between 3 and 8 weeks depending on scope. A focused landing page is fast; a full brand and site build takes longer. We\'ll give you a realistic timeline before we start.' },
-           { q: 'Will I see the work as it progresses?', a: 'Yes. We share progress at every stage and review together before moving on, so there are never any surprises at the end.' }
-         ],
-         working: [
-           { q: 'Do you work with international clients?', a: 'Absolutely. We\'re remote-first and already work across multiple countries and time zones. Async-friendly communication keeps everything smooth no matter where you are.' },
-           { q: 'What do you need from me to get started?', a: 'A clear sense of your goals, any existing brand assets, and a point of contact who can give feedback. We handle the rest and guide you through anything we still need.' },
-           { q: 'Who will I be working with?', a: 'You work directly with the founder and the small, senior team actually building your project — no account managers, no handoffs.' }
-         ],
-         pricing: [
-           { q: 'How does pricing work?', a: 'Every project is quoted up front based on scope, so you know the full investment before we begin. No hourly surprises.' },
-           { q: 'Do you offer post-launch support?', a: 'Yes. Launch is a milestone, not the finish line. We monitor, refine, and offer ongoing support so your project keeps performing after go-live.' },
-           { q: 'Do you offer ongoing retainers?', a: 'Many clients keep us on a monthly retainer for continued design, development, and growth work once the initial project ships.' }
-         ]
-       }; %>
-    <section class="faqx" id="faq" aria-label="Frequently asked questions">
-      <div class="container faqx__inner">
-        <div class="faqx__head">
-          <span class="faqx__eyebrow reveal">Let’s answer some questions</span>
-          <h2 class="faqx__title" data-split="words">Frequently Asked Questions</h2>
-        </div>
-
-        <div class="faqx__tabs reveal" role="tablist" aria-label="FAQ categories">
-          <% Object.entries(faqCategories).forEach(function (entry, i) { const key = entry[0], label = entry[1]; %>
-          <button class="faqx__tab<%= i === 0 ? ' is-active' : '' %>" role="tab"
-                  aria-selected="<%= i === 0 ? 'true' : 'false' %>" tabindex="<%= i === 0 ? '0' : '-1' %>"
-                  data-tab="<%= key %>" id="faqtab-<%= key %>" aria-controls="faqpanel-<%= key %>">
-            <span><%= label %></span>
-          </button>
-          <% }); %>
-        </div>
-
-        <div class="faqx__panels">
-          <% Object.entries(faqData).forEach(function (entry, ci) { const key = entry[0], items = entry[1]; %>
-          <div class="faqx__panel<%= ci === 0 ? ' is-active' : '' %>" role="tabpanel"
-               id="faqpanel-<%= key %>" aria-labelledby="faqtab-<%= key %>" data-panel="<%= key %>" <%= ci === 0 ? '' : 'hidden' %>>
-            <% items.forEach(function (f, i) { %>
-            <div class="faqx__item">
-              <button class="faqx__q" aria-expanded="false" aria-controls="fa-<%= key %>-<%= i %>" id="fq-<%= key %>-<%= i %>">
-                <span><%= f.q %></span>
-                <span class="faqx__icon" aria-hidden="true"></span>
-              </button>
-              <div class="faqx__a" id="fa-<%= key %>-<%= i %>" role="region" aria-labelledby="fq-<%= key %>-<%= i %>">
-                <p><%= f.a %></p>
-              </div>
-            </div>
-            <% }); %>
+    <!-- ============ D · WORK ============ -->
+    <section class="chapter work" id="work" data-chapter="D" data-shape="3" data-field-dim="0.5" tabindex="-1">
+      <div class="work__inner">
+        <div class="work__meta">
+          <div class="head">
+            <span class="chip" aria-hidden="true">D</span>
+            <h2 class="eyebrow mono" data-scramble>Selected work</h2>
           </div>
-          <% }); %>
-        </div>
-      </div>
-    </section>
-
-    <!-- 16. Contact -->
-    <section class="contact" id="contact">
-      <div class="container contact__inner">
-        <div class="contact__intro">
-          <span class="contact__slots reveal"><span class="contact__slots-dot" aria-hidden="true"></span> Taking 2 new projects this month</span>
-          <span class="section-label reveal">Start here</span>
-          <h2 class="section-heading" data-split="words">Let's talk.</h2>
-          <p class="contact__sub reveal">
-            Not ready for a full brief? <strong>Send me your site and I'll record a free 3-minute teardown</strong> — no pitch, no obligation. Or book a quick call and we'll map it out together.
+          <span class="mono work__index" aria-hidden="true">01 / 01</span>
+          <h3 class="work__title" data-lines>UKEE</h3>
+          <p class="mono work__kind" data-reveal>Haircare · Luxury e-commerce</p>
+          <p class="work__desc" data-reveal>
+            Minimal by design, luxurious by feel. Velvet reds, quiet gold type and generous
+            space let UKEE's serum take centre stage, so visitors are drawn into the brand
+            before they ever reach the shop.
           </p>
-          <div class="contact__cta-row reveal">
-            <a class="btn btn--sweep" href="<%= (typeof site !== 'undefined' && site.bookingUrl) ? site.bookingUrl : '#contactForm' %>" data-book-call>
-              Book a 15-min call <span aria-hidden="true">→</span>
-            </a>
-            <a class="contact__teardown" href="mailto:<%= site.email %>?subject=Free%20teardown%20request&body=Here's%20my%20site%3A%20">
-              Get a free teardown <span aria-hidden="true">→</span>
-            </a>
-          </div>
-          <p class="contact__or reveal">Prefer to send the details? Fill in the brief below.</p>
+          <ul class="pills mono" data-reveal><li>Minimal luxury</li><li>Web design</li><li>Development</li><li>Mobile-first</li></ul>
         </div>
 
-        <form class="contact__form reveal" id="contactForm" novalidate>
-          <div class="field">
-            <label for="fullName">Full Name *</label>
-            <input type="text" id="fullName" name="fullName" required autocomplete="name" />
-            <span class="field__error" data-error-for="fullName"></span>
+        <figure class="work__device">
+          <div class="phone" data-phone>
+            <img src="/images/work/ukee-mobile.jpg" width="324" height="572" loading="lazy" decoding="async"
+                 alt="UKEE website on a phone: a model resting on a red velvet sofa beside the serum bottle, with the headline India's first and a Shop now button." />
           </div>
-          <div class="field">
-            <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" required autocomplete="email" />
-            <span class="field__error" data-error-for="email"></span>
-          </div>
-          <div class="field">
-            <label for="company">Company / Brand</label>
-            <input type="text" id="company" name="company" autocomplete="organization" />
-          </div>
-          <div class="field">
-            <label for="website">Company Website</label>
-            <input type="text" id="website" name="website" autocomplete="url" placeholder="https://" />
-          </div>
-          <div class="field">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" />
-          </div>
-          <div class="field">
-            <label for="service">Service Interested In</label>
-            <select id="service" name="service">
-              <option value="">Select a service</option>
-              <option>Website Design &amp; Development</option>
-              <option>SEO</option>
-              <option>Website + SEO</option>
-              <option>Other</option>
-            </select>
-            <span class="field__error" data-error-for="service"></span>
-          </div>
-          <div class="field">
-            <label for="budget">Estimated Budget</label>
-            <select id="budget" name="budget">
-              <option value="">Select a budget</option>
-              <option>Under $1K</option>
-              <option>$1K–$3K</option>
-              <option>$3K–$5K</option>
-              <option>$5K–$10K</option>
-              <option>$10K+</option>
-              <option>Not sure yet</option>
-            </select>
-            <span class="field__error" data-error-for="budget"></span>
-          </div>
-          <div class="field field--full">
-            <label for="description">Project Description</label>
-            <textarea id="description" name="description" rows="5"></textarea>
-          </div>
-
-          <div class="field field--full field--consent">
-            <label class="consent" for="consent">
-              <input type="checkbox" id="consent" name="consent" required />
-              <span>I agree to the <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a> and consent to ONYX storing these details to respond to my enquiry.</span>
-            </label>
-            <span class="field__error" data-error-for="consent"></span>
-          </div>
-
-          <p class="contact__note">We only use your details to reply — no marketing, no sharing.</p>
-          <button type="submit" class="btn btn--sweep contact__submit" id="contactSubmit">
-            Send Dispatch <span aria-hidden="true">→</span>
-          </button>
-          <p class="contact__status" id="contactStatus" role="status" aria-live="polite"></p>
-        </form>
+          <figcaption class="mono">UKEE — mobile home page</figcaption>
+        </figure>
       </div>
+    </section>
+
+    <!-- ============ E · PROCESS (pinned sequence) ============ -->
+    <section class="chapter seq" id="process" data-chapter="E" data-seq style="--n:4" tabindex="-1">
+      <!-- field shape per phase (see public/js/field.js) -->
+      <span class="shape-mark" aria-hidden="true" data-shape="4" data-field-dim="0.4" style="top:0"></span>
+      <span class="shape-mark" aria-hidden="true" data-shape="7" data-field-dim="0.4" data-morph="0.28" style="top:calc((100% - 100vh) * 0.25 + 64vh)"></span>
+      <span class="shape-mark" aria-hidden="true" data-shape="8" data-field-dim="0.4" data-morph="0.28" style="top:calc((100% - 100vh) * 0.5 + 64vh)"></span>
+      <span class="shape-mark" aria-hidden="true" data-shape="9" data-field-dim="0.4" data-morph="0.28" style="top:calc((100% - 100vh) * 0.75 + 64vh)"></span>
+      <div class="seq__stage proc-stage">
+        <div class="seq__meta mono">
+          <span class="chip" aria-hidden="true">E</span>
+          <h2 class="eyebrow" data-scramble>How we work</h2>
+          <span class="seq__count" aria-hidden="true"><b data-seq-index>01</b> / 04</span>
+          <span class="seq__bar" aria-hidden="true"><i data-seq-bar></i></span>
+        </div>
+
+        <ol class="proc-steps">
+          <li class="proc-step" data-seq-item>
+            <span class="proc-step__n" aria-hidden="true">01</span>
+            <h3>Discover</h3>
+            <span class="mono">Typically days 1–3</span>
+            <p>Workshops, audits and a close look at your competitors. We find the one idea worth building around.</p>
+          </li>
+          <li class="proc-step" data-seq-item>
+            <span class="proc-step__n" aria-hidden="true">02</span>
+            <h3>Design</h3>
+            <span class="mono">Typically weeks 1–2</span>
+            <p>Identity and interface explored in parallel and refined with you in live review sessions.</p>
+          </li>
+          <li class="proc-step" data-seq-item>
+            <span class="proc-step__n" aria-hidden="true">03</span>
+            <h3>Build</h3>
+            <span class="mono">Typically weeks 2–3</span>
+            <p>Hand-coded, animated and tested on real phones and laptops, with a performance budget set up front.</p>
+          </li>
+          <li class="proc-step" data-seq-item>
+            <span class="proc-step__n" aria-hidden="true">04</span>
+            <h3>Grow</h3>
+            <span class="mono">Launch and after</span>
+            <p>After launch we look at where visitors drop off and fix it: page speed, search visibility and the steps between landing and enquiring.</p>
+          </li>
+        </ol>
+
+        <ol class="proc-ticks mono" aria-hidden="true">
+          <li data-seq-tick>Discover</li><li data-seq-tick>Design</li><li data-seq-tick>Build</li><li data-seq-tick>Grow</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ F · PROMISE (inverted light panel) ============ -->
+    <section class="promise" id="promise" data-chapter="F" tabindex="-1">
+      <div class="promise__inner">
+        <span class="chip chip--dark" aria-hidden="true">F</span>
+        <h2 class="sr-only">Our promise</h2>
+        <p class="promise__text" data-words>
+          ONYX is where design, code and <em>modern luxury</em> meet. We build brands for people
+          who notice the details, and websites that make everyone else notice them too.
+        </p>
+        <div class="promise__sign" data-reveal>
+          <span class="chip chip--dark" aria-hidden="true">S</span>
+          <span><b><%= site.founder %></b><small class="mono">Founder, ONYX</small></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ G · FAQ ============ -->
+    <section class="chapter faq" id="faq" data-chapter="G" data-shape="5" data-field-dim="0.5" tabindex="-1">
+      <div class="intro">
+        <span class="chip" aria-hidden="true">G</span>
+        <h2 class="h2" data-lines>Questions,<br />answered</h2>
+        <p class="muted" data-reveal>Still curious? Write to <a class="link" href="mailto:<%= site.email %>"><%= site.email %></a></p>
+      </div>
+      <div class="faq__list">
+        <% faq.forEach(function (item, i) { %>
+        <details class="qa" data-reveal>
+          <summary><span class="mono"><%= String(i + 1).padStart(2, '0') %></span><%= item.q %><i aria-hidden="true"></i></summary>
+          <div class="qa__body"><p><%= item.a %></p></div>
+        </details>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- ============ H · CONTACT ============ -->
+    <section class="chapter contact" id="contact" data-chapter="H" data-shape="6" data-field-dim="0.35" tabindex="-1">
+      <div class="contact__intro">
+        <div class="head">
+          <span class="chip" aria-hidden="true">H</span>
+          <span class="eyebrow mono" data-scramble>Start a project</span>
+        </div>
+        <h2 class="h2" data-lines>Bring the<br />rough stone.<br /><em>We'll cut it.</em></h2>
+        <p class="muted" data-reveal>Tell us what you're building. We usually reply within one business day, often with an invitation to a short call.</p>
+        <div class="contact__direct" data-reveal>
+          <a class="link mono" href="mailto:<%= site.email %>"><%= site.email %></a>
+        </div>
+      </div>
+
+      <form class="form" id="contactForm" novalidate data-reveal>
+        <div class="field-row">
+          <label class="fld">
+            <span class="mono">Your name</span>
+            <input type="text" name="name" autocomplete="name" required maxlength="80" aria-describedby="err-name" />
+            <small class="err" id="err-name" data-err="name"></small>
+          </label>
+          <label class="fld">
+            <span class="mono">Email</span>
+            <input type="email" name="email" autocomplete="email" required maxlength="120" aria-describedby="err-email" />
+            <small class="err" id="err-email" data-err="email"></small>
+          </label>
+        </div>
+
+        <fieldset class="choices">
+          <legend class="mono">I need</legend>
+          <label><input type="radio" name="service" value="Brand identity" /><span>Brand identity</span></label>
+          <label><input type="radio" name="service" value="Website" checked /><span>Website</span></label>
+          <label><input type="radio" name="service" value="UI/UX" /><span>UI / UX</span></label>
+          <label><input type="radio" name="service" value="SEO & growth" /><span>SEO &amp; growth</span></label>
+        </fieldset>
+
+        <fieldset class="choices budget" data-budget>
+          <legend class="mono">Budget</legend>
+          <div class="currency" role="radiogroup" aria-label="Currency">
+            <label><input type="radio" name="currency" value="INR" checked /><span>₹ INR</span></label>
+            <label><input type="radio" name="currency" value="USD" /><span>$ USD</span></label>
+          </div>
+          <div class="budget__set" data-currency="INR">
+            <label><input type="radio" name="budget" value="Under ₹10k" /><span>Under ₹10k</span></label>
+            <label><input type="radio" name="budget" value="₹10k–20k" checked /><span>₹10k–20k</span></label>
+            <label><input type="radio" name="budget" value="₹20k–30k" /><span>₹20k–30k</span></label>
+            <label><input type="radio" name="budget" value="₹30k+" /><span>₹30k+</span></label>
+          </div>
+          <div class="budget__set" data-currency="USD">
+            <label><input type="radio" name="budget" value="Under $2k" /><span>Under $2k</span></label>
+            <label><input type="radio" name="budget" value="$2k–5k" /><span>$2k–5k</span></label>
+            <label><input type="radio" name="budget" value="$5k–15k" /><span>$5k–15k</span></label>
+            <label><input type="radio" name="budget" value="$15k+" /><span>$15k+</span></label>
+          </div>
+        </fieldset>
+
+        <label class="fld">
+          <span class="mono">About the project</span>
+          <textarea name="message" rows="4" required maxlength="2000" aria-describedby="err-message" placeholder="Goals, timeline, links you love…"></textarea>
+          <small class="err" id="err-message" data-err="message"></small>
+        </label>
+
+        <div aria-hidden="true"><input type="text" name="company_site" class="hp" tabindex="-1" autocomplete="off" /></div>
+
+        <% if (turnstileKey) { %>
+        <div class="captcha">
+          <div data-turnstile data-sitekey="<%= turnstileKey %>"></div>
+          <small class="err" data-err="captcha"></small>
+        </div>
+        <% } %>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" required aria-describedby="err-consent" />
+          <span>I am 18 or older and agree that ONYX may store these details to reply to my enquiry, as described in the <a class="link" href="/privacy">Privacy Policy</a>. I can withdraw consent at any time by emailing <%= site.email %>.</span>
+        </label>
+        <small class="err" id="err-consent" data-err="consent"></small>
+
+        <button type="submit" class="btn btn--primary btn--big" data-magnetic>
+          <span class="btn__label">Send project enquiry</span><i aria-hidden="true">→</i>
+        </button>
+        <p class="form__status mono" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 
+  <!-- ============ THANK-YOU ============ -->
+  <dialog class="thanks" id="thanks" aria-labelledby="thanksTitle" aria-describedby="thanksText">
+    <span class="thanks__mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </span>
+    <p class="mono thanks__eyebrow">Enquiry received</p>
+    <h2 class="thanks__title" id="thanksTitle">Thank you<span data-thanks-name></span>.</h2>
+    <p class="thanks__text" id="thanksText">
+      Your project is with us. We usually reply within one business day from
+      <b><%= site.email %></b>, so keep an eye on your inbox (and spam folder, just in case).
+    </p>
+    <div class="thanks__actions">
+      <button type="button" class="btn btn--primary" data-thanks-close><span>Back to the site</span></button>
+      <a href="#work" class="btn btn--ghost" data-thanks-close><span>See our work</span></a>
+    </div>
+  </dialog>
+
+  <!-- ============ FOOTER ============ -->
   <%- include('partials/footer') %>
 
-  <!-- GSAP + ScrollTrigger + Lenis via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <noscript><style>.preloader{display:none}body.is-loading{overflow:auto}[data-reveal],[data-hero-in],.statement .sw,.w{opacity:1!important;transform:none!important;filter:none!important}.seq{height:auto}.seq__stage{position:relative;height:auto}.svc-detail,.proc-step{position:relative;opacity:1;transform:none}.proc-steps{display:grid;gap:40px}</style></noscript>
 
-  <script src="/js/preloader.js" defer></script>
-  <script src="/js/blackhole.js" defer></script>
-  <script src="/js/main.js" defer></script>
-  <script src="/js/gsap-init.js" defer></script>
-  <script src="/js/reveal-text.js" defer></script>
-  <script src="/js/form.js" defer></script>
-  <script src="/js/auralis.js" defer></script>
-  <script src="/js/footer.js" defer></script>
-  <script src="/js/textblock.js" defer></script>
-  <script src="/js/stickysvc.js" defer></script>
-  <script src="/js/imgreveal.js" defer></script>
-  <script src="/js/bento.js" defer></script>
-  <script src="/js/hproc.js" defer></script>
-  <script src="/js/workswheel.js" defer></script>
-  <script src="/js/hero.js" defer></script>
-  <script src="/js/portal.js" defer></script>
-  <script src="/js/faq.js" defer></script>
+  <script src="/vendor/gsap/gsap.min.js"></script>
+  <script src="/vendor/gsap/ScrollTrigger.min.js"></script>
+  <script src="/vendor/lenis/lenis.min.js"></script>
+  <script src="/js/app.js?v=<%= v %>" defer></script>
+  <script type="module" src="/js/field.js?v=<%= v %>"></script>
 </body>
 </html>

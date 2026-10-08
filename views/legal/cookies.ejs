@@ -1,34 +1,21 @@
-<p>
-  This Cookies Policy explains how ONYX uses cookies and similar local storage on this
-  website. We keep this deliberately minimal.
-</p>
+<p class="legal__lede">Short version: this website does not use cookies, analytics or advertising trackers, so there is no cookie banner to click through.</p>
 
-<h2>1. Do we use tracking cookies?</h2>
-<p><strong>No.</strong> This site does not use advertising cookies, analytics pixels, or
-  cross-site trackers. We don’t profile you or sell your data.</p>
+<h2>1. Cookies</h2>
+<p>This website does not set any cookies of its own<% if (!turnstileOn) { %>, and it loads nothing from third parties that could set them<% } %>. We do not run Google Analytics, Meta Pixel, heatmaps, session recording or any other tracking tool.</p>
 
-<h2>2. What we do store</h2>
-<p>We use your browser’s <strong>local storage</strong> for two essential, functional purposes
-  only:</p>
-<ul>
-  <li><strong>Cookie choice</strong> — remembers whether you accepted or declined the notice,
-    so we don’t ask again.</li>
-  <li><strong>Intro preference</strong> — remembers you’ve seen the opening animation so it
-    doesn’t replay every visit.</li>
-</ul>
-<p>This information stays in your browser, on your device. It is not sent to us or to any third
-  party.</p>
+<h2>2. Local storage</h2>
+<p>If you press the <b>pause-motion</b> button (bottom-right of the home page), your browser remembers that choice in local storage under the name <code>onyx-motion</code>, so animations stay paused on your next visit. It stores only "on" or "off", never leaves your device, and is not shared with anyone. You can remove it by clearing your browser's site data.</p>
 
-<h2>3. Third-party requests</h2>
-<p>When the page loads, your browser fetches fonts and script libraries from third-party
-  networks (Google Fonts, cdnjs, jsDelivr). These providers may receive your IP address as a
-  normal part of serving those files. They do not set tracking cookies on our behalf.</p>
+<h2>3. Third-party services</h2>
+<% if (turnstileOn) { %>
+<p>One: <b>Cloudflare Turnstile</b>, a spam check on the contact form. It loads only when you scroll to the form and is used solely to tell people from bots, which makes it strictly necessary for keeping the form secure. Cloudflare's own privacy policy explains what it processes. Everything else (typefaces and code) is served from our own server.</p>
+<% } else { %>
+<p>None. All typefaces and code are served from our own server, so your browser does not connect to Google, content-delivery networks or any other third party while you browse this site.</p>
+<% } %>
+<p>There are no embedded videos, maps, social media widgets or chat tools on this site.</p>
 
-<h2>4. Managing storage</h2>
-<p>You can clear local storage at any time through your browser settings, and use the
-  “Decline” option on the cookie notice. Declining does not break the site — the storage we
-  use is functional, not tracking.</p>
+<h2>4. Why there is no consent banner</h2>
+<p>Consent banners are needed for cookies and trackers that are not strictly necessary, such as analytics and advertising. Because we use none<% if (turnstileOn) { %> (the spam check is a security measure, not a tracker)<% } %>, and the only stored item is a preference you set yourself, there is nothing to consent to. If we ever add analytics or similar tools, we will ask for your consent before they load and update this policy.</p>
 
-<h2>5. More information</h2>
-<p>See our <a href="/privacy">Privacy Policy</a> for how we handle personal data, or email
-  <a href="mailto:<%= site.email %>"><%= site.email %></a>.</p>
+<h2>5. Controlling cookies</h2>
+<p>You can block or delete cookies and site data at any time in your browser settings. The site works fully with all cookies and storage blocked.</p>
